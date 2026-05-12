@@ -4,15 +4,10 @@
     preferCanvas: true,
   }).setView([37.07, 25.18], 11);
 
-  L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png", {
+  L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", {
     subdomains: "abcd",
     maxZoom: 19,
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> contributors, <a href="https://carto.com/attributions">CARTO</a>',
-  }).addTo(map);
-
-  L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}{r}.png", {
-    subdomains: "abcd",
-    maxZoom: 19,
   }).addTo(map);
 
   const ICONS = {
@@ -103,9 +98,9 @@
     iconCreateFunction: (c) => {
       const count = c.getChildCount();
       const hasFav = c.getAllChildMarkers().some((m) => m.options.placeData && m.options.placeData.highlight);
-      const bg = hasFav ? "#ff3b30" : "#4a90e2";
+      const bg = hasFav ? "#e63946" : "#2a7de1";
       return L.divIcon({
-        html: `<div style="background:${bg};color:#fff;border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;box-shadow:0 4px 10px rgba(0,0,0,0.45);border:2px solid #fff;">${count}</div>`,
+        html: `<div style="background:${bg};color:#fff;border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;box-shadow:0 3px 10px rgba(0,0,0,0.25);border:2.5px solid #fff;">${count}</div>`,
         className: "",
         iconSize: [34, 34],
       });
