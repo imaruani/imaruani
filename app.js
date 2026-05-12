@@ -170,9 +170,14 @@
           </span>`;
         li.addEventListener("click", () => {
           if (!p.coords) return;
-          map.setView(p.coords, 15, { animate: true });
-          const m = markers.get(p.id);
-          if (m) m.openPopup();
+          const wasMobile = closeSidebarMobile();
+          const fly = () => {
+            map.invalidateSize();
+            map.setView(p.coords, 15, { animate: true });
+            const m = markers.get(p.id);
+            if (m) m.openPopup();
+          };
+          if (wasMobile) setTimeout(fly, 300); else fly();
         });
         ul.appendChild(li);
       });
@@ -214,6 +219,24 @@
       map.fitBounds(bounds, { padding: [40, 40], maxZoom: 13 });
     }
   }
+
+  // Mobile sidebar (bottom sheet)
+  const sidebarEl = document.getElementById("sidebar");
+  const openBtn = document.getElementById("openSidebar");
+  const closeBtn = document.getElementById("closeSidebar");
+  function isMobile() { return window.matchMedia("(max-width: 720px)").matches; }
+  function openSidebar() { sidebarEl.classList.add("open"); }
+  function closeSidebar() { sidebarEl.classList.remove("open"); }
+  function closeSidebarMobile() {
+    if (isMobile() && sidebarEl.classList.contains("open")) {
+      closeSidebar();
+      return true;
+    }
+    return false;
+  }
+  if (openBtn) openBtn.addEventListener("click", openSidebar);
+  if (closeBtn) closeBtn.addEventListener("click", closeSidebar);
+  window._closeSidebarMobile = closeSidebarMobile;
 
   // Tab switching
   document.querySelectorAll(".tab-btn").forEach(btn => {
