@@ -245,6 +245,16 @@ body { display: flex; }
 .popup .tag.resa { background: rgba(244,162,97,0.18); color: #c47a1e; }
 .popup .tag.avoid { background: rgba(120,120,120,0.12); color: var(--muted); }
 
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 4px 0 8px;
+}
+.stars { color: #f59e0b; font-size: 14px; letter-spacing: 1px; }
+.rating-num { font-weight: 700; font-size: 14px; color: var(--text); }
+.review-count { font-size: 11px; color: var(--muted); }
+
 .popup .notes { display: flex; flex-direction: column; gap: 8px; margin: 8px 0 10px; }
 .popup .note {
   background: #fafafa;
@@ -288,6 +298,142 @@ body { display: flex; }
 .popup .links a.maps { background: rgba(42,125,225,0.08); color: var(--link); border-color: rgba(42,125,225,0.2); }
 .popup .links a.insta { background: linear-gradient(135deg, rgba(225,72,128,0.10), rgba(255,148,72,0.10)); color: #c2185b; border-color: rgba(194,24,91,0.2); }
 
+/* ── Tab nav ───────────────────────────────────────── */
+.tab-nav {
+  display: flex;
+  gap: 6px;
+  margin-top: 12px;
+}
+.tab-btn {
+  flex: 1;
+  appearance: none;
+  border: none;
+  padding: 7px 0;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  background: rgba(255,255,255,0.18);
+  color: rgba(255,255,255,0.7);
+  transition: all 140ms;
+}
+.tab-btn.active {
+  background: white;
+  color: var(--accent);
+}
+.tab-panel { display: flex; flex-direction: column; flex: 1; overflow: hidden; }
+.tab-panel.active { display: flex; }
+
+/* ── Itinerary tab ─────────────────────────────────── */
+.itin-wrapper {
+  overflow-y: auto;
+  flex: 1;
+  padding: 12px 12px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.itin-dest {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--panel);
+}
+.itin-dest-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  color: white;
+}
+.itin-emoji { font-size: 22px; }
+.itin-dest-name { font-size: 16px; font-weight: 700; }
+
+.itin-suggestions {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 14px;
+  background: #fafafa;
+  border-bottom: 1px solid var(--border);
+}
+.itin-sugg {
+  display: flex;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text);
+  line-height: 1.4;
+}
+
+.itin-day {
+  padding: 10px 14px;
+  border-top: 1px solid var(--border);
+}
+.itin-day-header {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.itin-day-date {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--accent);
+  background: rgba(230,57,70,0.08);
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+.itin-day-label { font-size: 13px; font-weight: 600; color: var(--text); }
+
+.itin-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 5px 0;
+  font-size: 12.5px;
+  line-height: 1.4;
+  color: var(--text);
+  border-radius: 6px;
+}
+.itin-item.clickable {
+  cursor: pointer;
+  padding: 5px 6px;
+  margin: 0 -6px;
+}
+.itin-item.clickable:hover { background: #fef3f2; }
+.itin-item.itin-star .itin-text { font-weight: 600; }
+.itin-time {
+  flex: 0 0 52px;
+  font-size: 11px;
+  color: var(--muted);
+  padding-top: 1px;
+  font-weight: 500;
+}
+.itin-icon { flex: 0 0 18px; }
+.itin-text { flex: 1; }
+.itin-goto {
+  flex: 0 0 16px;
+  font-size: 12px;
+  color: var(--accent);
+  opacity: 0.6;
+  padding-top: 1px;
+}
+.itin-item.clickable:hover .itin-goto { opacity: 1; }
+
+.itin-tip {
+  margin-top: 6px;
+  background: #fffbf0;
+  border: 1px solid #f4e2a0;
+  border-radius: 8px;
+  padding: 7px 10px;
+  font-size: 12px;
+  color: #7a5c00;
+  line-height: 1.45;
+}
+
+/* ─────────────────────────────────────────────────── */
 @media (max-width: 720px) {
   body { flex-direction: column; }
   #sidebar { width: 100%; flex: 0 0 auto; height: 50vh; border-right: none; border-bottom: 1px solid var(--border); }

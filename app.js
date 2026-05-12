@@ -46,6 +46,16 @@
     if (p.area) tags.push(`<span class="tag">${escapeHtml(p.area)}</span>`);
     if (p.cuisine) tags.push(`<span class="tag">${escapeHtml(p.cuisine)}</span>`);
 
+    // Google rating stars
+    let ratingHtml = "";
+    if (p.rating) {
+      const full = Math.floor(p.rating);
+      const half = (p.rating - full) >= 0.5;
+      let stars = "★".repeat(full) + (half ? "½" : "") + "☆".repeat(5 - full - (half ? 1 : 0));
+      const reviews = p.review_count ? ` <span class="review-count">(${p.review_count.toLocaleString("fr")} avis)</span>` : "";
+      ratingHtml = `<div class="rating"><span class="stars">${stars}</span><span class="rating-num">${p.rating}</span>${reviews}</div>`;
+    }
+
     const notes = (p.notes || [])
       .map((n) => `
         <div class="note">
@@ -75,6 +85,7 @@
         ${photoBlock}
         <div class="body">
           <h3>${escapeHtml(p.name)}</h3>
+          ${ratingHtml}
           <div class="tags">${tags.join("")}</div>
           <div class="notes">${notes || ""}</div>
           <div class="links">${links.join("")}</div>
@@ -90,7 +101,9 @@
     search: "",
   };
 
+  window._map = map;
   const markers = new Map();
+  window._markers = markers;
   const cluster = L.markerClusterGroup({
     showCoverageOnHover: false,
     spiderfyOnMaxZoom: true,
@@ -201,6 +214,20 @@
       map.fitBounds(bounds, { padding: [40, 40], maxZoom: 13 });
     }
   }
+
+  // Tab switching
+  document.querySelectorAll(".tab-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      const target = btn.dataset.tab;
+      document.querySelectorAll(".tab-panel").forEach(p => {
+        p.style.display = p.id === target ? "" : "none";
+        p.classList.toggle("active", p.id === target);
+      });
+      if (target === "map-tab") setTimeout(() => map.invalidateSize(), 50);
+    });
+  });
 
   applyFilters();
   setTimeout(fitToVisible, 100);
