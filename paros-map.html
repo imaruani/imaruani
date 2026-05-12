@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Paros · Carte des bonnes adresses</title>
+  <title>Grèce · Carte &amp; Itinéraires</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="anonymous" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
@@ -255,6 +255,16 @@ body { display: flex; }
 .popup .tag.resa { background: rgba(244,162,97,0.18); color: #c47a1e; }
 .popup .tag.avoid { background: rgba(120,120,120,0.12); color: var(--muted); }
 
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 4px 0 8px;
+}
+.stars { color: #f59e0b; font-size: 14px; letter-spacing: 1px; }
+.rating-num { font-weight: 700; font-size: 14px; color: var(--text); }
+.review-count { font-size: 11px; color: var(--muted); }
+
 .popup .notes { display: flex; flex-direction: column; gap: 8px; margin: 8px 0 10px; }
 .popup .note {
   background: #fafafa;
@@ -298,6 +308,142 @@ body { display: flex; }
 .popup .links a.maps { background: rgba(42,125,225,0.08); color: var(--link); border-color: rgba(42,125,225,0.2); }
 .popup .links a.insta { background: linear-gradient(135deg, rgba(225,72,128,0.10), rgba(255,148,72,0.10)); color: #c2185b; border-color: rgba(194,24,91,0.2); }
 
+/* ── Tab nav ───────────────────────────────────────── */
+.tab-nav {
+  display: flex;
+  gap: 6px;
+  margin-top: 12px;
+}
+.tab-btn {
+  flex: 1;
+  appearance: none;
+  border: none;
+  padding: 7px 0;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  background: rgba(255,255,255,0.18);
+  color: rgba(255,255,255,0.7);
+  transition: all 140ms;
+}
+.tab-btn.active {
+  background: white;
+  color: var(--accent);
+}
+.tab-panel { display: flex; flex-direction: column; flex: 1; overflow: hidden; }
+.tab-panel.active { display: flex; }
+
+/* ── Itinerary tab ─────────────────────────────────── */
+.itin-wrapper {
+  overflow-y: auto;
+  flex: 1;
+  padding: 12px 12px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.itin-dest {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--panel);
+}
+.itin-dest-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  color: white;
+}
+.itin-emoji { font-size: 22px; }
+.itin-dest-name { font-size: 16px; font-weight: 700; }
+
+.itin-suggestions {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 14px;
+  background: #fafafa;
+  border-bottom: 1px solid var(--border);
+}
+.itin-sugg {
+  display: flex;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text);
+  line-height: 1.4;
+}
+
+.itin-day {
+  padding: 10px 14px;
+  border-top: 1px solid var(--border);
+}
+.itin-day-header {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.itin-day-date {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--accent);
+  background: rgba(230,57,70,0.08);
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+.itin-day-label { font-size: 13px; font-weight: 600; color: var(--text); }
+
+.itin-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 5px 0;
+  font-size: 12.5px;
+  line-height: 1.4;
+  color: var(--text);
+  border-radius: 6px;
+}
+.itin-item.clickable {
+  cursor: pointer;
+  padding: 5px 6px;
+  margin: 0 -6px;
+}
+.itin-item.clickable:hover { background: #fef3f2; }
+.itin-item.itin-star .itin-text { font-weight: 600; }
+.itin-time {
+  flex: 0 0 52px;
+  font-size: 11px;
+  color: var(--muted);
+  padding-top: 1px;
+  font-weight: 500;
+}
+.itin-icon { flex: 0 0 18px; }
+.itin-text { flex: 1; }
+.itin-goto {
+  flex: 0 0 16px;
+  font-size: 12px;
+  color: var(--accent);
+  opacity: 0.6;
+  padding-top: 1px;
+}
+.itin-item.clickable:hover .itin-goto { opacity: 1; }
+
+.itin-tip {
+  margin-top: 6px;
+  background: #fffbf0;
+  border: 1px solid #f4e2a0;
+  border-radius: 8px;
+  padding: 7px 10px;
+  font-size: 12px;
+  color: #7a5c00;
+  line-height: 1.45;
+}
+
+/* ─────────────────────────────────────────────────── */
 @media (max-width: 720px) {
   body { flex-direction: column; }
   #sidebar { width: 100%; flex: 0 0 auto; height: 50vh; border-right: none; border-bottom: 1px solid var(--border); }
@@ -309,42 +455,60 @@ body { display: flex; }
 <body>
   <aside id="sidebar">
     <header>
-      <h1>Paros &amp; Antiparos</h1>
-      <p class="subtitle">Carte des bonnes adresses</p>
+      <h1>🇬🇷 Grèce — Bonnes adresses</h1>
+      <p class="subtitle">Paros · Antiparos · Sifnos · Milos · Kimolos · Athènes</p>
+      <nav class="tab-nav">
+        <button class="tab-btn active" data-tab="map-tab">🗺 Carte</button>
+        <button class="tab-btn" data-tab="itinerary-tab">📅 Itinéraires</button>
+      </nav>
     </header>
-    <div class="filters">
-      <div class="filter-row" id="islandFilter">
-        <button data-island="all" class="active">Tout</button>
-        <button data-island="Paros">Paros</button>
-        <button data-island="Antiparos">Antiparos</button>
-        <button data-island="Athènes">Athènes</button>
-        <button data-island="Sifnos">Sifnos</button>
-        <button data-island="Milos">Milos</button>
-        <button data-island="Kimolos">Kimolos</button>
+
+    <!-- TAB 1: MAP -->
+    <div id="map-tab" class="tab-panel active">
+      <div class="filters">
+        <div class="filter-row" id="islandFilter">
+          <button data-island="all" class="active">Tout</button>
+          <button data-island="Paros">Paros</button>
+          <button data-island="Antiparos">Antiparos</button>
+          <button data-island="Athènes">Athènes</button>
+          <button data-island="Sifnos">Sifnos</button>
+          <button data-island="Milos">Milos</button>
+          <button data-island="Kimolos">Kimolos</button>
+        </div>
+        <div class="filter-row" id="categoryFilter">
+          <button data-category="all" class="active">Tout</button>
+          <button data-category="restaurant">🍽 Restos</button>
+          <button data-category="beach">🏖 Plages</button>
+          <button data-category="bar">🍸 Bars</button>
+          <button data-category="hotel">🏨 Hôtels</button>
+          <button data-category="breakfast">☕ Petit déj</button>
+          <button data-category="activity">⚓ Activités</button>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="favOnly" />
+          <span>Coups de cœur uniquement <span class="star">★</span></span>
+        </label>
       </div>
-      <div class="filter-row" id="categoryFilter">
-        <button data-category="all" class="active">Toutes catégories</button>
-        <button data-category="restaurant">Restos</button>
-        <button data-category="beach">Plages</button>
-        <button data-category="bar">Bars / sunset</button>
-        <button data-category="hotel">Hôtels</button>
-        <button data-category="breakfast">Petit déj</button>
-        <button data-category="activity">Activités</button>
+      <div class="list-wrapper">
+        <input id="search" type="search" placeholder="Rechercher un lieu, une zone…" />
+        <ul id="placeList"></ul>
       </div>
-      <label class="toggle">
-        <input type="checkbox" id="favOnly" />
-        <span>Seulement les coups de cœur <span class="star">★</span></span>
-      </label>
     </div>
-    <div class="list-wrapper">
-      <input id="search" type="search" placeholder="Rechercher un lieu, une zone…" />
-      <ul id="placeList"></ul>
+
+    <!-- TAB 2: ITINERAIRES -->
+    <div id="itinerary-tab" class="tab-panel" style="display:none">
+      <div class="itin-wrapper" id="itinContent"></div>
     </div>
+
     <footer>
-      <p>Carte établie à partir de 5 listes d'adresses. Les <span class="star">★</span> sont les coups de cœur, les <span class="resa">⛔</span> sont à réserver.</p>
+      <p>Les <span class="star">★</span> sont les coups de cœur · <span class="resa">⛔</span> = réserver</p>
     </footer>
   </aside>
-  <main id="mapWrap"><div id="map"></div></main>
+
+  <main id="mapWrap">
+    <div id="map"></div>
+  </main>
+
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
   <script>
@@ -389,6 +553,8 @@ window.PLACES = [
     instagram_url: "https://www.instagram.com/buonventoparos/",
     website: "http://www.buonventoristoranteitaliano.it/",
     google_maps_url: "https://maps.app.goo.gl/tNxpsBYDvgbAYSSV8",
+    rating: 4.6,
+    review_count: 373,
     photo_url: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800&h=400&fit=crop",
   },
   {
@@ -407,6 +573,8 @@ window.PLACES = [
     instagram: "blueoyster.paros",
     instagram_url: "https://www.instagram.com/blueoyster.paros/",
     website: "https://www.blueoysterparos.com/",
+    rating: 4.4,
+    review_count: 210,
   },
   {
     id: "cliff",
@@ -427,6 +595,8 @@ window.PLACES = [
     instagram_url: "https://www.instagram.com/thecliff_lolantonis/",
     website: "https://www.thecliffparos.com/",
     phone: "+30 694 557 9448",
+    rating: 3.7,
+    review_count: 302,
   },
   {
     id: "arodo",
@@ -448,6 +618,8 @@ window.PLACES = [
     instagram_url: "https://www.instagram.com/arodo.paros/",
     phone: "+30 2284 021308",
     google_maps_url: "https://maps.app.goo.gl/zJokcX4uVFBB8ddD8",
+    rating: 4.3,
+    review_count: 337,
   },
   {
     id: "il-napolitano",
@@ -464,6 +636,8 @@ window.PLACES = [
     instagram: "ilnapoletanoeat",
     instagram_url: "https://www.instagram.com/ilnapoletanoeat/",
     phone: "+30 694 520 9075",
+    rating: 4.3,
+    review_count: 160,
   },
   {
     id: "siparos",
@@ -483,6 +657,8 @@ window.PLACES = [
     instagram_url: "https://www.instagram.com/siparos_seaside_restaurant/",
     website: "https://siparos.gr/",
     phone: "+30 22840 52785",
+    rating: 4.6,
+    review_count: 480,
   },
   {
     id: "fyssilanis",
@@ -501,6 +677,8 @@ window.PLACES = [
     instagram_url: "https://www.instagram.com/fisilanis_hotel_restaurant/",
     phone: "+30 22840 41530",
     google_maps_url: "https://maps.app.goo.gl/RGorWnbop74YPdRk6",
+    rating: 4.5,
+    review_count: 460,
   },
   {
     id: "taverna-julia",
@@ -515,6 +693,8 @@ window.PLACES = [
       { author: "Liste 1", text: "⭐ Pour moi le meilleur spot, de ouf, hyper belle vue." },
     ],
     phone: "+30 22840 41036",
+    rating: 4.5,
+    review_count: 89,
   },
   {
     id: "yemeni",
@@ -533,6 +713,8 @@ window.PLACES = [
     instagram_url: "https://www.instagram.com/yemeni.paros/",
     website: "https://www.yemeni.gr/",
     phone: "+30 22840 51445",
+    rating: 4.5,
+    review_count: 950,
   },
   {
     id: "kima",
@@ -551,6 +733,8 @@ window.PLACES = [
     website: "https://kimarestaurant.com",
     phone: "+30 22840 41180",
     google_maps_url: "https://maps.app.goo.gl/DRPBxA42ADLaNfZv5",
+    rating: 4.7,
+    review_count: 380,
   },
   {
     id: "sousouro",
@@ -566,6 +750,8 @@ window.PLACES = [
     instagram: "sousouro_",
     instagram_url: "https://www.instagram.com/sousouro_/",
     phone: "+30 22840 53113",
+    rating: 4.5,
+    review_count: 69,
   },
   {
     id: "katsounas",
@@ -582,6 +768,8 @@ window.PLACES = [
       { author: "Liste 3", text: "Katsounas ⛔ — le meilleur." },
     ],
     phone: "+30 22840 51246",
+    rating: 4.3,
+    review_count: 291,
   },
   {
     id: "glafkos",
@@ -598,6 +786,8 @@ window.PLACES = [
     instagram: "glafkos_taverna",
     instagram_url: "https://www.instagram.com/glafkos_taverna/",
     phone: "+30 22840 52100",
+    rating: 4.3,
+    review_count: 1500,
   },
   {
     id: "thalami",
@@ -611,6 +801,9 @@ window.PLACES = [
       { author: "Liste 2", text: "Taverne à Ambelas, super joli cadre, bon plutôt pour le déj. Pas de résa — ne pas prendre la moussaka." },
     ],
     phone: "+30 22840 53351",
+    rating: 4.0,
+    review_count: 341,
+    photo_url: "https://commons.wikimedia.org/wiki/Special:FilePath/Prawns_at_Thalami,_Ambelas.JPG",
   },
   {
     id: "magaia",
@@ -636,6 +829,8 @@ window.PLACES = [
       { author: "Liste 2", text: "Très joli spot et authentique, jolie plage." },
     ],
     phone: "+30 694 667 3645",
+    rating: 2.2,
+    review_count: 97,
   },
   {
     id: "byzantino",
@@ -650,6 +845,8 @@ window.PLACES = [
     ],
     phone: "+30 2284 045273",
     google_maps_url: "https://maps.app.goo.gl/nfzmSva7UutEAz6c6",
+    rating: 4.4,
+    review_count: 84,
   },
   {
     id: "kallitechniko",
@@ -664,6 +861,8 @@ window.PLACES = [
     ],
     phone: "+30 22840 42033",
     google_maps_url: "https://maps.app.goo.gl/sY4fuQxg6Em3Ux7B7",
+    rating: 4.3,
+    review_count: 93,
   },
   {
     id: "santa-pacou",
@@ -680,6 +879,8 @@ window.PLACES = [
     instagram_url: "https://www.instagram.com/santapacou/",
     phone: "+30 697 242 4104",
     google_maps_url: "https://maps.app.goo.gl/mN4ZHdiwGKSw2Kqo8",
+    rating: 4.6,
+    review_count: 33,
   },
   {
     id: "aliki-resto",
@@ -698,6 +899,8 @@ window.PLACES = [
     website: "https://www.alikirestaurant.com/",
     phone: "+30 2284 091228",
     google_maps_url: "https://maps.app.goo.gl/BsV718AFMtasYkK49",
+    rating: 4.4,
+    review_count: 320,
   },
   {
     id: "ouzeri-halaris",
@@ -713,6 +916,8 @@ window.PLACES = [
     ],
     phone: "+30 2284 043257",
     google_maps_url: "https://maps.app.goo.gl/2M3Eu94wtXTNoKrFA",
+    rating: 4.4,
+    review_count: 878,
   },
   {
     id: "mare-nostrum",
@@ -729,6 +934,8 @@ window.PLACES = [
     instagram_url: "https://www.instagram.com/marenostrumrestaurant/",
     phone: "+30 22840 51225",
     google_maps_url: "https://maps.app.goo.gl/Q3BvsbdYqE4t1Drg8",
+    rating: 3.7,
+    review_count: 418,
   },
   {
     id: "almond-coffee",
@@ -744,6 +951,8 @@ window.PLACES = [
     instagram: "almond_paros",
     instagram_url: "https://www.instagram.com/almond_paros/",
     website: "https://www.almondlivingwell.com/en/",
+    rating: 4.8,
+    review_count: 120,
   },
   {
     id: "taverne-laris",
@@ -757,6 +966,8 @@ window.PLACES = [
       { author: "Liste 2", text: "Dans les meilleures (Blue Oyster, Ministiri, Taverne Laris)." },
     ],
     phone: "+30 22840 91496",
+    rating: 3.6,
+    review_count: 146,
   },
   {
     id: "monastiri",
@@ -773,6 +984,22 @@ window.PLACES = [
     instagram_url: "https://www.instagram.com/monastiri.paros/",
     website: "https://www.monastiri-paros.gr/",
     phone: "+30 22840 53560",
+    rating: 3.5,
+    review_count: 180,
+  },
+  {
+    id: "markakis",
+    name: "Markakis (taverne, pas plage)",
+    area: "Drios",
+    island: "Paros",
+    category: "restaurant",
+    cuisine: "Taverne familiale bord de mer",
+    coords: [37.00224, 25.22682],
+    notes: [
+      { author: "Liste 2", text: "Markakis (en réalité une taverne à Drios, pas une plage)." },
+    ],
+    rating: 4.4,
+    review_count: 350,
   },
 
   /* ============================== PAROS — PLAGES ============================== */
@@ -786,6 +1013,8 @@ window.PLACES = [
     notes: [
       { author: "Liste 2", text: "Ski nautique à Kolimbithres." },
     ],
+    rating: 4.0,
+    review_count: 1378,
   },
   {
     id: "punda",
@@ -800,6 +1029,8 @@ window.PLACES = [
     instagram: "pundacoast",
     instagram_url: "https://www.instagram.com/pundacoast/",
     website: "https://pundacoast.com/",
+    rating: 3.5,
+    review_count: 95,
   },
   {
     id: "parasporos",
@@ -812,6 +1043,8 @@ window.PLACES = [
       { author: "Liste 3", text: "Paras poros." },
       { author: "Liste 5", text: "Personne, plage non aménagée, mer hyper belle, vous allez être seul seul." },
     ],
+    rating: 4.5,
+    review_count: 65,
   },
   {
     id: "palm-beach",
@@ -825,6 +1058,8 @@ window.PLACES = [
     ],
     instagram: "palmbeachparos",
     instagram_url: "https://www.instagram.com/palmbeachparos/",
+    rating: 4.0,
+    review_count: 80,
   },
   {
     id: "golden-beach",
@@ -836,6 +1071,8 @@ window.PLACES = [
     notes: [
       { author: "Liste 3", text: "Golden beach (blue lagon)." },
     ],
+    rating: 4.5,
+    review_count: 414,
   },
   {
     id: "faragas",
@@ -851,6 +1088,9 @@ window.PLACES = [
     instagram: "faragas_beach",
     instagram_url: "https://www.instagram.com/faragas_beach/",
     website: "https://www.faragas-beach.gr/",
+    rating: 4.5,
+    review_count: 120,
+    photo_url: "https://upload.wikimedia.org/wikipedia/commons/e/e5/Cyclades_Paros_Faragas_Beach_-_panoramio.jpg",
   },
   {
     id: "aliki-beach",
@@ -862,18 +1102,8 @@ window.PLACES = [
     notes: [
       { author: "Liste 3", text: "Aliki." },
     ],
-  },
-  {
-    id: "markakis",
-    name: "Markakis (taverne, pas plage)",
-    area: "Drios",
-    island: "Paros",
-    category: "restaurant",
-    cuisine: "Taverne familiale bord de mer",
-    coords: [37.00224, 25.22682],
-    notes: [
-      { author: "Liste 2", text: "Markakis (en réalité une taverne à Drios, pas une plage)." },
-    ],
+    rating: 4.5,
+    review_count: 368,
   },
   {
     id: "katsouna-beach",
@@ -885,6 +1115,8 @@ window.PLACES = [
     notes: [
       { author: "Liste 2", text: "Katsouna — derrière la taverne Katsounas à Santa Maria." },
     ],
+    rating: 4.0,
+    review_count: 991,
   },
   {
     id: "livadaki",
@@ -896,6 +1128,8 @@ window.PLACES = [
     notes: [
       { author: "Liste 2", text: "Plage Livadaki." },
     ],
+    rating: 4.5,
+    review_count: 39,
   },
   {
     id: "pomodros",
@@ -918,6 +1152,8 @@ window.PLACES = [
     notes: [
       { author: "Liste 3", text: "Beach project." },
     ],
+    rating: 4.1,
+    review_count: 54,
   },
 
   /* ============================== ANTIPAROS ============================== */
@@ -938,6 +1174,8 @@ window.PLACES = [
     instagram: "sunsetantiparos",
     instagram_url: "https://www.instagram.com/sunsetantiparos/",
     website: "https://sunsetantiparos.com/",
+    rating: 4.0,
+    review_count: 83,
   },
   {
     id: "rooster",
@@ -954,6 +1192,8 @@ window.PLACES = [
     instagram: "therooster.antiparos",
     instagram_url: "https://www.instagram.com/therooster.antiparos/",
     website: "https://theroosterantiparos.com/",
+    rating: 4.0,
+    review_count: 26,
   },
   {
     id: "kalokeri",
@@ -968,6 +1208,8 @@ window.PLACES = [
     ],
     instagram: "kalokerirestaurant",
     instagram_url: "https://www.instagram.com/kalokerirestaurant/",
+    rating: 4.6,
+    review_count: 339,
   },
   {
     id: "lolos",
@@ -983,6 +1225,8 @@ window.PLACES = [
     ],
     instagram: "lollosantiparos",
     instagram_url: "https://www.instagram.com/lollosantiparos/",
+    rating: 4.0,
+    review_count: 387,
   },
   {
     id: "soros-beach",
@@ -995,6 +1239,8 @@ window.PLACES = [
       { author: "Liste 2", text: "Antiparos déjeuner et plage Soros top et très bon." },
       { author: "Liste 3", text: "Journée à Antiparos (Soros)." },
     ],
+    rating: 4.5,
+    review_count: 238,
   },
   {
     id: "soros-beach-club",
@@ -1010,6 +1256,8 @@ window.PLACES = [
     instagram: "sorosbeachantiparos",
     instagram_url: "https://www.instagram.com/sorosbeachantiparos/",
     website: "https://www.sorosbeach.gr/",
+    rating: 3.0,
+    review_count: 372,
   },
   {
     id: "fanari-beach",
@@ -1023,6 +1271,8 @@ window.PLACES = [
       { author: "Liste 5", text: "Fanari Beach." },
     ],
     website: "https://fanaribeach.gr/",
+    rating: 4.5,
+    review_count: 40,
   },
   {
     id: "beach-house",
@@ -1038,6 +1288,8 @@ window.PLACES = [
     instagram: "beachhouseantiparos",
     instagram_url: "https://www.instagram.com/beachhouseantiparos/",
     website: "https://beachhouseantiparos.com/",
+    rating: 3.6,
+    review_count: 298,
   },
   {
     id: "captain-pepinos",
@@ -1053,6 +1305,8 @@ window.PLACES = [
     instagram: "captain_pipinos",
     instagram_url: "https://www.instagram.com/captain_pipinos/",
     website: "https://captainpipinos.com/",
+    rating: 3.9,
+    review_count: 1130,
   },
 
   /* ============================== PAROS — ACTIVITÉS ============================== */
@@ -1080,6 +1334,8 @@ window.PLACES = [
     ],
     website: "https://www.waterskizone.com/",
     phone: "+30 6944 242227",
+    rating: 4.5,
+    review_count: 19,
   },
 
   /* ============================== ATHÈNES ============================== */
@@ -1096,6 +1352,8 @@ window.PLACES = [
     instagram: "cinapos",
     instagram_url: "https://www.instagram.com/cinapos/",
     website: "https://cinapos.com",
+    rating: 4.3,
+    review_count: 65,
   },
   {
     id: "voylkanizater",
@@ -1124,6 +1382,8 @@ window.PLACES = [
     instagram: "manaritaverna",
     instagram_url: "https://www.instagram.com/manaritaverna/",
     website: "https://www.manaritaverna.com",
+    rating: 4.4,
+    review_count: 1419,
   },
   {
     id: "isandsia",
@@ -1135,6 +1395,8 @@ window.PLACES = [
     notes: [
       { author: "Programme", text: "Recommandé (orthographe à confirmer)." },
     ],
+    rating: 4.1,
+    review_count: 9,
   },
   {
     id: "regal-hotel",
@@ -1147,6 +1409,8 @@ window.PLACES = [
       { author: "Programme", text: "Check-in Athènes." },
     ],
     website: "https://www.regalhotels.gr/",
+    rating: 4.4,
+    review_count: 2421,
   },
 
   /* ============================== SIFNOS ============================== */
@@ -1160,6 +1424,8 @@ window.PLACES = [
     notes: [
       { author: "Programme", text: "Sunbeds at Nostos — il faut réserver en ligne." },
     ],
+    rating: 4.5,
+    review_count: 508,
   },
   {
     id: "nostos-sifnos",
@@ -1173,6 +1439,8 @@ window.PLACES = [
       { author: "Programme", text: "Réserver les sunbeds en ligne." },
     ],
     website: "https://nostosbeachbar.gr/en/",
+    rating: 4.4,
+    review_count: 473,
   },
   {
     id: "tsika",
@@ -1185,6 +1453,8 @@ window.PLACES = [
       { author: "Programme", text: "Lunch at Tsika / Manolis." },
     ],
     website: "https://tsikali.com",
+    rating: 4.1,
+    review_count: 535,
   },
   {
     id: "manolis",
@@ -1197,6 +1467,8 @@ window.PLACES = [
       { author: "Programme", text: "Lunch at Tsika / Manolis." },
     ],
     website: "https://www.manolistaverna.gr/",
+    rating: 4.2,
+    review_count: 385,
   },
   {
     id: "loggia",
@@ -1209,6 +1481,8 @@ window.PLACES = [
     notes: [
       { author: "Programme", text: "Sunset + dîner. Descendre au sunset voir l'église des Sept Martyrs, c'est sublime !!" },
     ],
+    rating: 4.3,
+    review_count: 335,
   },
   {
     id: "kafeneio-drakaki",
@@ -1222,6 +1496,8 @@ window.PLACES = [
     ],
     instagram: "kafeneiodrakakis",
     instagram_url: "https://www.instagram.com/kafeneiodrakakis/",
+    rating: 4.3,
+    review_count: 2455,
   },
   {
     id: "paralia-beach-bar",
@@ -1236,6 +1512,8 @@ window.PLACES = [
     instagram: "paraliasifnos",
     instagram_url: "https://www.instagram.com/paraliasifnos/",
     website: "https://paraliabeachbarsifnos.gr/",
+    rating: 4.3,
+    review_count: 50,
   },
   {
     id: "yalos-beach",
@@ -1249,6 +1527,8 @@ window.PLACES = [
     ],
     instagram: "yalos_sifnos",
     instagram_url: "https://www.instagram.com/yalos_sifnos/",
+    rating: 4.6,
+    review_count: 461,
   },
   {
     id: "pelicanos",
@@ -1261,6 +1541,8 @@ window.PLACES = [
       { author: "Programme", text: "Lunch (14h)." },
     ],
     website: "https://pelicanossifnos.gr/",
+    rating: 3.7,
+    review_count: 31,
   },
   {
     id: "bostani",
@@ -1275,6 +1557,8 @@ window.PLACES = [
     instagram: "bostanisifnos",
     instagram_url: "https://www.instagram.com/bostanisifnos/",
     website: "https://verinahotelsifnos.com/bostani-bar-restaurant/",
+    rating: 4.5,
+    review_count: 49,
   },
   {
     id: "vroulidia",
@@ -1287,6 +1571,8 @@ window.PLACES = [
     notes: [
       { author: "Programme", text: "Transats à réserver en avance. On a passé la journée." },
     ],
+    rating: 4.3,
+    review_count: 125,
   },
   {
     id: "cheronissos-beach",
@@ -1298,6 +1584,9 @@ window.PLACES = [
     notes: [
       { author: "Programme", text: "Pas fait." },
     ],
+    rating: 4.3,
+    review_count: 150,
+    photo_url: "https://commons.wikimedia.org/wiki/Special:FilePath/Cyclades_Sifnos_Keronisos_Port_-_panoramio.jpg",
   },
   {
     id: "captain-george",
@@ -1311,6 +1600,8 @@ window.PLACES = [
     ],
     instagram: "captaingeorgesifnos",
     instagram_url: "https://www.instagram.com/captaingeorgesifnos/",
+    rating: 4.1,
+    review_count: 59,
   },
   {
     id: "perivoli",
@@ -1324,6 +1615,8 @@ window.PLACES = [
     ],
     instagram: "perivoli_restaurant_sifnos",
     instagram_url: "https://www.instagram.com/perivoli_restaurant_sifnos/",
+    rating: 4.5,
+    review_count: 283,
   },
 
   /* ============================== MILOS ============================== */
@@ -1337,6 +1630,9 @@ window.PLACES = [
     notes: [
       { author: "Programme", text: "Petite plage où tu descends par une échelle." },
     ],
+    rating: 4.5,
+    review_count: 600,
+    photo_url: "https://commons.wikimedia.org/wiki/Special:FilePath/Tsigrado_Beach_on_Milos_Island%2C_Greece.jpg",
   },
   {
     id: "firiplaka",
@@ -1348,6 +1644,9 @@ window.PLACES = [
     notes: [
       { author: "Programme", text: "Trop trop beau." },
     ],
+    rating: 4.5,
+    review_count: 620,
+    photo_url: "https://commons.wikimedia.org/wiki/Special:FilePath/Paralia_Firiplaka_on_Milos_Island%2C_Greece_as_seen_from_the_north.jpg",
   },
   {
     id: "sirocco",
@@ -1360,6 +1659,8 @@ window.PLACES = [
       { author: "Programme", text: "Lunch 15h. Aller sur la plage toute à gauche du resto, c'est sublime et tu es seul au monde." },
     ],
     website: "https://siroccomilos.gr/",
+    rating: 3.6,
+    review_count: 866,
   },
   {
     id: "mosaic-milos",
@@ -1374,6 +1675,8 @@ window.PLACES = [
     instagram: "mosaic.milos",
     instagram_url: "https://www.instagram.com/mosaic.milos/",
     website: "https://mosaicmilos.gr/",
+    rating: 4.4,
+    review_count: 40,
   },
   {
     id: "okto",
@@ -1388,6 +1691,8 @@ window.PLACES = [
     instagram: "okto.milos",
     instagram_url: "https://www.instagram.com/okto.milos/",
     website: "https://www.restaurant-okto.gr/",
+    rating: 4.5,
+    review_count: 356,
   },
   {
     id: "barriello",
@@ -1400,17 +1705,8 @@ window.PLACES = [
       { author: "Programme", text: "Dinner — Okto ou Barriello." },
     ],
     website: "https://www.barriello.com/",
-  },
-  {
-    id: "papafragas",
-    name: "Papafragas Beach",
-    area: "Côte nord · Milos",
-    island: "Milos",
-    category: "beach",
-    coords: [36.7508, 24.5061],
-    notes: [
-      { author: "Programme", text: "Papafragas Beach." },
-    ],
+    rating: 4.6,
+    review_count: 1244,
   },
   {
     id: "mandrakia",
@@ -1422,6 +1718,9 @@ window.PLACES = [
     notes: [
       { author: "Programme", text: "Village de pêcheurs." },
     ],
+    rating: 4.5,
+    review_count: 200,
+    photo_url: "https://commons.wikimedia.org/wiki/Special:FilePath/Cyclades_Milos_Mandrakia_13092014_-_panoramio.jpg",
   },
   {
     id: "medusa",
@@ -1435,6 +1734,8 @@ window.PLACES = [
       { author: "Programme", text: "No reservation — donner son nom et attendre sur la plage." },
     ],
     website: "https://medusamilos.gr/",
+    rating: 4.4,
+    review_count: 2451,
   },
   {
     id: "sarakiniko",
@@ -1446,6 +1747,9 @@ window.PLACES = [
     notes: [
       { author: "Programme", text: "Sarakiniko Beach." },
     ],
+    rating: 4.7,
+    review_count: 2416,
+    photo_url: "https://commons.wikimedia.org/wiki/Special:FilePath/Sarakiniko_Beach_on_Milos_Island%2C_Greece_with_a_view_of_the_Aegean_Sea.jpg",
   },
   {
     id: "klima",
@@ -1457,6 +1761,9 @@ window.PLACES = [
     notes: [
       { author: "Programme", text: "Klima for Sunset." },
     ],
+    rating: 4.6,
+    review_count: 300,
+    photo_url: "https://commons.wikimedia.org/wiki/Special:FilePath/Cyclades_Milos_Klima_Eglise_-_panoramio.jpg",
   },
   {
     id: "astakas",
@@ -1470,6 +1777,8 @@ window.PLACES = [
       { author: "Programme", text: "6 personnes, 20h30." },
     ],
     website: "https://astakasmilos.gr/",
+    rating: 4.2,
+    review_count: 797,
   },
   {
     id: "domes-white-coves",
@@ -1483,6 +1792,8 @@ window.PLACES = [
       { author: "Programme", text: "Dîner au Makris Restaurant, 20h30." },
     ],
     website: "https://domesresorts.com/domeswhitecoastmilos/",
+    rating: 4.0,
+    review_count: 308,
   },
   {
     id: "calypso-boat",
@@ -1495,6 +1806,8 @@ window.PLACES = [
       { author: "Programme", text: "Boat day Calypso." },
     ],
     website: "https://milosboatrental.com/",
+    rating: 5.0,
+    review_count: 19,
   },
 
   /* ============================== KIMOLOS ============================== */
@@ -1508,6 +1821,8 @@ window.PLACES = [
     notes: [
       { author: "Programme", text: "Goupa Kara." },
     ],
+    rating: 4.6,
+    review_count: 39,
   },
   {
     id: "rema",
@@ -1519,6 +1834,8 @@ window.PLACES = [
     notes: [
       { author: "Programme", text: "Rema Beach." },
     ],
+    rating: 4.5,
+    review_count: 20,
   },
   {
     id: "prassa",
@@ -1530,6 +1847,8 @@ window.PLACES = [
     notes: [
       { author: "Programme", text: "Prassa Beach." },
     ],
+    rating: 4.8,
+    review_count: 497,
   },
   {
     id: "prasonisi-kimolos",
@@ -1541,6 +1860,8 @@ window.PLACES = [
     notes: [
       { author: "Programme", text: "Déj : Prasonisi / The Wave / To Kyma." },
     ],
+    rating: 4.6,
+    review_count: 224,
   },
   {
     id: "to-kyma-kimolos",
@@ -1553,10 +1874,352 @@ window.PLACES = [
       { author: "Programme", text: "Déj : Prasonisi / The Wave / To Kyma (« To Kyma » = « The Wave », même resto)." },
     ],
     website: "https://kyma-kimolos.gr/",
+    rating: 4.0,
+    review_count: 339,
   },
 ];
-  </script>
-  <script>
+
+/* Itinéraires et suggestions — Grèce 2025
+ * Organisés par destination, avec programme jour par jour
+ * et suggestions thématiques pour Paros/Antiparos.
+ */
+window.ITINERARIES = [
+  /* ─────────────────────────── ATHÈNES ─────────────────────────── */
+  {
+    id: "athenes",
+    title: "Athènes",
+    emoji: "🏛",
+    flag: "🇬🇷",
+    color: "#3a86ff",
+    days: [
+      {
+        date: "02 août",
+        label: "Arrivée",
+        items: [
+          { time: "14h15", icon: "✈️", text: "Vol → Athènes (arrivée 18h25)" },
+          { time: "Soir",  icon: "🏨", text: "Check-in Regal Hotel Mitropoleos", placeId: "regal-hotel" },
+          { time: "Dîner", icon: "🍽", text: "Cinapos — on a kiffé !", placeId: "cinapos", star: true },
+        ],
+        tip: "Recommandés si Cinapos complet : Voulkanizater (Koukaki), Manari Taverna, Isandsia (Monastiraki).",
+      },
+    ],
+    suggestions: [
+      { icon: "🥘", text: "Cinapos (Thiseio) — la valeur sûre" },
+      { icon: "🍷", text: "Voulkanizater (Koukaki) — ambiance locale" },
+      { icon: "🫒", text: "Manari Taverna — traditionnel" },
+    ],
+  },
+
+  /* ─────────────────────────── SIFNOS ─────────────────────────── */
+  {
+    id: "sifnos",
+    title: "Sifnos",
+    emoji: "⛵",
+    flag: "🇬🇷",
+    color: "#2ec4b6",
+    days: [
+      {
+        date: "03 août",
+        label: "Arrivée à Sifnos",
+        items: [
+          { time: "08h15", icon: "⛴",  text: "Ferry Athènes → Sifnos (arrivée 10h45)" },
+          { time: "Matin", icon: "🏖",  text: "Plage Vathi — sunbeds Nostos (réserver en ligne)", placeId: "vahti-beach" },
+          { time: "Déj",   icon: "🍽",  text: "Tsikali / Manolis (Vathi)", placeId: "tsika" },
+          { time: "18h",   icon: "🍸",  text: "Loggia Wine Bar (Kastro) — sunset + église des Sept Martyrs ❤️", placeId: "loggia", star: true },
+          { time: "Dîner", icon: "🍽",  text: "Kafeneio Drakakis — no résa, dîner en ville top", placeId: "kafeneio-drakaki" },
+        ],
+        tip: "Descendre vers l'église des Sept Martyrs au coucher du soleil depuis Loggia — sublime !",
+      },
+      {
+        date: "04 août",
+        label: "Plages & sunset",
+        items: [
+          { time: "Matin", icon: "🏖",  text: "Paralia Beach Bar (collé à l'hôtel) — hyper sympa", placeId: "paralia-beach-bar" },
+          { time: "Midi",  icon: "🏖",  text: "Yalos Beach — poufs, kiffe total", placeId: "yalos-beach" },
+          { time: "14h",   icon: "🍽",  text: "Pelicanos (Faros)", placeId: "pelicanos" },
+          { time: "20h30", icon: "🌅",  text: "Bostani (Poulati) — sublime vue sunset, bouffe moyenne", placeId: "bostani" },
+        ],
+        tip: "Bostani : venez pour le coucher de soleil sur la falaise plutôt que pour la nourriture.",
+      },
+      {
+        date: "05 août",
+        label: "Plage sauvage",
+        items: [
+          { time: "Matin", icon: "🏖",  text: "Paralia Vroulidia — transats à réserver en avance (journée entière)", placeId: "vroulidia" },
+          { time: "Alt.",  icon: "🏖",  text: "Cheronissos Beach (nord) — pas fait mais recommandé", placeId: "cheronissos-beach" },
+          { time: "Alt.",  icon: "🍽",  text: "Captain George (Kastro Seralia) — il paraît top", placeId: "captain-george" },
+          { time: "22h",   icon: "🍽",  text: "Perivoli Restaurant (Artemonas)", placeId: "perivoli" },
+        ],
+        tip: "Vroulidia : piste en terre battue, valeur la peine. Réserver les transats bien à l'avance.",
+      },
+    ],
+    suggestions: [
+      { icon: "🏖", text: "Vroulidia — la plus sauvage et belle de l'île" },
+      { icon: "🌅", text: "Loggia + église Sept Martyrs (Kastro) — incontournable" },
+      { icon: "🍽", text: "Tsikali + Manolis pour déjeuner à Vathi" },
+    ],
+  },
+
+  /* ─────────────────────────── MILOS ─────────────────────────── */
+  {
+    id: "milos",
+    title: "Milos",
+    emoji: "🌋",
+    flag: "🇬🇷",
+    color: "#e07c24",
+    days: [
+      {
+        date: "06 août",
+        label: "Arrivée à Milos",
+        items: [
+          { time: "10h55", icon: "⛴",  text: "Ferry Sifnos → Milos (arrivée 11h40)" },
+          { time: "Après-midi", icon: "🏖", text: "Tsigrado Beach — petite plage, descente par échelle !", placeId: "tsigrado" },
+          { time: "Après-midi", icon: "🏖", text: "Firiplaka Beach — trop trop beau", placeId: "firiplaka" },
+          { time: "15h",   icon: "🍽",  text: "Sirocco Volcanic Restaurant (Paleochori) — plage à gauche du resto = seul au monde", placeId: "sirocco" },
+          { time: "Dîner", icon: "🍽",  text: "Okto ou Barriello (Trypiti)", placeId: "okto" },
+        ],
+        tip: "Après le Sirocco : marchez jusqu'à la plage à gauche du resto — personne, eaux turquoise incroyables.",
+      },
+      {
+        date: "07 août",
+        label: "Kimolos (excursion)",
+        items: [
+          { time: "09h45", icon: "⛴",  text: "Ferry Milos → Kimolos depuis Pollonia" },
+          { time: "Matin", icon: "🏖",  text: "Goupa Kara", placeId: "goupa-kara" },
+          { time: "Matin", icon: "🏖",  text: "Rema Beach", placeId: "rema" },
+          { time: "Matin", icon: "🏖",  text: "Prassa Beach (nord-est)", placeId: "prassa" },
+          { time: "Déj",   icon: "🍽",  text: "Prasonisi / To Kyma / The Wave (Psathi)", placeId: "to-kyma-kimolos" },
+          { time: "17h15", icon: "⛴",  text: "Retour ferry Kimolos → Milos (ou 18h45)" },
+        ],
+        tip: "Kimolos en day trip depuis Pollonia (nord de Milos) — très authentique, presque pas de touristes.",
+      },
+      {
+        date: "08 août",
+        label: "Sarakiniko & Nord",
+        items: [
+          { time: "Matin", icon: "🏖",  text: "Mandrakia Village — village de pêcheurs coloré", placeId: "mandrakia" },
+          { time: "Déj",   icon: "🍽",  text: "Medusa Restaurant (Mandrakia) — donner son nom + attendre sur la plage", placeId: "medusa" },
+          { time: "Après-midi", icon: "🏖", text: "Sarakiniko Beach — paysage lunaire unique !", placeId: "sarakiniko" },
+          { time: "Sunset", icon: "🌅", text: "Klima Village — coucher de soleil sur les syrmata", placeId: "klima" },
+          { time: "20h30", icon: "🍽",  text: "Astakas Milos (Klima) — réserver !", placeId: "astakas", star: true },
+        ],
+        tip: "Sarakiniko : arriver tôt le matin ou en fin de journée pour éviter la foule et avoir les meilleures lumières.",
+      },
+      {
+        date: "09 août",
+        label: "Journée bateau",
+        items: [
+          { time: "Journée", icon: "⛵", text: "Boat Day avec Calypso (Adamas)", placeId: "calypso-boat", star: true },
+          { time: "20h30",  icon: "🍽", text: "Makris Restaurant — Hôtel Domes White Coast (réserver)", placeId: "domes-white-coves" },
+        ],
+        tip: "La journée bateau Calypso permet de voir les plages inaccessibles par la route : Kleftiko (grottes), Sikia, Gerontas.",
+      },
+    ],
+    suggestions: [
+      { icon: "🏖", text: "Sarakiniko — paysage lunaire, unique au monde" },
+      { icon: "🏖", text: "Firiplaka & Tsigrado — les deux plus belles plages" },
+      { icon: "⛵", text: "Journée bateau Calypso — indispensable pour voir Kleftiko" },
+      { icon: "🌅", text: "Klima au coucher du soleil + Astakas pour dîner" },
+      { icon: "🏝", text: "Day trip Kimolos — authentique, peu touristique" },
+    ],
+  },
+
+  /* ─────────────────────────── PAROS ─────────────────────────── */
+  {
+    id: "paros",
+    title: "Paros",
+    emoji: "🏖",
+    flag: "🇬🇷",
+    color: "#e63946",
+    days: [
+      {
+        date: "Jour type",
+        label: "Programme type Paros",
+        items: [
+          { time: "Matin",     icon: "☕",  text: "Almond Coffee Shop (Naoussa) — pancakes, bowls, brunch", placeId: "almond-coffee" },
+          { time: "Matinée",   icon: "🏖",  text: "Kolimbithres (baie de Naoussa) ou Santa Maria Beach", placeId: "kolimbithres" },
+          { time: "Déj",       icon: "🍽",  text: "Katsounas ⛔ (Santa Maria) — le meilleur selon plusieurs listes", placeId: "katsounas", star: true },
+          { time: "Après-midi",icon: "🏖",  text: "Parasporos (plage sauvage, personne) ou Faragas", placeId: "parasporos" },
+          { time: "Sunset",    icon: "🍸",  text: "Verre à Naoussa — Sousouro dans les ruelles", placeId: "sousouro" },
+          { time: "Dîner",     icon: "🍽",  text: "BuonVento ⭐ (soir) ou Yemeni — réserver !", placeId: "buonvento", star: true },
+        ],
+        tip: "",
+      },
+      {
+        date: "Plages à faire",
+        label: "Le tour des plages",
+        items: [
+          { time: "★★★", icon: "🏖", text: "Kolimbithres — rochers granitiques, eaux limpides", placeId: "kolimbithres" },
+          { time: "★★★", icon: "🏖", text: "Parasporos — sauvage, personne, mer magnifique", placeId: "parasporos" },
+          { time: "★★★", icon: "🏖", text: "Plage Faragas (sud)", placeId: "faragas" },
+          { time: "★★",  icon: "🏖", text: "Golden Beach (Chrissi Akti) — windsurf, animé", placeId: "golden-beach" },
+          { time: "★★",  icon: "🏖", text: "Palm Beach (côte ouest)", placeId: "palm-beach" },
+          { time: "★★",  icon: "🏖", text: "Punda Beach Club (côte est, fête)", placeId: "punda" },
+          { time: "★★",  icon: "🏖", text: "Santa Maria / Katsouna (nord)", placeId: "katsouna-beach" },
+        ],
+        tip: "",
+      },
+      {
+        date: "Restos incontournables",
+        label: "La liste des meilleurs",
+        items: [
+          { time: "★ Déj", icon: "🍽", text: "Katsounas ⛔ (brochettes, vue, Santa Maria)", placeId: "katsounas", star: true },
+          { time: "★ Déj", icon: "🍽", text: "Thalami (Ambelas) — joli cadre, pas de résa, pas de moussaka !", placeId: "thalami" },
+          { time: "★ Déj", icon: "🍽", text: "Ouzeri Halaris (Piso Livadi) — mezés fruits de mer", placeId: "ouzeri-halaris" },
+          { time: "★ Soir", icon: "🍽", text: "BuonVento ⭐ (Marpissa) — pâtes, vue sur la baie", placeId: "buonvento", star: true },
+          { time: "★ Soir", icon: "🍽", text: "Arodo ⭐⛔ (Krios) — réserver plage + transats + resto", placeId: "arodo", star: true },
+          { time: "★ Soir", icon: "🍽", text: "Taverna Julia ⭐ (Drios) — meilleure vue de l'île", placeId: "taverna-julia", star: true },
+          { time: "★ Soir", icon: "🍽", text: "Yemeni (Naoussa) — grec moderne, réserver", placeId: "yemeni" },
+          { time: "★ Soir", icon: "🍽", text: "The Cliff ⛔ (plage israélienne) — unique", placeId: "cliff", star: true },
+          { time: "★ Soir", icon: "🍽", text: "Il Napoletano (Parikia) — meilleure pizza de l'île", placeId: "il-napolitano" },
+          { time: "★ Midi", icon: "🍽", text: "Fisilanis ⭐ (Logaras) — poisson, coup de cœur", placeId: "fyssilanis", star: true },
+        ],
+        tip: "",
+      },
+    ],
+    suggestions: [
+      { icon: "⭐", text: "BuonVento — réserver, aller le soir" },
+      { icon: "⭐", text: "Arodo (Krios) — réserver resto + transats ensemble" },
+      { icon: "⭐", text: "Taverna Julia (Drios) — vue incroyable" },
+      { icon: "⛔", text: "Katsounas (Santa Maria) — à réserver absolument" },
+      { icon: "⛔", text: "The Cliff (plage israélienne) — expérience unique" },
+      { icon: "🏖", text: "Parasporos — plage sauvage, personne" },
+      { icon: "🏔", text: "Santa Pacou (Kostos) — montagne, vue sur la mer" },
+    ],
+  },
+
+  /* ─────────────────────────── ANTIPAROS ─────────────────────────── */
+  {
+    id: "antiparos",
+    title: "Antiparos",
+    emoji: "🌅",
+    flag: "🇬🇷",
+    color: "#a259ff",
+    days: [
+      {
+        date: "Journée type",
+        label: "Journée à Antiparos (15 min de ferry)",
+        items: [
+          { time: "Matin", icon: "⛴",   text: "Ferry depuis Pounta (Paros) — pas besoin de résa, toutes les 30 min" },
+          { time: "Matin", icon: "🏖",   text: "Fanari Beach ou Soros Beach (sud, 8 km)", placeId: "fanari-beach" },
+          { time: "Déj",   icon: "🍽",   text: "Soros Beach Club — déjeuner sur la plage", placeId: "soros-beach-club" },
+          { time: "Après-midi", icon: "🏖", text: "Plage Soros — top, belles eaux", placeId: "soros-beach" },
+          { time: "Sunset", icon: "🍸",  text: "Sunset Deseo ⭐ — bar coucher de soleil incontournable", placeId: "sunset-deseo", star: true },
+          { time: "Dîner", icon: "🍽",   text: "Kalokeri (Chora) — pas très joli mais excellent", placeId: "kalokeri" },
+          { time: "Alt.",  icon: "🍕",   text: "Lollo's Pizzeria — pâtes et pizza de rêve", placeId: "lolos" },
+        ],
+        tip: "Captain Pipinos (Agios Georgios) = plus beau coucher de soleil de l'île + excellent.",
+      },
+    ],
+    suggestions: [
+      { icon: "⭐", text: "Sunset Deseo — obligatoire" },
+      { icon: "⭐", text: "The Rooster — hôtel boutique, très beau, prendre un verre" },
+      { icon: "🏖", text: "Soros Beach — la meilleure plage de l'île" },
+      { icon: "🍕", text: "Lollo's Pizzeria — pizza pâtes de rêve" },
+      { icon: "🌅", text: "Captain Pipinos — plus beau coucher de soleil de l'île" },
+      { icon: "📍", text: "Ferry Pounta → Antiparos : toutes les 20-30 min, pas de réservation" },
+    ],
+  },
+];
+
+/* ─────────────────────── RENDER ITINERARY TAB ─────────────────────── */
+(function () {
+  function escHtml(s) {
+    if (!s) return "";
+    return String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  }
+
+  function renderItineraries() {
+    const container = document.getElementById("itinContent");
+    if (!container) return;
+
+    let html = "";
+
+    ITINERARIES.forEach(dest => {
+      html += `
+        <div class="itin-dest">
+          <div class="itin-dest-header" style="background:${escHtml(dest.color)}">
+            <span class="itin-emoji">${dest.emoji}</span>
+            <div>
+              <div class="itin-dest-name">${escHtml(dest.title)}</div>
+            </div>
+          </div>`;
+
+      // Suggestions bloc
+      if (dest.suggestions && dest.suggestions.length) {
+        html += `<div class="itin-suggestions">`;
+        dest.suggestions.forEach(s => {
+          html += `<div class="itin-sugg"><span>${s.icon}</span><span>${escHtml(s.text)}</span></div>`;
+        });
+        html += `</div>`;
+      }
+
+      // Days
+      dest.days.forEach(day => {
+        html += `
+          <div class="itin-day">
+            <div class="itin-day-header">
+              <span class="itin-day-date">${escHtml(day.date)}</span>
+              <span class="itin-day-label">${escHtml(day.label)}</span>
+            </div>`;
+
+        day.items.forEach(item => {
+          const placeLink = item.placeId
+            ? `data-place-id="${escHtml(item.placeId)}" class="itin-item clickable${item.star ? ' itin-star' : ''}"`
+            : `class="itin-item${item.star ? ' itin-star' : ''}"`;
+          html += `
+            <div ${placeLink}>
+              <span class="itin-time">${escHtml(item.time)}</span>
+              <span class="itin-icon">${item.icon}</span>
+              <span class="itin-text">${escHtml(item.text)}</span>
+              ${item.placeId ? '<span class="itin-goto">↗</span>' : ''}
+            </div>`;
+        });
+
+        if (day.tip) {
+          html += `<div class="itin-tip">💡 ${escHtml(day.tip)}</div>`;
+        }
+
+        html += `</div>`;
+      });
+
+      html += `</div>`;
+    });
+
+    container.innerHTML = html;
+
+    // Click: switch to map tab and fly to place
+    container.addEventListener("click", e => {
+      const item = e.target.closest("[data-place-id]");
+      if (!item) return;
+      const id = item.dataset.placeId;
+      const place = (window.PLACES || []).find(p => p.id === id);
+      if (!place || !place.coords) return;
+
+      // Switch to map tab
+      document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+      document.querySelectorAll(".tab-panel").forEach(p => { p.style.display = "none"; p.classList.remove("active"); });
+      document.querySelector('[data-tab="map-tab"]').classList.add("active");
+      document.getElementById("map-tab").style.display = "";
+      document.getElementById("map-tab").classList.add("active");
+
+      // Fly to place (map exposed on window by app.js)
+      if (window._map) {
+        window._map.setView(place.coords, 15, { animate: true });
+        const m = window._markers && window._markers.get(id);
+        if (m) setTimeout(() => m.openPopup(), 400);
+      }
+    });
+  }
+
+  // Wait for DOM
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", renderItineraries);
+  } else {
+    renderItineraries();
+  }
+})();
+
 (function () {
   const map = L.map("map", {
     zoomControl: true,
@@ -1605,6 +2268,16 @@ window.PLACES = [
     if (p.area) tags.push(`<span class="tag">${escapeHtml(p.area)}</span>`);
     if (p.cuisine) tags.push(`<span class="tag">${escapeHtml(p.cuisine)}</span>`);
 
+    // Google rating stars
+    let ratingHtml = "";
+    if (p.rating) {
+      const full = Math.floor(p.rating);
+      const half = (p.rating - full) >= 0.5;
+      let stars = "★".repeat(full) + (half ? "½" : "") + "☆".repeat(5 - full - (half ? 1 : 0));
+      const reviews = p.review_count ? ` <span class="review-count">(${p.review_count.toLocaleString("fr")} avis)</span>` : "";
+      ratingHtml = `<div class="rating"><span class="stars">${stars}</span><span class="rating-num">${p.rating}</span>${reviews}</div>`;
+    }
+
     const notes = (p.notes || [])
       .map((n) => `
         <div class="note">
@@ -1634,6 +2307,7 @@ window.PLACES = [
         ${photoBlock}
         <div class="body">
           <h3>${escapeHtml(p.name)}</h3>
+          ${ratingHtml}
           <div class="tags">${tags.join("")}</div>
           <div class="notes">${notes || ""}</div>
           <div class="links">${links.join("")}</div>
@@ -1649,7 +2323,9 @@ window.PLACES = [
     search: "",
   };
 
+  window._map = map;
   const markers = new Map();
+  window._markers = markers;
   const cluster = L.markerClusterGroup({
     showCoverageOnHover: false,
     spiderfyOnMaxZoom: true,
@@ -1760,6 +2436,20 @@ window.PLACES = [
       map.fitBounds(bounds, { padding: [40, 40], maxZoom: 13 });
     }
   }
+
+  // Tab switching
+  document.querySelectorAll(".tab-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      const target = btn.dataset.tab;
+      document.querySelectorAll(".tab-panel").forEach(p => {
+        p.style.display = p.id === target ? "" : "none";
+        p.classList.toggle("active", p.id === target);
+      });
+      if (target === "map-tab") setTimeout(() => map.invalidateSize(), 50);
+    });
+  });
 
   applyFilters();
   setTimeout(fitToVisible, 100);

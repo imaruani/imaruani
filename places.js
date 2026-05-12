@@ -39,6 +39,8 @@ window.PLACES = [
     instagram_url: "https://www.instagram.com/buonventoparos/",
     website: "http://www.buonventoristoranteitaliano.it/",
     google_maps_url: "https://maps.app.goo.gl/tNxpsBYDvgbAYSSV8",
+    rating: 4.6,
+    review_count: 373,
     photo_url: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800&h=400&fit=crop",
   },
   {
@@ -57,6 +59,8 @@ window.PLACES = [
     instagram: "blueoyster.paros",
     instagram_url: "https://www.instagram.com/blueoyster.paros/",
     website: "https://www.blueoysterparos.com/",
+    rating: 4.4,
+    review_count: 210,
   },
   {
     id: "cliff",
@@ -77,6 +81,8 @@ window.PLACES = [
     instagram_url: "https://www.instagram.com/thecliff_lolantonis/",
     website: "https://www.thecliffparos.com/",
     phone: "+30 694 557 9448",
+    rating: 3.7,
+    review_count: 302,
   },
   {
     id: "arodo",
@@ -98,6 +104,8 @@ window.PLACES = [
     instagram_url: "https://www.instagram.com/arodo.paros/",
     phone: "+30 2284 021308",
     google_maps_url: "https://maps.app.goo.gl/zJokcX4uVFBB8ddD8",
+    rating: 4.3,
+    review_count: 337,
   },
   {
     id: "il-napolitano",
@@ -114,6 +122,8 @@ window.PLACES = [
     instagram: "ilnapoletanoeat",
     instagram_url: "https://www.instagram.com/ilnapoletanoeat/",
     phone: "+30 694 520 9075",
+    rating: 4.3,
+    review_count: 160,
   },
   {
     id: "siparos",
@@ -133,6 +143,8 @@ window.PLACES = [
     instagram_url: "https://www.instagram.com/siparos_seaside_restaurant/",
     website: "https://siparos.gr/",
     phone: "+30 22840 52785",
+    rating: 4.6,
+    review_count: 480,
   },
   {
     id: "fyssilanis",
@@ -151,6 +163,8 @@ window.PLACES = [
     instagram_url: "https://www.instagram.com/fisilanis_hotel_restaurant/",
     phone: "+30 22840 41530",
     google_maps_url: "https://maps.app.goo.gl/RGorWnbop74YPdRk6",
+    rating: 4.5,
+    review_count: 460,
   },
   {
     id: "taverna-julia",
@@ -165,6 +179,8 @@ window.PLACES = [
       { author: "Liste 1", text: "⭐ Pour moi le meilleur spot, de ouf, hyper belle vue." },
     ],
     phone: "+30 22840 41036",
+    rating: 4.5,
+    review_count: 89,
   },
   {
     id: "yemeni",
@@ -183,6 +199,8 @@ window.PLACES = [
     instagram_url: "https://www.instagram.com/yemeni.paros/",
     website: "https://www.yemeni.gr/",
     phone: "+30 22840 51445",
+    rating: 4.5,
+    review_count: 950,
   },
   {
     id: "kima",
@@ -201,6 +219,8 @@ window.PLACES = [
     website: "https://kimarestaurant.com",
     phone: "+30 22840 41180",
     google_maps_url: "https://maps.app.goo.gl/DRPBxA42ADLaNfZv5",
+    rating: 4.7,
+    review_count: 380,
   },
   {
     id: "sousouro",
@@ -216,6 +236,8 @@ window.PLACES = [
     instagram: "sousouro_",
     instagram_url: "https://www.instagram.com/sousouro_/",
     phone: "+30 22840 53113",
+    rating: 4.5,
+    review_count: 69,
   },
   {
     id: "katsounas",
@@ -232,6 +254,8 @@ window.PLACES = [
       { author: "Liste 3", text: "Katsounas ⛔ — le meilleur." },
     ],
     phone: "+30 22840 51246",
+    rating: 4.3,
+    review_count: 291,
   },
   {
     id: "glafkos",
@@ -248,6 +272,8 @@ window.PLACES = [
     instagram: "glafkos_taverna",
     instagram_url: "https://www.instagram.com/glafkos_taverna/",
     phone: "+30 22840 52100",
+    rating: 4.3,
+    review_count: 1500,
   },
   {
     id: "thalami",
@@ -261,6 +287,9 @@ window.PLACES = [
       { author: "Liste 2", text: "Taverne à Ambelas, super joli cadre, bon plutôt pour le déj. Pas de résa — ne pas prendre la moussaka." },
     ],
     phone: "+30 22840 53351",
+    rating: 4.0,
+    review_count: 341,
+    photo_url: "https://commons.wikimedia.org/wiki/Special:FilePath/Prawns_at_Thalami,_Ambelas.JPG",
   },
   {
     id: "magaia",
@@ -286,6 +315,8 @@ window.PLACES = [
       { author: "Liste 2", text: "Très joli spot et authentique, jolie plage." },
     ],
     phone: "+30 694 667 3645",
+    rating: 2.2,
+    review_count: 97,
   },
   {
     id: "byzantino",
@@ -300,6 +331,8 @@ window.PLACES = [
     ],
     phone: "+30 2284 045273",
     google_maps_url: "https://maps.app.goo.gl/nfzmSva7UutEAz6c6",
+    rating: 4.4,
+    review_count: 84,
   },
   {
     id: "kallitechniko",
@@ -314,6 +347,8 @@ window.PLACES = [
     ],
     phone: "+30 22840 42033",
     google_maps_url: "https://maps.app.goo.gl/sY4fuQxg6Em3Ux7B7",
+    rating: 4.3,
+    review_count: 93,
   },
   {
     id: "santa-pacou",
@@ -330,6 +365,8 @@ window.PLACES = [
     instagram_url: "https://www.instagram.com/santapacou/",
     phone: "+30 697 242 4104",
     google_maps_url: "https://maps.app.goo.gl/mN4ZHdiwGKSw2Kqo8",
+    rating: 4.6,
+    review_count: 33,
   },
   {
     id: "aliki-resto",
@@ -348,6 +385,8 @@ window.PLACES = [
     website: "https://www.alikirestaurant.com/",
     phone: "+30 2284 091228",
     google_maps_url: "https://maps.app.goo.gl/BsV718AFMtasYkK49",
+    rating: 4.4,
+    review_count: 320,
   },
   {
     id: "ouzeri-halaris",
@@ -363,6 +402,8 @@ window.PLACES = [
     ],
     phone: "+30 2284 043257",
     google_maps_url: "https://maps.app.goo.gl/2M3Eu94wtXTNoKrFA",
+    rating: 4.4,
+    review_count: 878,
   },
   {
     id: "mare-nostrum",
@@ -379,6 +420,8 @@ window.PLACES = [
     instagram_url: "https://www.instagram.com/marenostrumrestaurant/",
     phone: "+30 22840 51225",
     google_maps_url: "https://maps.app.goo.gl/Q3BvsbdYqE4t1Drg8",
+    rating: 3.7,
+    review_count: 418,
   },
   {
     id: "almond-coffee",
@@ -394,6 +437,8 @@ window.PLACES = [
     instagram: "almond_paros",
     instagram_url: "https://www.instagram.com/almond_paros/",
     website: "https://www.almondlivingwell.com/en/",
+    rating: 4.8,
+    review_count: 120,
   },
   {
     id: "taverne-laris",
@@ -407,6 +452,8 @@ window.PLACES = [
       { author: "Liste 2", text: "Dans les meilleures (Blue Oyster, Ministiri, Taverne Laris)." },
     ],
     phone: "+30 22840 91496",
+    rating: 3.6,
+    review_count: 146,
   },
   {
     id: "monastiri",
@@ -423,6 +470,22 @@ window.PLACES = [
     instagram_url: "https://www.instagram.com/monastiri.paros/",
     website: "https://www.monastiri-paros.gr/",
     phone: "+30 22840 53560",
+    rating: 3.5,
+    review_count: 180,
+  },
+  {
+    id: "markakis",
+    name: "Markakis (taverne, pas plage)",
+    area: "Drios",
+    island: "Paros",
+    category: "restaurant",
+    cuisine: "Taverne familiale bord de mer",
+    coords: [37.00224, 25.22682],
+    notes: [
+      { author: "Liste 2", text: "Markakis (en réalité une taverne à Drios, pas une plage)." },
+    ],
+    rating: 4.4,
+    review_count: 350,
   },
 
   /* ============================== PAROS — PLAGES ============================== */
@@ -436,6 +499,8 @@ window.PLACES = [
     notes: [
       { author: "Liste 2", text: "Ski nautique à Kolimbithres." },
     ],
+    rating: 4.0,
+    review_count: 1378,
   },
   {
     id: "punda",
@@ -450,6 +515,8 @@ window.PLACES = [
     instagram: "pundacoast",
     instagram_url: "https://www.instagram.com/pundacoast/",
     website: "https://pundacoast.com/",
+    rating: 3.5,
+    review_count: 95,
   },
   {
     id: "parasporos",
@@ -462,6 +529,8 @@ window.PLACES = [
       { author: "Liste 3", text: "Paras poros." },
       { author: "Liste 5", text: "Personne, plage non aménagée, mer hyper belle, vous allez être seul seul." },
     ],
+    rating: 4.5,
+    review_count: 65,
   },
   {
     id: "palm-beach",
@@ -475,6 +544,8 @@ window.PLACES = [
     ],
     instagram: "palmbeachparos",
     instagram_url: "https://www.instagram.com/palmbeachparos/",
+    rating: 4.0,
+    review_count: 80,
   },
   {
     id: "golden-beach",
@@ -486,6 +557,8 @@ window.PLACES = [
     notes: [
       { author: "Liste 3", text: "Golden beach (blue lagon)." },
     ],
+    rating: 4.5,
+    review_count: 414,
   },
   {
     id: "faragas",
@@ -501,6 +574,9 @@ window.PLACES = [
     instagram: "faragas_beach",
     instagram_url: "https://www.instagram.com/faragas_beach/",
     website: "https://www.faragas-beach.gr/",
+    rating: 4.5,
+    review_count: 120,
+    photo_url: "https://upload.wikimedia.org/wikipedia/commons/e/e5/Cyclades_Paros_Faragas_Beach_-_panoramio.jpg",
   },
   {
     id: "aliki-beach",
@@ -512,18 +588,8 @@ window.PLACES = [
     notes: [
       { author: "Liste 3", text: "Aliki." },
     ],
-  },
-  {
-    id: "markakis",
-    name: "Markakis (taverne, pas plage)",
-    area: "Drios",
-    island: "Paros",
-    category: "restaurant",
-    cuisine: "Taverne familiale bord de mer",
-    coords: [37.00224, 25.22682],
-    notes: [
-      { author: "Liste 2", text: "Markakis (en réalité une taverne à Drios, pas une plage)." },
-    ],
+    rating: 4.5,
+    review_count: 368,
   },
   {
     id: "katsouna-beach",
@@ -535,6 +601,8 @@ window.PLACES = [
     notes: [
       { author: "Liste 2", text: "Katsouna — derrière la taverne Katsounas à Santa Maria." },
     ],
+    rating: 4.0,
+    review_count: 991,
   },
   {
     id: "livadaki",
@@ -546,6 +614,8 @@ window.PLACES = [
     notes: [
       { author: "Liste 2", text: "Plage Livadaki." },
     ],
+    rating: 4.5,
+    review_count: 39,
   },
   {
     id: "pomodros",
@@ -568,6 +638,8 @@ window.PLACES = [
     notes: [
       { author: "Liste 3", text: "Beach project." },
     ],
+    rating: 4.1,
+    review_count: 54,
   },
 
   /* ============================== ANTIPAROS ============================== */
@@ -588,6 +660,8 @@ window.PLACES = [
     instagram: "sunsetantiparos",
     instagram_url: "https://www.instagram.com/sunsetantiparos/",
     website: "https://sunsetantiparos.com/",
+    rating: 4.0,
+    review_count: 83,
   },
   {
     id: "rooster",
@@ -604,6 +678,8 @@ window.PLACES = [
     instagram: "therooster.antiparos",
     instagram_url: "https://www.instagram.com/therooster.antiparos/",
     website: "https://theroosterantiparos.com/",
+    rating: 4.0,
+    review_count: 26,
   },
   {
     id: "kalokeri",
@@ -618,6 +694,8 @@ window.PLACES = [
     ],
     instagram: "kalokerirestaurant",
     instagram_url: "https://www.instagram.com/kalokerirestaurant/",
+    rating: 4.6,
+    review_count: 339,
   },
   {
     id: "lolos",
@@ -633,6 +711,8 @@ window.PLACES = [
     ],
     instagram: "lollosantiparos",
     instagram_url: "https://www.instagram.com/lollosantiparos/",
+    rating: 4.0,
+    review_count: 387,
   },
   {
     id: "soros-beach",
@@ -645,6 +725,8 @@ window.PLACES = [
       { author: "Liste 2", text: "Antiparos déjeuner et plage Soros top et très bon." },
       { author: "Liste 3", text: "Journée à Antiparos (Soros)." },
     ],
+    rating: 4.5,
+    review_count: 238,
   },
   {
     id: "soros-beach-club",
@@ -660,6 +742,8 @@ window.PLACES = [
     instagram: "sorosbeachantiparos",
     instagram_url: "https://www.instagram.com/sorosbeachantiparos/",
     website: "https://www.sorosbeach.gr/",
+    rating: 3.0,
+    review_count: 372,
   },
   {
     id: "fanari-beach",
@@ -673,6 +757,8 @@ window.PLACES = [
       { author: "Liste 5", text: "Fanari Beach." },
     ],
     website: "https://fanaribeach.gr/",
+    rating: 4.5,
+    review_count: 40,
   },
   {
     id: "beach-house",
@@ -688,6 +774,8 @@ window.PLACES = [
     instagram: "beachhouseantiparos",
     instagram_url: "https://www.instagram.com/beachhouseantiparos/",
     website: "https://beachhouseantiparos.com/",
+    rating: 3.6,
+    review_count: 298,
   },
   {
     id: "captain-pepinos",
@@ -703,6 +791,8 @@ window.PLACES = [
     instagram: "captain_pipinos",
     instagram_url: "https://www.instagram.com/captain_pipinos/",
     website: "https://captainpipinos.com/",
+    rating: 3.9,
+    review_count: 1130,
   },
 
   /* ============================== PAROS — ACTIVITÉS ============================== */
@@ -730,6 +820,8 @@ window.PLACES = [
     ],
     website: "https://www.waterskizone.com/",
     phone: "+30 6944 242227",
+    rating: 4.5,
+    review_count: 19,
   },
 
   /* ============================== ATHÈNES ============================== */
@@ -746,6 +838,8 @@ window.PLACES = [
     instagram: "cinapos",
     instagram_url: "https://www.instagram.com/cinapos/",
     website: "https://cinapos.com",
+    rating: 4.3,
+    review_count: 65,
   },
   {
     id: "voylkanizater",
@@ -774,6 +868,8 @@ window.PLACES = [
     instagram: "manaritaverna",
     instagram_url: "https://www.instagram.com/manaritaverna/",
     website: "https://www.manaritaverna.com",
+    rating: 4.4,
+    review_count: 1419,
   },
   {
     id: "isandsia",
@@ -785,6 +881,8 @@ window.PLACES = [
     notes: [
       { author: "Programme", text: "Recommandé (orthographe à confirmer)." },
     ],
+    rating: 4.1,
+    review_count: 9,
   },
   {
     id: "regal-hotel",
@@ -797,6 +895,8 @@ window.PLACES = [
       { author: "Programme", text: "Check-in Athènes." },
     ],
     website: "https://www.regalhotels.gr/",
+    rating: 4.4,
+    review_count: 2421,
   },
 
   /* ============================== SIFNOS ============================== */
@@ -810,6 +910,8 @@ window.PLACES = [
     notes: [
       { author: "Programme", text: "Sunbeds at Nostos — il faut réserver en ligne." },
     ],
+    rating: 4.5,
+    review_count: 508,
   },
   {
     id: "nostos-sifnos",
@@ -823,6 +925,8 @@ window.PLACES = [
       { author: "Programme", text: "Réserver les sunbeds en ligne." },
     ],
     website: "https://nostosbeachbar.gr/en/",
+    rating: 4.4,
+    review_count: 473,
   },
   {
     id: "tsika",
@@ -835,6 +939,8 @@ window.PLACES = [
       { author: "Programme", text: "Lunch at Tsika / Manolis." },
     ],
     website: "https://tsikali.com",
+    rating: 4.1,
+    review_count: 535,
   },
   {
     id: "manolis",
@@ -847,6 +953,8 @@ window.PLACES = [
       { author: "Programme", text: "Lunch at Tsika / Manolis." },
     ],
     website: "https://www.manolistaverna.gr/",
+    rating: 4.2,
+    review_count: 385,
   },
   {
     id: "loggia",
@@ -859,6 +967,8 @@ window.PLACES = [
     notes: [
       { author: "Programme", text: "Sunset + dîner. Descendre au sunset voir l'église des Sept Martyrs, c'est sublime !!" },
     ],
+    rating: 4.3,
+    review_count: 335,
   },
   {
     id: "kafeneio-drakaki",
@@ -872,6 +982,8 @@ window.PLACES = [
     ],
     instagram: "kafeneiodrakakis",
     instagram_url: "https://www.instagram.com/kafeneiodrakakis/",
+    rating: 4.3,
+    review_count: 2455,
   },
   {
     id: "paralia-beach-bar",
@@ -886,6 +998,8 @@ window.PLACES = [
     instagram: "paraliasifnos",
     instagram_url: "https://www.instagram.com/paraliasifnos/",
     website: "https://paraliabeachbarsifnos.gr/",
+    rating: 4.3,
+    review_count: 50,
   },
   {
     id: "yalos-beach",
@@ -899,6 +1013,8 @@ window.PLACES = [
     ],
     instagram: "yalos_sifnos",
     instagram_url: "https://www.instagram.com/yalos_sifnos/",
+    rating: 4.6,
+    review_count: 461,
   },
   {
     id: "pelicanos",
@@ -911,6 +1027,8 @@ window.PLACES = [
       { author: "Programme", text: "Lunch (14h)." },
     ],
     website: "https://pelicanossifnos.gr/",
+    rating: 3.7,
+    review_count: 31,
   },
   {
     id: "bostani",
@@ -925,6 +1043,8 @@ window.PLACES = [
     instagram: "bostanisifnos",
     instagram_url: "https://www.instagram.com/bostanisifnos/",
     website: "https://verinahotelsifnos.com/bostani-bar-restaurant/",
+    rating: 4.5,
+    review_count: 49,
   },
   {
     id: "vroulidia",
@@ -937,6 +1057,8 @@ window.PLACES = [
     notes: [
       { author: "Programme", text: "Transats à réserver en avance. On a passé la journée." },
     ],
+    rating: 4.3,
+    review_count: 125,
   },
   {
     id: "cheronissos-beach",
@@ -948,6 +1070,9 @@ window.PLACES = [
     notes: [
       { author: "Programme", text: "Pas fait." },
     ],
+    rating: 4.3,
+    review_count: 150,
+    photo_url: "https://commons.wikimedia.org/wiki/Special:FilePath/Cyclades_Sifnos_Keronisos_Port_-_panoramio.jpg",
   },
   {
     id: "captain-george",
@@ -961,6 +1086,8 @@ window.PLACES = [
     ],
     instagram: "captaingeorgesifnos",
     instagram_url: "https://www.instagram.com/captaingeorgesifnos/",
+    rating: 4.1,
+    review_count: 59,
   },
   {
     id: "perivoli",
@@ -974,6 +1101,8 @@ window.PLACES = [
     ],
     instagram: "perivoli_restaurant_sifnos",
     instagram_url: "https://www.instagram.com/perivoli_restaurant_sifnos/",
+    rating: 4.5,
+    review_count: 283,
   },
 
   /* ============================== MILOS ============================== */
@@ -987,6 +1116,9 @@ window.PLACES = [
     notes: [
       { author: "Programme", text: "Petite plage où tu descends par une échelle." },
     ],
+    rating: 4.5,
+    review_count: 600,
+    photo_url: "https://commons.wikimedia.org/wiki/Special:FilePath/Tsigrado_Beach_on_Milos_Island%2C_Greece.jpg",
   },
   {
     id: "firiplaka",
@@ -998,6 +1130,9 @@ window.PLACES = [
     notes: [
       { author: "Programme", text: "Trop trop beau." },
     ],
+    rating: 4.5,
+    review_count: 620,
+    photo_url: "https://commons.wikimedia.org/wiki/Special:FilePath/Paralia_Firiplaka_on_Milos_Island%2C_Greece_as_seen_from_the_north.jpg",
   },
   {
     id: "sirocco",
@@ -1010,6 +1145,8 @@ window.PLACES = [
       { author: "Programme", text: "Lunch 15h. Aller sur la plage toute à gauche du resto, c'est sublime et tu es seul au monde." },
     ],
     website: "https://siroccomilos.gr/",
+    rating: 3.6,
+    review_count: 866,
   },
   {
     id: "mosaic-milos",
@@ -1024,6 +1161,8 @@ window.PLACES = [
     instagram: "mosaic.milos",
     instagram_url: "https://www.instagram.com/mosaic.milos/",
     website: "https://mosaicmilos.gr/",
+    rating: 4.4,
+    review_count: 40,
   },
   {
     id: "okto",
@@ -1038,6 +1177,8 @@ window.PLACES = [
     instagram: "okto.milos",
     instagram_url: "https://www.instagram.com/okto.milos/",
     website: "https://www.restaurant-okto.gr/",
+    rating: 4.5,
+    review_count: 356,
   },
   {
     id: "barriello",
@@ -1050,17 +1191,8 @@ window.PLACES = [
       { author: "Programme", text: "Dinner — Okto ou Barriello." },
     ],
     website: "https://www.barriello.com/",
-  },
-  {
-    id: "papafragas",
-    name: "Papafragas Beach",
-    area: "Côte nord · Milos",
-    island: "Milos",
-    category: "beach",
-    coords: [36.7508, 24.5061],
-    notes: [
-      { author: "Programme", text: "Papafragas Beach." },
-    ],
+    rating: 4.6,
+    review_count: 1244,
   },
   {
     id: "mandrakia",
@@ -1072,6 +1204,9 @@ window.PLACES = [
     notes: [
       { author: "Programme", text: "Village de pêcheurs." },
     ],
+    rating: 4.5,
+    review_count: 200,
+    photo_url: "https://commons.wikimedia.org/wiki/Special:FilePath/Cyclades_Milos_Mandrakia_13092014_-_panoramio.jpg",
   },
   {
     id: "medusa",
@@ -1085,6 +1220,8 @@ window.PLACES = [
       { author: "Programme", text: "No reservation — donner son nom et attendre sur la plage." },
     ],
     website: "https://medusamilos.gr/",
+    rating: 4.4,
+    review_count: 2451,
   },
   {
     id: "sarakiniko",
@@ -1096,6 +1233,9 @@ window.PLACES = [
     notes: [
       { author: "Programme", text: "Sarakiniko Beach." },
     ],
+    rating: 4.7,
+    review_count: 2416,
+    photo_url: "https://commons.wikimedia.org/wiki/Special:FilePath/Sarakiniko_Beach_on_Milos_Island%2C_Greece_with_a_view_of_the_Aegean_Sea.jpg",
   },
   {
     id: "klima",
@@ -1107,6 +1247,9 @@ window.PLACES = [
     notes: [
       { author: "Programme", text: "Klima for Sunset." },
     ],
+    rating: 4.6,
+    review_count: 300,
+    photo_url: "https://commons.wikimedia.org/wiki/Special:FilePath/Cyclades_Milos_Klima_Eglise_-_panoramio.jpg",
   },
   {
     id: "astakas",
@@ -1120,6 +1263,8 @@ window.PLACES = [
       { author: "Programme", text: "6 personnes, 20h30." },
     ],
     website: "https://astakasmilos.gr/",
+    rating: 4.2,
+    review_count: 797,
   },
   {
     id: "domes-white-coves",
@@ -1133,6 +1278,8 @@ window.PLACES = [
       { author: "Programme", text: "Dîner au Makris Restaurant, 20h30." },
     ],
     website: "https://domesresorts.com/domeswhitecoastmilos/",
+    rating: 4.0,
+    review_count: 308,
   },
   {
     id: "calypso-boat",
@@ -1145,6 +1292,8 @@ window.PLACES = [
       { author: "Programme", text: "Boat day Calypso." },
     ],
     website: "https://milosboatrental.com/",
+    rating: 5.0,
+    review_count: 19,
   },
 
   /* ============================== KIMOLOS ============================== */
@@ -1158,6 +1307,8 @@ window.PLACES = [
     notes: [
       { author: "Programme", text: "Goupa Kara." },
     ],
+    rating: 4.6,
+    review_count: 39,
   },
   {
     id: "rema",
@@ -1169,6 +1320,8 @@ window.PLACES = [
     notes: [
       { author: "Programme", text: "Rema Beach." },
     ],
+    rating: 4.5,
+    review_count: 20,
   },
   {
     id: "prassa",
@@ -1180,6 +1333,8 @@ window.PLACES = [
     notes: [
       { author: "Programme", text: "Prassa Beach." },
     ],
+    rating: 4.8,
+    review_count: 497,
   },
   {
     id: "prasonisi-kimolos",
@@ -1191,6 +1346,8 @@ window.PLACES = [
     notes: [
       { author: "Programme", text: "Déj : Prasonisi / The Wave / To Kyma." },
     ],
+    rating: 4.6,
+    review_count: 224,
   },
   {
     id: "to-kyma-kimolos",
@@ -1203,5 +1360,7 @@ window.PLACES = [
       { author: "Programme", text: "Déj : Prasonisi / The Wave / To Kyma (« To Kyma » = « The Wave », même resto)." },
     ],
     website: "https://kyma-kimolos.gr/",
+    rating: 4.0,
+    review_count: 339,
   },
 ];

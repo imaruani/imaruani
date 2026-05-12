@@ -116,7 +116,6 @@ window.ITINERARIES = [
         date: "08 août",
         label: "Sarakiniko & Nord",
         items: [
-          { time: "Matin", icon: "🏖",  text: "Papafragas Beach (falaises creusées)", placeId: "papafragas" },
           { time: "Matin", icon: "🏖",  text: "Mandrakia Village — village de pêcheurs coloré", placeId: "mandrakia" },
           { time: "Déj",   icon: "🍽",  text: "Medusa Restaurant (Mandrakia) — donner son nom + attendre sur la plage", placeId: "medusa" },
           { time: "Après-midi", icon: "🏖", text: "Sarakiniko Beach — paysage lunaire unique !", placeId: "sarakiniko" },
