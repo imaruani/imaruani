@@ -322,11 +322,18 @@ window.ITINERARIES = [
       document.getElementById("map-tab").style.display = "";
       document.getElementById("map-tab").classList.add("active");
 
+      // Close mobile bottom-sheet so the map is visible
+      const closedMobile = window._closeSidebarMobile && window._closeSidebarMobile();
+      const delay = closedMobile ? 320 : 0;
+
       // Fly to place (map exposed on window by app.js)
       if (window._map) {
-        window._map.setView(place.coords, 15, { animate: true });
-        const m = window._markers && window._markers.get(id);
-        if (m) setTimeout(() => m.openPopup(), 400);
+        setTimeout(() => {
+          window._map.invalidateSize();
+          window._map.setView(place.coords, 15, { animate: true });
+          const m = window._markers && window._markers.get(id);
+          if (m) setTimeout(() => m.openPopup(), 400);
+        }, delay);
       }
     });
   }
