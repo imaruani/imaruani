@@ -547,23 +547,24 @@ window.ITINERARIES = [
             <div class="itin-day-body">`;
 
         if (hasSlots) {
-          // Programme card with category slots
+          // Programme card with category slots — vertical list format
           html += `<div class="itin-programme">`;
           day.slots.forEach(slot => {
-            html += `<div class="itin-prog-row cat-${escHtml(slot.cat)}">
-              <div class="itin-prog-cat">
-                <span class="itin-prog-icon">${slot.icon}</span>
-                <span class="itin-prog-label-text">${escHtml(slot.label)}</span>
-              </div>
-              <div class="itin-prog-opts">`;
+            html += `<section class="itin-slot cat-${escHtml(slot.cat)}">
+              <header class="itin-slot-header">
+                <span class="itin-slot-icon">${slot.icon}</span>
+                <span class="itin-slot-label">${escHtml(slot.label)}</span>
+              </header>
+              <ul class="itin-slot-list">`;
             slot.options.forEach(opt => {
-              const cls = `itin-prog-opt${opt.star ? " itin-star" : ""}${opt.placeId ? " clickable" : ""}`;
-              html += `<div class="${cls}"${opt.placeId ? ` data-place-id="${escHtml(opt.placeId)}"` : ""}>
+              const cls = `itin-slot-item${opt.star ? " itin-star" : ""}${opt.placeId ? " clickable" : ""}`;
+              html += `<li class="${cls}"${opt.placeId ? ` data-place-id="${escHtml(opt.placeId)}"` : ""}>
+                <span class="itin-bullet">•</span>
                 <span class="itin-prog-text">${escHtml(opt.text)}</span>
                 ${opt.placeId ? '<span class="itin-goto">↗</span>' : ""}
-              </div>`;
+              </li>`;
             });
-            html += `</div></div>`;
+            html += `</ul></section>`;
           });
           html += `</div>`;
         } else if (day.items) {
