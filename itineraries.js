@@ -494,13 +494,24 @@ window.ITINERARIES = [
 
     let html = "";
 
+    // ── Pills navigation (jump to destination) ──
+    html += `<div class="itin-pills">`;
+    ITINERARIES.forEach(dest => {
+      html += `<button type="button" class="itin-pill" data-dest-id="${escHtml(dest.id)}" style="--pill-color:${escHtml(dest.color)}">
+        <span class="itin-pill-emoji">${dest.emoji}</span>
+        <span>${escHtml(dest.title)}</span>
+      </button>`;
+    });
+    html += `</div>`;
+
     ITINERARIES.forEach(dest => {
       html += `
-        <div class="itin-dest">
+        <div class="itin-dest" id="dest-${escHtml(dest.id)}">
           <div class="itin-dest-header" style="background:${escHtml(dest.color)}">
             <span class="itin-emoji">${dest.emoji}</span>
             <div>
               <div class="itin-dest-name">${escHtml(dest.title)}</div>
+              <div class="itin-dest-meta">${dest.days.length} jour${dest.days.length > 1 ? "s" : ""}</div>
             </div>
           </div>`;
 
@@ -514,15 +525,28 @@ window.ITINERARIES = [
       }
 
       // Days
-      dest.days.forEach(day => {
-        html += `
-          <div class="itin-day">
-            <div class="itin-day-header">
-              <span class="itin-day-date">${escHtml(day.date)}</span>
-              <span class="itin-day-label">${escHtml(day.label)}</span>
-            </div>`;
+      dest.days.forEach((day, idx) => {
+        const hasSlots = !!day.slots;
+        // Open by default: first day OR programme types
+        const isOpen = idx === 0 || hasSlots;
+        const count = hasSlots
+          ? day.slots.reduce((sum, s) => sum + s.options.length, 0)
+          : (day.items ? day.items.length : 0);
+        const countLabel = hasSlots ? "idées" : "étapes";
 
-        if (day.slots) {
+        html += `
+          <div class="itin-day${isOpen ? " open" : ""}">
+            <button type="button" class="itin-day-header">
+              <span class="itin-day-head-text">
+                <span class="itin-day-date">${escHtml(day.date)}</span>
+                <span class="itin-day-label">${escHtml(day.label)}</span>
+              </span>
+              <span class="itin-day-count">${count} ${countLabel}</span>
+              <span class="itin-day-chevron">▾</span>
+            </button>
+            <div class="itin-day-body">`;
+
+        if (hasSlots) {
           // Programme card with category slots
           html += `<div class="itin-programme">`;
           day.slots.forEach(slot => {
@@ -535,7 +559,7 @@ window.ITINERARIES = [
             slot.options.forEach(opt => {
               const cls = `itin-prog-opt${opt.star ? " itin-star" : ""}${opt.placeId ? " clickable" : ""}`;
               html += `<div class="${cls}"${opt.placeId ? ` data-place-id="${escHtml(opt.placeId)}"` : ""}>
-                <span>${escHtml(opt.text)}</span>
+                <span class="itin-prog-text">${escHtml(opt.text)}</span>
                 ${opt.placeId ? '<span class="itin-goto">↗</span>' : ""}
               </div>`;
             });
@@ -545,14 +569,14 @@ window.ITINERARIES = [
         } else if (day.items) {
           day.items.forEach(item => {
             const placeLink = item.placeId
-              ? `data-place-id="${escHtml(item.placeId)}" class="itin-item clickable${item.star ? ' itin-star' : ''}"`
-              : `class="itin-item${item.star ? ' itin-star' : ''}"`;
+              ? `data-place-id="${escHtml(item.placeId)}" class="itin-item clickable${item.star ? " itin-star" : ""}"`
+              : `class="itin-item${item.star ? " itin-star" : ""}"`;
             html += `
               <div ${placeLink}>
                 <span class="itin-time">${escHtml(item.time)}</span>
                 <span class="itin-icon">${item.icon}</span>
                 <span class="itin-text">${escHtml(item.text)}</span>
-                ${item.placeId ? '<span class="itin-goto">↗</span>' : ''}
+                ${item.placeId ? '<span class="itin-goto">↗</span>' : ""}
               </div>`;
           });
         }
@@ -561,7 +585,7 @@ window.ITINERARIES = [
           html += `<div class="itin-tip">💡 ${escHtml(day.tip)}</div>`;
         }
 
-        html += `</div>`;
+        html += `</div></div>`;
       });
 
       html += `</div>`;
@@ -569,7 +593,25 @@ window.ITINERARIES = [
 
     container.innerHTML = html;
 
-    // Click: switch to map tab and fly to place
+    // ── Pills: scroll to destination ──
+    container.querySelectorAll(".itin-pill").forEach(pill => {
+      pill.addEventListener("click", () => {
+        const target = document.getElementById("dest-" + pill.dataset.destId);
+        if (!target) return;
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+        container.querySelectorAll(".itin-pill").forEach(p => p.classList.remove("active"));
+        pill.classList.add("active");
+      });
+    });
+
+    // ── Day header: toggle open/close ──
+    container.querySelectorAll(".itin-day-header").forEach(btn => {
+      btn.addEventListener("click", () => {
+        btn.closest(".itin-day").classList.toggle("open");
+      });
+    });
+
+    // ── Click on place → switch to map tab and fly ──
     container.addEventListener("click", e => {
       const item = e.target.closest("[data-place-id]");
       if (!item) return;
@@ -588,7 +630,7 @@ window.ITINERARIES = [
       const closedMobile = window._closeSidebarMobile && window._closeSidebarMobile();
       const delay = closedMobile ? 320 : 0;
 
-      // Fly to place (map exposed on window by app.js)
+      // Fly to place
       if (window._map) {
         setTimeout(() => {
           window._map.invalidateSize();

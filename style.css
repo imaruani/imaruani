@@ -328,52 +328,117 @@ body { display: flex; }
 .itin-wrapper {
   overflow-y: auto;
   flex: 1;
-  padding: 12px 12px 24px;
+  padding: 0 12px 28px;
   display: flex;
   flex-direction: column;
   gap: 16px;
+  scroll-padding-top: 56px;
 }
+
+/* ─── Pills nav (sticky) ─── */
+.itin-pills {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  gap: 6px;
+  padding: 10px 4px;
+  margin: 0 -12px;
+  padding-left: 16px;
+  padding-right: 16px;
+  background: rgba(255,255,255,0.97);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.itin-pills::-webkit-scrollbar { display: none; }
+.itin-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: var(--panel-2);
+  border: 1.5px solid transparent;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: all 0.15s;
+}
+.itin-pill-emoji { font-size: 15px; }
+.itin-pill:hover { background: white; border-color: var(--pill-color, var(--border)); }
+.itin-pill.active {
+  background: white;
+  border-color: var(--pill-color, var(--accent));
+  color: var(--pill-color, var(--accent));
+}
+
+/* ─── Destination card ─── */
 .itin-dest {
   border-radius: 12px;
   overflow: hidden;
   border: 1px solid var(--border);
   background: var(--panel);
+  scroll-margin-top: 60px;
 }
 .itin-dest-header {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 12px 14px;
+  padding: 14px 16px;
   color: white;
 }
-.itin-emoji { font-size: 22px; }
-.itin-dest-name { font-size: 16px; font-weight: 700; }
+.itin-emoji { font-size: 26px; }
+.itin-dest-name { font-size: 18px; font-weight: 700; line-height: 1.1; }
+.itin-dest-meta { font-size: 12px; opacity: 0.85; margin-top: 2px; }
 
 .itin-suggestions {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  padding: 10px 14px;
+  gap: 5px;
+  padding: 11px 16px;
   background: #fafafa;
   border-bottom: 1px solid var(--border);
 }
 .itin-sugg {
   display: flex;
   gap: 8px;
-  font-size: 12px;
+  font-size: 12.5px;
   color: var(--text);
   line-height: 1.4;
 }
 
+/* ─── Day (collapsible) ─── */
 .itin-day {
-  padding: 10px 14px;
   border-top: 1px solid var(--border);
 }
 .itin-day-header {
   display: flex;
-  align-items: baseline;
-  gap: 8px;
-  margin-bottom: 8px;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 12px 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  color: var(--text);
+  min-height: 48px;
+}
+.itin-day-header:hover { background: #fafafa; }
+.itin-day-head-text {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 2px;
+  min-width: 0;
 }
 .itin-day-date {
   font-size: 11px;
@@ -381,56 +446,89 @@ body { display: flex; }
   text-transform: uppercase;
   letter-spacing: 0.5px;
   color: var(--accent);
+  align-self: flex-start;
   background: rgba(230,57,70,0.08);
   padding: 2px 8px;
   border-radius: 999px;
 }
-.itin-day-label { font-size: 13px; font-weight: 600; color: var(--text); }
+.itin-day-label {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.3;
+}
+.itin-day-count {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: var(--panel-2);
+  padding: 3px 8px;
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+.itin-day-chevron {
+  color: var(--muted);
+  font-size: 14px;
+  transition: transform 0.2s;
+  flex-shrink: 0;
+}
+.itin-day.open .itin-day-chevron { transform: rotate(180deg); }
+.itin-day-body {
+  display: none;
+  padding: 0 16px 14px;
+}
+.itin-day.open .itin-day-body { display: block; }
 
+/* ─── Timeline items (dated days) ─── */
 .itin-item {
   display: flex;
   align-items: flex-start;
-  gap: 8px;
-  padding: 5px 0;
-  font-size: 12.5px;
-  line-height: 1.4;
+  gap: 10px;
+  padding: 8px 8px;
+  margin: 0 -8px;
+  font-size: 13.5px;
+  line-height: 1.45;
   color: var(--text);
-  border-radius: 6px;
+  border-radius: 8px;
+  min-height: 40px;
 }
 .itin-item.clickable {
   cursor: pointer;
-  padding: 5px 6px;
-  margin: 0 -6px;
+  transition: background 0.15s;
 }
 .itin-item.clickable:hover { background: #fef3f2; }
+.itin-item.clickable:active { background: #fde4e3; }
 .itin-item.itin-star .itin-text { font-weight: 600; }
 .itin-time {
-  flex: 0 0 52px;
-  font-size: 11px;
+  flex: 0 0 60px;
+  font-size: 11.5px;
   color: var(--muted);
-  padding-top: 1px;
-  font-weight: 500;
+  padding-top: 2px;
+  font-weight: 600;
 }
-.itin-icon { flex: 0 0 18px; }
-.itin-text { flex: 1; }
+.itin-icon { flex: 0 0 20px; font-size: 15px; padding-top: 1px; }
+.itin-text { flex: 1; min-width: 0; }
 .itin-goto {
-  flex: 0 0 16px;
-  font-size: 12px;
+  flex-shrink: 0;
+  font-size: 13px;
   color: var(--accent);
-  opacity: 0.6;
-  padding-top: 1px;
+  opacity: 0.5;
+  padding-top: 2px;
+  transition: opacity 0.15s;
 }
 .itin-item.clickable:hover .itin-goto { opacity: 1; }
 
 .itin-tip {
-  margin-top: 6px;
+  margin-top: 8px;
   background: #fffbf0;
   border: 1px solid #f4e2a0;
   border-radius: 8px;
-  padding: 7px 10px;
-  font-size: 12px;
+  padding: 9px 11px;
+  font-size: 12.5px;
   color: #7a5c00;
-  line-height: 1.45;
+  line-height: 1.5;
 }
 
 /* ─── Programme card (slots) ─── */
@@ -439,15 +537,15 @@ body { display: flex; }
   border-radius: 10px;
   overflow: hidden;
   margin: 2px 0 4px;
+  background: white;
 }
 
 .itin-prog-row {
   display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  padding: 9px 12px;
+  align-items: stretch;
+  gap: 0;
   border-bottom: 1px solid var(--border);
-  border-left: 3px solid transparent;
+  border-left: 4px solid transparent;
 }
 .itin-prog-row:last-child { border-bottom: none; }
 
@@ -462,51 +560,64 @@ body { display: flex; }
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 58px;
-  padding-top: 1px;
-  gap: 2px;
+  justify-content: center;
+  min-width: 64px;
+  max-width: 64px;
+  padding: 10px 6px;
+  background: #fafafa;
+  gap: 3px;
+  border-right: 1px solid var(--border);
 }
-.itin-prog-icon { font-size: 1.25rem; line-height: 1; }
+.itin-prog-icon { font-size: 22px; line-height: 1; }
 .itin-prog-label-text {
-  font-size: 0.65rem;
+  font-size: 9.5px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
   color: var(--muted);
   text-align: center;
-  white-space: nowrap;
+  line-height: 1.1;
 }
 
 .itin-prog-opts {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  padding: 6px 8px;
+  gap: 1px;
+  min-width: 0;
 }
 
 .itin-prog-opt {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 6px;
-  padding: 4px 6px;
-  border-radius: 6px;
-  font-size: 0.85rem;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 7px 8px;
+  border-radius: 7px;
+  font-size: 13.5px;
   color: var(--text);
-  line-height: 1.35;
+  line-height: 1.4;
+  min-height: 36px;
 }
 .itin-prog-opt.clickable {
   cursor: pointer;
   transition: background 0.15s;
 }
 .itin-prog-opt.clickable:hover { background: #fef3f2; }
+.itin-prog-opt.clickable:active { background: #fde4e3; }
 .itin-prog-opt.clickable:hover .itin-goto { opacity: 1; }
 .itin-prog-opt.itin-star { font-weight: 600; }
+.itin-prog-text {
+  flex: 1;
+  min-width: 0;
+  word-wrap: break-word;
+}
 .itin-prog-opt .itin-goto {
-  opacity: 0;
-  font-size: 0.7rem;
+  opacity: 0.45;
+  font-size: 13px;
   color: var(--accent);
   flex-shrink: 0;
+  padding-top: 1px;
   transition: opacity 0.15s;
 }
 
@@ -634,14 +745,26 @@ body { display: flex; }
   .popup .body { padding: 12px 14px 14px; }
   .popup h3 { font-size: 16px; }
 
-  /* Itineraries */
-  .itin-wrapper { padding: 12px 12px 28px; gap: 14px; }
-  .itin-item { font-size: 13px; padding: 7px 0; }
-  .itin-item.clickable { padding: 7px 8px; margin: 0 -8px; }
-  .itin-prog-cat { min-width: 50px; }
-  .itin-prog-label-text { font-size: 0.6rem; }
-  .itin-prog-opt { font-size: 0.82rem; padding: 4px 4px; }
-  .itin-prog-opt .itin-goto { opacity: 0.4; }
+  /* Itineraries — mobile */
+  .itin-wrapper { padding: 0 10px 32px; gap: 14px; }
+  .itin-pills { padding: 9px 12px; margin: 0 -10px; }
+  .itin-pill { padding: 8px 13px; font-size: 13px; }
+  .itin-dest-header { padding: 14px 14px; }
+  .itin-dest-name { font-size: 17px; }
+  .itin-emoji { font-size: 24px; }
+  .itin-day-header { padding: 13px 14px; min-height: 52px; }
+  .itin-day-label { font-size: 14px; }
+  .itin-day-body { padding: 0 14px 14px; }
+  .itin-item { font-size: 14px; padding: 9px 8px; min-height: 44px; }
+  .itin-time { flex: 0 0 56px; font-size: 11.5px; }
+  .itin-prog-cat { min-width: 56px; max-width: 56px; padding: 10px 4px; }
+  .itin-prog-icon { font-size: 20px; }
+  .itin-prog-label-text { font-size: 9px; }
+  .itin-prog-opts { padding: 5px 6px; }
+  .itin-prog-opt { font-size: 13.5px; padding: 8px 8px; min-height: 40px; }
+  .itin-prog-opt .itin-goto { opacity: 0.5; }
+  .itin-suggestions { padding: 10px 14px; }
+  .itin-sugg { font-size: 13px; }
 
   /* Footer */
   #sidebar footer { padding: 10px 16px max(10px, env(safe-area-inset-bottom)); }
