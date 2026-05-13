@@ -433,6 +433,83 @@ body { display: flex; }
   line-height: 1.45;
 }
 
+/* ─── Programme card (slots) ─── */
+.itin-programme {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 2px 0 4px;
+}
+
+.itin-prog-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--border);
+  border-left: 3px solid transparent;
+}
+.itin-prog-row:last-child { border-bottom: none; }
+
+.itin-prog-row.cat-breakfast { border-left-color: #f4a261; }
+.itin-prog-row.cat-beach     { border-left-color: #2ec4b6; }
+.itin-prog-row.cat-lunch     { border-left-color: #e9c46a; }
+.itin-prog-row.cat-activity  { border-left-color: #52b788; }
+.itin-prog-row.cat-sunset    { border-left-color: #e76f51; }
+.itin-prog-row.cat-dinner    { border-left-color: #e63946; }
+
+.itin-prog-cat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 58px;
+  padding-top: 1px;
+  gap: 2px;
+}
+.itin-prog-icon { font-size: 1.25rem; line-height: 1; }
+.itin-prog-label-text {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  text-align: center;
+  white-space: nowrap;
+}
+
+.itin-prog-opts {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.itin-prog-opt {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 4px 6px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  color: var(--text);
+  line-height: 1.35;
+}
+.itin-prog-opt.clickable {
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.itin-prog-opt.clickable:hover { background: #fef3f2; }
+.itin-prog-opt.clickable:hover .itin-goto { opacity: 1; }
+.itin-prog-opt.itin-star { font-weight: 600; }
+.itin-prog-opt .itin-goto {
+  opacity: 0;
+  font-size: 0.7rem;
+  color: var(--accent);
+  flex-shrink: 0;
+  transition: opacity 0.15s;
+}
+
 /* Mobile-only buttons (FAB + close) — hidden on desktop */
 #openSidebar, #closeSidebar { display: none; }
 
@@ -561,6 +638,10 @@ body { display: flex; }
   .itin-wrapper { padding: 12px 12px 28px; gap: 14px; }
   .itin-item { font-size: 13px; padding: 7px 0; }
   .itin-item.clickable { padding: 7px 8px; margin: 0 -8px; }
+  .itin-prog-cat { min-width: 50px; }
+  .itin-prog-label-text { font-size: 0.6rem; }
+  .itin-prog-opt { font-size: 0.82rem; padding: 4px 4px; }
+  .itin-prog-opt .itin-goto { opacity: 0.4; }
 
   /* Footer */
   #sidebar footer { padding: 10px 16px max(10px, env(safe-area-inset-bottom)); }
