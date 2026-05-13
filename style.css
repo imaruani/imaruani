@@ -328,7 +328,7 @@ body { display: flex; }
 .itin-wrapper {
   overflow-y: auto;
   flex: 1;
-  padding: 0 12px 28px;
+  padding: 0 12px 40px;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -531,7 +531,7 @@ body { display: flex; }
   line-height: 1.5;
 }
 
-/* ─── Programme card (slots) ─── */
+/* ─── Programme — vertical list par catégorie ─── */
 .itin-programme {
   border: 1px solid var(--border);
   border-radius: 10px;
@@ -540,84 +540,82 @@ body { display: flex; }
   background: white;
 }
 
-.itin-prog-row {
-  display: flex;
-  align-items: stretch;
-  gap: 0;
-  border-bottom: 1px solid var(--border);
+.itin-slot {
   border-left: 4px solid transparent;
+  border-bottom: 1px solid var(--border);
+  padding: 10px 12px 11px;
 }
-.itin-prog-row:last-child { border-bottom: none; }
+.itin-slot:last-child { border-bottom: none; }
 
-.itin-prog-row.cat-breakfast { border-left-color: #f4a261; }
-.itin-prog-row.cat-beach     { border-left-color: #2ec4b6; }
-.itin-prog-row.cat-lunch     { border-left-color: #e9c46a; }
-.itin-prog-row.cat-activity  { border-left-color: #52b788; }
-.itin-prog-row.cat-sunset    { border-left-color: #e76f51; }
-.itin-prog-row.cat-dinner    { border-left-color: #e63946; }
+.itin-slot.cat-breakfast { border-left-color: #f4a261; background: linear-gradient(to right, #fff5e6 0%, white 60%); }
+.itin-slot.cat-beach     { border-left-color: #2ec4b6; background: linear-gradient(to right, #e6faf7 0%, white 60%); }
+.itin-slot.cat-lunch     { border-left-color: #e9c46a; background: linear-gradient(to right, #fdf6e3 0%, white 60%); }
+.itin-slot.cat-activity  { border-left-color: #52b788; background: linear-gradient(to right, #ebf7ee 0%, white 60%); }
+.itin-slot.cat-sunset    { border-left-color: #e76f51; background: linear-gradient(to right, #fdeae3 0%, white 60%); }
+.itin-slot.cat-dinner    { border-left-color: #e63946; background: linear-gradient(to right, #fde7e9 0%, white 60%); }
 
-.itin-prog-cat {
+.itin-slot-header {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  min-width: 64px;
-  max-width: 64px;
-  padding: 10px 6px;
-  background: #fafafa;
-  gap: 3px;
-  border-right: 1px solid var(--border);
+  gap: 8px;
+  margin-bottom: 6px;
 }
-.itin-prog-icon { font-size: 22px; line-height: 1; }
-.itin-prog-label-text {
-  font-size: 9.5px;
-  font-weight: 700;
+.itin-slot-icon { font-size: 19px; line-height: 1; }
+.itin-slot-label {
+  font-size: 11.5px;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--muted);
-  text-align: center;
-  line-height: 1.1;
+  letter-spacing: 0.06em;
+  color: var(--text);
 }
 
-.itin-prog-opts {
-  flex: 1;
+.itin-slot-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
-  padding: 6px 8px;
   gap: 1px;
-  min-width: 0;
 }
 
-.itin-prog-opt {
+.itin-slot-item {
   display: flex;
   align-items: flex-start;
   gap: 8px;
-  padding: 7px 8px;
-  border-radius: 7px;
-  font-size: 13.5px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 14px;
   color: var(--text);
-  line-height: 1.4;
-  min-height: 36px;
+  line-height: 1.45;
+  min-height: 40px;
 }
-.itin-prog-opt.clickable {
+.itin-slot-item.clickable {
   cursor: pointer;
   transition: background 0.15s;
 }
-.itin-prog-opt.clickable:hover { background: #fef3f2; }
-.itin-prog-opt.clickable:active { background: #fde4e3; }
-.itin-prog-opt.clickable:hover .itin-goto { opacity: 1; }
-.itin-prog-opt.itin-star { font-weight: 600; }
+.itin-slot-item.clickable:hover { background: rgba(255,255,255,0.9); box-shadow: inset 0 0 0 1px var(--border); }
+.itin-slot-item.clickable:active { background: white; }
+.itin-slot-item.clickable:hover .itin-goto { opacity: 1; }
+.itin-slot-item.itin-star { font-weight: 600; }
+
+.itin-bullet {
+  color: var(--muted);
+  flex-shrink: 0;
+  font-size: 16px;
+  line-height: 1.25;
+  margin-top: -1px;
+}
 .itin-prog-text {
   flex: 1;
   min-width: 0;
-  word-wrap: break-word;
+  overflow-wrap: anywhere;
 }
-.itin-prog-opt .itin-goto {
-  opacity: 0.45;
+.itin-slot-item .itin-goto {
+  opacity: 0.5;
   font-size: 13px;
   color: var(--accent);
   flex-shrink: 0;
-  padding-top: 1px;
+  padding-top: 2px;
   transition: opacity 0.15s;
 }
 
@@ -746,7 +744,11 @@ body { display: flex; }
   .popup h3 { font-size: 16px; }
 
   /* Itineraries — mobile */
-  .itin-wrapper { padding: 0 10px 32px; gap: 14px; }
+  .itin-wrapper {
+    padding: 0 10px;
+    padding-bottom: calc(80px + env(safe-area-inset-bottom));
+    gap: 14px;
+  }
   .itin-pills { padding: 9px 12px; margin: 0 -10px; }
   .itin-pill { padding: 8px 13px; font-size: 13px; }
   .itin-dest-header { padding: 14px 14px; }
@@ -757,14 +759,15 @@ body { display: flex; }
   .itin-day-body { padding: 0 14px 14px; }
   .itin-item { font-size: 14px; padding: 9px 8px; min-height: 44px; }
   .itin-time { flex: 0 0 56px; font-size: 11.5px; }
-  .itin-prog-cat { min-width: 56px; max-width: 56px; padding: 10px 4px; }
-  .itin-prog-icon { font-size: 20px; }
-  .itin-prog-label-text { font-size: 9px; }
-  .itin-prog-opts { padding: 5px 6px; }
-  .itin-prog-opt { font-size: 13.5px; padding: 8px 8px; min-height: 40px; }
-  .itin-prog-opt .itin-goto { opacity: 0.5; }
+  .itin-slot { padding: 11px 12px 12px; }
+  .itin-slot-icon { font-size: 19px; }
+  .itin-slot-label { font-size: 12px; }
+  .itin-slot-item { font-size: 14px; padding: 9px 10px; min-height: 44px; }
+  .itin-slot-item .itin-goto { opacity: 0.55; }
   .itin-suggestions { padding: 10px 14px; }
   .itin-sugg { font-size: 13px; }
+  /* Hide footer on mobile to free bottom space */
+  #sidebar footer { display: none; }
 
   /* Footer */
   #sidebar footer { padding: 10px 16px max(10px, env(safe-area-inset-bottom)); }
