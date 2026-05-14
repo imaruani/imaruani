@@ -643,10 +643,6 @@ window.ITINERARIES = [
     });
   }
 
-  // Wait for DOM
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", renderItineraries);
-  } else {
-    renderItineraries();
-  }
+  // Expose for home.js to invoke after trip is loaded
+  window._renderItineraries = renderItineraries;
 })();
