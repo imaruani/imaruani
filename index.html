@@ -3,75 +3,118 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Grèce · Carte &amp; Itinéraires</title>
+  <title>Mes voyages</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="anonymous" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
   <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
-  <aside id="sidebar">
-    <button id="closeSidebar" aria-label="Fermer">✕</button>
-    <header>
-      <h1>🇬🇷 Grèce — Bonnes adresses</h1>
-      <p class="subtitle">Paros · Antiparos · Sifnos · Milos · Kimolos · Athènes</p>
-      <nav class="tab-nav">
-        <button class="tab-btn active" data-tab="map-tab">🗺 Carte</button>
-        <button class="tab-btn" data-tab="itinerary-tab">📅 Itinéraires</button>
-      </nav>
+
+  <!-- ════════════════════ HOME VIEW ════════════════════ -->
+  <div id="homeView" class="view">
+    <header class="home-header">
+      <h1>🌍 Mes voyages</h1>
+      <p class="home-sub">Tous tes programmes au même endroit · partage en un tap</p>
     </header>
+    <main class="home-main">
+      <div id="tripGrid" class="trip-grid"></div>
+    </main>
+  </div>
 
-    <!-- TAB 1: MAP -->
-    <div id="map-tab" class="tab-panel active">
-      <div class="filters">
-        <div class="filter-row" id="islandFilter">
-          <button data-island="all" class="active">Tout</button>
-          <button data-island="Paros">Paros</button>
-          <button data-island="Antiparos">Antiparos</button>
-          <button data-island="Athènes">Athènes</button>
-          <button data-island="Sifnos">Sifnos</button>
-          <button data-island="Milos">Milos</button>
-          <button data-island="Kimolos">Kimolos</button>
+  <!-- ════════════════════ TRIP VIEW ════════════════════ -->
+  <div id="tripView" class="view" hidden>
+    <aside id="sidebar">
+      <button id="closeSidebar" aria-label="Fermer">✕</button>
+      <header>
+        <div class="trip-head">
+          <a class="back-link" href="./" aria-label="Retour aux voyages">←</a>
+          <div class="trip-head-text">
+            <h1 id="tripTitle">Voyage</h1>
+            <p id="tripSubtitle" class="subtitle"></p>
+          </div>
+          <button id="shareTrip" class="trip-action" title="Partager">📤</button>
         </div>
-        <div class="filter-row" id="categoryFilter">
-          <button data-category="all" class="active">Tout</button>
-          <button data-category="restaurant">🍽 Restos</button>
-          <button data-category="beach">🏖 Plages</button>
-          <button data-category="bar">🍸 Bars</button>
-          <button data-category="hotel">🏨 Hôtels</button>
-          <button data-category="breakfast">☕ Petit déj</button>
-          <button data-category="activity">⚓ Activités</button>
+        <nav class="tab-nav">
+          <button class="tab-btn active" data-tab="map-tab">🗺 Carte</button>
+          <button class="tab-btn" data-tab="itinerary-tab">📅 Itinéraires</button>
+          <button class="tab-btn" data-tab="edit-tab" id="editTabBtn" hidden>✏️ Éditer</button>
+        </nav>
+      </header>
+
+      <!-- TAB 1: MAP -->
+      <div id="map-tab" class="tab-panel active">
+        <div class="filters">
+          <div class="filter-row" id="islandFilter"></div>
+          <div class="filter-row" id="categoryFilter">
+            <button data-category="all" class="active">Tout</button>
+            <button data-category="restaurant">🍽 Restos</button>
+            <button data-category="beach">🏖 Plages</button>
+            <button data-category="bar">🍸 Bars</button>
+            <button data-category="hotel">🏨 Hôtels</button>
+            <button data-category="breakfast">☕ Petit déj</button>
+            <button data-category="activity">⚓ Activités</button>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" id="favOnly" />
+            <span>Coups de cœur uniquement <span class="star">★</span></span>
+          </label>
         </div>
-        <label class="toggle">
-          <input type="checkbox" id="favOnly" />
-          <span>Coups de cœur uniquement <span class="star">★</span></span>
-        </label>
+        <div class="list-wrapper">
+          <input id="search" type="search" placeholder="Rechercher un lieu, une zone…" />
+          <ul id="placeList"></ul>
+        </div>
       </div>
-      <div class="list-wrapper">
-        <input id="search" type="search" placeholder="Rechercher un lieu, une zone…" />
-        <ul id="placeList"></ul>
+
+      <!-- TAB 2: ITINERAIRES -->
+      <div id="itinerary-tab" class="tab-panel" style="display:none">
+        <div class="itin-wrapper" id="itinContent"></div>
       </div>
-    </div>
 
-    <!-- TAB 2: ITINERAIRES -->
-    <div id="itinerary-tab" class="tab-panel" style="display:none">
-      <div class="itin-wrapper" id="itinContent"></div>
-    </div>
+      <!-- TAB 3: EDIT (only for user trips) -->
+      <div id="edit-tab" class="tab-panel" style="display:none">
+        <div class="edit-wrapper">
+          <section class="edit-block">
+            <h3>Voyage</h3>
+            <button id="editMetaBtn" class="big-btn">✏️ Modifier titre / dates / couleur</button>
+            <button id="deleteTripBtn" class="big-btn danger">🗑 Supprimer ce voyage</button>
+          </section>
+          <section class="edit-block">
+            <h3>Lieux (<span id="placeCount">0</span>)</h3>
+            <button id="addPlaceBtn" class="big-btn primary">+ Ajouter un lieu</button>
+            <ul id="placeAdminList" class="admin-list"></ul>
+          </section>
+          <section class="edit-block">
+            <h3>Itinéraires</h3>
+            <button id="addProgramBtn" class="big-btn primary">+ Ajouter un programme type</button>
+            <ul id="destAdminList" class="admin-list"></ul>
+          </section>
+        </div>
+      </div>
 
-    <footer>
-      <p>Les <span class="star">★</span> sont les coups de cœur · <span class="resa">⛔</span> = réserver</p>
-    </footer>
-  </aside>
+      <footer>
+        <p>Les <span class="star">★</span> sont les coups de cœur · <span class="resa">⛔</span> = réserver</p>
+      </footer>
+    </aside>
 
-  <main id="mapWrap">
-    <div id="map"></div>
-    <button id="openSidebar" aria-label="Ouvrir la liste">📋 Adresses & itinéraires</button>
-  </main>
+    <main id="mapWrap">
+      <div id="map"></div>
+      <button id="openSidebar" aria-label="Ouvrir la liste">📋 Adresses & itinéraires</button>
+    </main>
+  </div>
+
+  <!-- ════════════════════ MODAL ════════════════════ -->
+  <div id="modal" class="modal" hidden>
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-content" id="modalContent"></div>
+  </div>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
   <script src="./places.js"></script>
   <script src="./itineraries.js"></script>
+  <script src="./trips.js"></script>
+  <script src="./home.js"></script>
   <script src="./app.js"></script>
 </body>
 </html>

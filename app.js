@@ -1,8 +1,11 @@
-(function () {
+window._initTripApp = function () {
+  const trip = window._currentTrip || {};
+  const center = trip.center || [37.07, 25.18];
+  const zoom = trip.zoom || 11;
   const map = L.map("map", {
     zoomControl: true,
     preferCanvas: true,
-  }).setView([37.07, 25.18], 11);
+  }).setView(center, zoom);
 
   L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", {
     subdomains: "abcd",
@@ -183,6 +186,17 @@
       });
   }
 
+  // Auto-build island/area filter from this trip's places
+  const islandFilterEl = document.getElementById("islandFilter");
+  if (islandFilterEl) {
+    const islands = Array.from(new Set((window.PLACES || []).map(p => p.island).filter(Boolean)));
+    let html = `<button data-island="all" class="active">Tout</button>`;
+    islands.forEach(i => {
+      html += `<button data-island="${i.replace(/"/g, "&quot;")}">${i}</button>`;
+    });
+    islandFilterEl.innerHTML = islands.length > 0 ? html : "";
+  }
+
   // UI wiring
   document.querySelectorAll("#islandFilter button").forEach((b) => {
     b.addEventListener("click", () => {
@@ -254,4 +268,9 @@
 
   applyFilters();
   setTimeout(fitToVisible, 100);
-})();
+
+  // Render the itineraries tab (defined in itineraries.js)
+  if (typeof window._renderItineraries === "function") {
+    window._renderItineraries();
+  }
+};
