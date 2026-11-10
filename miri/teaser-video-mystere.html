@@ -183,7 +183,7 @@ function sRedact(lt) {
 function sMontage(lt) {
   const k = Math.floor(lt / .16) % 4;
   if (k === 0) { blackBg(.6); bodyLit(lt*3, W/2, H*.5, 700, W/2, H*.35, 420); }
-  if (k === 1) { eye(1.2 + lt); }
+  if (k === 1) { blackBg(.8); bodyLit(lt*4+2, W/2, H*.95, 1500, W/2, H*.45, 520); }
   if (k === 2) { ecg(1 + lt); }
   if (k === 3) { blackBg(.9); bigText(['ミリ'], 1, { size: 300, start: 0 }); }
   glitch(.9);
@@ -210,14 +210,13 @@ function sEnd(lt) {
 const SCENES = [
   [0,    2.8,  sOpen],
   [2.8,  5.8,  sHook],
-  [5.8,  7.6,  eye],
-  [7.6,  9.0,  ecg],
-  [9.0,  12.6, sRedact],
-  [12.6, 13.6, sMontage],
-  [13.6, 16.6, sDoors],
-  [16.6, 20.0, sEnd]
+  [5.8,  7.4,  ecg],
+  [7.4,  11.0, sRedact],
+  [11.0, 12.0, sMontage],
+  [12.0, 15.0, sDoors],
+  [15.0, 18.4, sEnd]
 ];
-const DURATION = 20.0;
+const DURATION = 18.4;
 function draw(t) {
   FRAME = Math.round(t*30);
   x.setTransform(1,0,0,1,0,0); x.globalAlpha=1; x.shadowBlur=0; x.textAlign='left'; x.letterSpacing='0px'; x.globalCompositeOperation='source-over';
