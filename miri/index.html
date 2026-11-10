@@ -142,6 +142,15 @@ h2{font-size:clamp(40px,5.6vw,84px);line-height:.96;font-weight:500;letter-spaci
 .nots b{display:block;font-size:22px;font-weight:500;letter-spacing:-.02em;margin-bottom:10px}
 .nots p{font-weight:300;opacity:.65;line-height:1.55}
 
+
+/* PROBLEM */
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.facts div{border-radius:var(--rad);border:1px solid var(--edge);background:var(--glass);padding:28px;display:flex;flex-direction:column;gap:16px;min-height:240px;justify-content:space-between}
+.facts b{font-size:clamp(48px,6vw,88px);font-weight:500;letter-spacing:-.05em;line-height:.9;color:var(--rg);text-shadow:0 0 40px rgba(255,184,198,.25)}
+.facts p{font-weight:300;opacity:.75;line-height:1.5;max-width:340px}
+.src{opacity:.4;font-size:10.5px;margin-top:16px}
+.punch{font-size:clamp(28px,3.6vw,52px);font-weight:500;letter-spacing:-.04em;line-height:1.05;margin-top:72px;max-width:900px}
+
 /* STEPS */
 .steps{display:grid;gap:12px}
 .step{border-radius:var(--rad);border:1px solid var(--edge);background:var(--glass);padding:26px;min-height:300px;display:flex;flex-direction:column}
@@ -198,7 +207,8 @@ footer{padding:36px 0 44px;position:relative;z-index:1}
 @media(max-width:960px){
   .links{display:none}
   .bento{grid-template-columns:1fr 1fr;grid-auto-rows:230px}
-  .faq,.results,.nots{grid-template-columns:1fr}
+  .faq,.results,.nots,.facts{grid-template-columns:1fr}
+  .facts div{min-height:0}
   .steps,.zones{grid-template-columns:1fr 1fr}
   .stats{grid-template-columns:1fr 1fr}.stats div:nth-child(3){border-left:0}.stats div:nth-child(n+3){border-top:1px solid var(--edge)}
   .step{min-height:220px}
@@ -235,7 +245,7 @@ footer{padding:36px 0 44px;position:relative;z-index:1}
     <path d="M51 15 V36 Q51 46 40 52"/>
   </g>
 </svg><span>MIRI</span></a>
-  <div class="links mono"><a href="#bilan">Le bilan</a><a href="#etapes">La visite</a><a href="#resultats">Résultats</a><a href="#faq">Questions</a></div>
+  <div class="links mono"><a href="#bilan">Le scan</a><a href="#pourquoi">Pourquoi</a><a href="#etapes">La visite</a><a href="#faq">Questions</a></div>
   <a href="#liste" class="pill">Liste d'attente <span class="arr">→</span></a>
 </nav>
 
@@ -260,46 +270,60 @@ footer{padding:36px 0 44px;position:relative;z-index:1}
 
 <section id="bilan"><div class="wrap">
   <div class="head reveal">
-    <div><div class="kicker mono">01 — Ce que fait MIRI</div><h2>Un check-up complet de tout le corps. En une seule visite.</h2></div>
-    <p class="lead">Aujourd'hui, pour faire le point sur sa santé, il faut voir un dermato, un cardiologue, faire une prise de sang, attendre des semaines. Chez MIRI, tout se fait au même endroit, en une heure environ.</p>
+    <div><div class="kicker mono">01 — Le scan MIRI</div><h2>Le bilan complet de votre corps. En une heure.</h2></div>
+    <p class="lead">Aujourd'hui, faire le point sur sa santé, c'est un dermato, un cardiologue, un labo, et des semaines d'attente. Chez MIRI : imagerie de la peau et du corps, bilan du cœur, prise de sang analysée sur place, puis un médecin qui vous explique tout. Le même jour, au même endroit.</p>
   </div>
   <div class="stats reveal">
     <div><b>≈ 1 h</b><span class="mono">Durée de la visite</span></div>
-    <div><b>4</b><span class="mono">Zones examinées</span></div>
+    <div><b>0</b><span class="mono">Rayons, 0 attente</span></div>
     <div><b>Jour J</b><span class="mono">Résultats expliqués</span></div>
     <div><b>1</b><span class="mono">Médecin dédié</span></div>
   </div>
   <div class="zones">
+    <article class="zone reveal">
+      <div class="top mono"><span>Imagerie</span><span>◎</span></div>
+      <h3>Peau &amp; corps</h3>
+      <ul><li>Imagerie de tout le corps, sans rayons</li><li>Carte complète de vos grains de beauté</li><li>Masse musculaire, masse grasse</li></ul>
+      <p class="why"><span class="mono">Pourquoi</span>Avec une image de référence, un grain de beauté qui change se repère d'une année sur l'autre.</p>
+    </article>
     <article class="zone accent reveal">
-      <div class="top mono"><span>Zone 01</span><span>♥</span></div>
+      <div class="top mono"><span>Cardio</span><span>♥</span></div>
       <svg class="ecg" viewBox="0 0 600 120" preserveAspectRatio="none"><path d="M0 60 H150 L170 60 L185 30 L200 95 L215 10 L232 80 L245 60 H330 L345 50 L360 60 H420 L438 60 L452 25 L468 100 L482 15 L498 78 L510 60 H600"/></svg>
       <h3>Cœur &amp; circulation</h3>
-      <ul><li>Électrocardiogramme</li><li>Tension aux deux bras</li><li>Rythme et circulation sanguine</li></ul>
-      <p class="why"><span class="mono">Pourquoi</span>Les problèmes cardiovasculaires s'installent souvent sans aucun symptôme.</p>
+      <ul><li>Tension artérielle</li><li>Électrocardiogramme</li><li>Bilan du cœur et des vaisseaux</li></ul>
+      <p class="why"><span class="mono">Pourquoi</span>L'hypertension ne se sent pas. Elle se mesure.</p>
     </article>
     <article class="zone reveal">
-      <div class="top mono"><span>Zone 02</span><span>◎</span></div>
-      <h3>Peau</h3>
-      <ul><li>Photo haute définition de tout le corps</li><li>Cartographie de vos grains de beauté</li><li>Comparaison d'une visite à l'autre</li></ul>
-      <p class="why"><span class="mono">Pourquoi</span>Un grain de beauté qui change, ça se repère beaucoup mieux quand on a une image de référence.</p>
+      <div class="top mono"><span>Labo</span><span>◐</span></div>
+      <h3>Prise de sang</h3>
+      <ul><li>Les marqueurs essentiels, choisis par nos médecins</li><li>Cholestérol, glycémie, inflammation</li><li>Analysé sur place, résultats pendant la visite</li></ul>
+      <p class="why"><span class="mono">Pourquoi</span>Pas besoin de revenir ni d'attendre un e-mail du labo trois jours plus tard.</p>
     </article>
     <article class="zone reveal">
-      <div class="top mono"><span>Zone 03</span><span>◐</span></div>
-      <h3>Sang</h3>
-      <ul><li>Une petite prise de sang sur place</li><li>Cholestérol, glycémie, inflammation</li><li>Résultats pendant la visite</li></ul>
-      <p class="why"><span class="mono">Pourquoi</span>Ce sont les marqueurs de base pour anticiper diabète et maladies cardiaques.</p>
-    </article>
-    <article class="zone reveal">
-      <div class="top mono"><span>Zone 04</span><span>◇</span></div>
-      <h3>Corps &amp; métabolisme</h3>
-      <ul><li>Masse musculaire et masse grasse</li><li>Force de préhension</li><li>Examen des yeux</li></ul>
-      <p class="why"><span class="mono">Pourquoi</span>Le poids seul ne dit presque rien. La composition du corps, beaucoup plus.</p>
+      <div class="top mono"><span>Médecin</span><span>◇</span></div>
+      <h3>Consultation</h3>
+      <ul><li>Un médecin revoit tout avec vous</li><li>Le jour même, en face à face</li><li>Le temps de poser toutes vos questions</li></ul>
+      <p class="why"><span class="mono">Pourquoi</span>Des chiffres sans explication ne servent à rien. On vous dit ce qu'ils veulent dire pour vous.</p>
     </article>
   </div>
 </div></section>
 
+<section id="pourquoi" style="padding-top:0"><div class="wrap">
+  <div class="head reveal">
+    <div><div class="kicker mono">02 — Le problème</div><h2>Le plus souvent, on découvre trop tard.</h2></div>
+    <p class="lead">Notre système de santé est excellent pour soigner. Mais il s'organise autour du moment où l'on tombe malade. Or beaucoup de problèmes envoient des signaux des années avant le premier symptôme, et personne ne les regarde.</p>
+  </div>
+  <div class="facts reveal">
+    <div><b>1 sur 2</b><p>Environ la moitié des adultes hypertendus en France ne savent pas qu'ils le sont.</p></div>
+    <div><b>≈ 140 000</b><p>décès par an en France liés aux maladies cardiovasculaires, l'une des premières causes de mortalité.</p></div>
+    <div><b>+15 000</b><p>nouveaux mélanomes chaque année en France. Repéré tôt, il se soigne très bien.</p></div>
+  </div>
+  <p class="src mono reveal">Sources : Santé publique France, Institut national du cancer. Ordres de grandeur.</p>
+  <p class="punch reveal">Il manquait un endroit pour faire le point <span class="grad">quand tout va bien.</span> C'est MIRI.</p>
+</div></section>
+
 <section id="etapes" style="padding-top:0"><div class="wrap">
-  <div class="head reveal"><div><div class="kicker mono">02 — Votre visite</div><h2>Comment se passe une visite.</h2></div><p class="lead">Pas de salle d'attente, pas d'ordonnance à aller chercher. Vous arrivez, on s'occupe de tout.</p></div>
+  <div class="head reveal"><div><div class="kicker mono">03 — Votre visite</div><h2>Comment se passe une visite.</h2></div><p class="lead">Pas de salle d'attente, pas d'ordonnance à aller chercher. Vous arrivez, on s'occupe de tout.</p></div>
   <div class="steps">
     <div class="step reveal" style="--w:25%"><span class="mono"><span>Étape 01</span><span>Avant</span></span><h3>Réserver</h3><p>Vous choisissez un créneau en ligne et répondez à un court questionnaire sur vos antécédents et vos habitudes.</p><div class="prog"><i></i></div></div>
     <div class="step reveal" style="--w:50%"><span class="mono"><span>Étape 02</span><span>Sur place</span></span><h3>Le scan</h3><p>En sous-vêtements, dans une cabine privée. Les capteurs mesurent le cœur, la peau et le corps. Une infirmière fait la prise de sang.</p><div class="prog"><i></i></div></div>
@@ -310,7 +334,7 @@ footer{padding:36px 0 44px;position:relative;z-index:1}
 
 <section id="resultats" style="padding-top:0"><div class="wrap results">
   <div class="reveal">
-    <div class="kicker mono">03 — Vos résultats</div>
+    <div class="kicker mono">04 — Vos résultats</div>
     <h2>Un compte rendu que vous comprenez vraiment.</h2>
     <p class="lead">Chaque indicateur est classé simplement : tout va bien, à surveiller, ou à voir avec un spécialiste. Pas de jargon, pas de PDF illisible.</p>
     <ul class="get">
@@ -334,21 +358,22 @@ footer{padding:36px 0 44px;position:relative;z-index:1}
 </div></section>
 
 <section class="notlist" style="padding-top:0"><div class="wrap">
-  <div class="head reveal"><div><div class="kicker mono">04 — Pour être clair</div><h2>Ce que MIRI n'est pas.</h2></div></div>
+  <div class="head reveal"><div><div class="kicker mono">05 — Notre approche</div><h2>Pensé pour les gens en bonne santé.</h2></div></div>
   <div class="nots reveal">
-    <div><b>Pas un remplaçant de votre médecin traitant.</b><p>MIRI vient en plus. Vous repartez avec un compte rendu à lui montrer.</p></div>
-    <div><b>Pas un service d'urgence.</b><p>En cas de symptôme aigu, appelez le 15.</p></div>
-    <div><b>Pas une appli qui devine.</b><p>Chaque résultat est relu par un médecin, en face de vous.</p></div>
+    <div><b>Tout sous un même toit.</b><p>Scan, prise de sang, analyse et médecin au même endroit. Une heure, et vous repartez avec vos réponses.</p></div>
+    <div><b>Du temps avec un médecin.</b><p>Nos consultations sont conçues pour prendre le temps, pas pour enchaîner les patients.</p></div>
+    <div><b>Un suivi dans la durée.</b><p>Le vrai intérêt, c'est de comparer. D'une visite à l'autre, on voit ce qui change, avant que ça devienne un problème.</p></div>
   </div>
+  <p class="src mono reveal" style="margin-top:28px">MIRI ne remplace pas votre médecin traitant et n'est pas un service d'urgence. En cas d'urgence, appelez le 15.</p>
 </div></section>
 
 <section class="manifesto"><div class="wrap">
-  <div class="kicker mono">05 — Manifeste</div>
+  <div class="kicker mono">06 — Manifeste</div>
   <p id="mani">Votre corps vous parle depuis toujours. Vous ne l'entendez que quand il crie. MIRI vous apprend à l'écouter avant.</p>
 </div></section>
 
 <section id="faq"><div class="wrap faq">
-  <div class="reveal"><div class="kicker mono">06 — Questions</div><h2>Bon à savoir.</h2></div>
+  <div class="reveal"><div class="kicker mono">07 — Questions</div><h2>Bon à savoir.</h2></div>
   <div class="reveal">
     <details open><summary>Quand MIRI ouvre-t-il&nbsp;?</summary><p>Nous préparons un premier espace à Paris. La date n'est pas encore fixée : les inscrits sur la liste d'attente l'apprendront en premier, avec un accès prioritaire.</p></details>
     <details><summary>C'est pour qui&nbsp;?</summary><p>Pour tous les adultes qui se sentent bien et veulent le vérifier. Pas besoin d'ordonnance ni de symptôme pour venir.</p></details>
