@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#14020A;--bg2:#1F0511;--b:#5B0F22;--b2:#8E2B44;--r:#F5DDE0;--rg:#FFB8C6;--glass:rgba(245,221,224,.04);--edge:rgba(245,221,224,.12);--rad:24px}
+:root{--bg:#14020A;--bg2:#1F0511;--b:#5B0F22;--b2:#8E2B44;--r:#F5DDE0;--rg:#FFB8C6;--glass:rgba(245,221,224,.04);--edge:rgba(245,221,224,.12);--amber:#E8B26A;--rad:24px}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--r);font-family:"Inter Tight",system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;letter-spacing:-.01em}
@@ -96,8 +96,54 @@ h2{font-size:clamp(40px,5.6vw,84px);line-height:.96;font-weight:500;letter-spaci
 .ring .bgc{stroke:var(--edge)}.ring .fg{stroke:var(--rg);stroke-linecap:round;stroke-dasharray:251;stroke-dashoffset:251;transition:stroke-dashoffset 2s ease;filter:drop-shadow(0 0 6px rgba(255,184,198,.6))}
 .in .ring .fg,.ring.in .fg{stroke-dashoffset:60}
 
+
+/* STATS + ZONES */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--edge);border-radius:var(--rad);margin-bottom:12px;background:var(--glass)}
+.stats div{padding:22px 24px;display:flex;flex-direction:column;gap:6px}
+.stats div+div{border-left:1px solid var(--edge)}
+.stats b{font-size:clamp(28px,3vw,44px);font-weight:500;letter-spacing:-.04em}
+.stats .mono{opacity:.55;font-size:11px}
+.zones{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.zone{border-radius:var(--rad);padding:26px;display:flex;flex-direction:column;gap:16px;position:relative;overflow:hidden;background:var(--glass);border:1px solid var(--edge);min-height:440px;transition:border-color .3s,transform .3s}
+.zone:hover{border-color:rgba(255,184,198,.4);transform:translateY(-3px)}
+.zone.accent{background:linear-gradient(160deg,var(--b2),var(--b) 60%,#3A0716);border-color:rgba(255,184,198,.25)}
+.zone .top{display:flex;justify-content:space-between;opacity:.6}
+.zone h3{font-size:28px;font-weight:500;letter-spacing:-.03em;margin-top:auto}
+.zone ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.zone li{font-size:15px;display:flex;gap:10px;align-items:baseline;opacity:.9}
+.zone li::before{content:"";flex:none;width:5px;height:5px;border:1px solid var(--rg);transform:rotate(45deg) translateY(-2px)}
+.why{font-size:14px;font-weight:300;opacity:.7;line-height:1.5;border-top:1px solid var(--edge);padding-top:14px}
+.why .mono{display:block;color:var(--rg);font-size:10.5px;margin-bottom:4px;opacity:1}
+.zone .ecg{top:16%}
+.steps{grid-template-columns:repeat(4,1fr)}
+
+/* RESULTS */
+.results{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,5vw,80px);align-items:center}
+.get{list-style:none;margin-top:32px;display:flex;flex-direction:column;border-top:1px solid var(--edge)}
+.get li{padding:14px 0;border-bottom:1px solid var(--edge);display:flex;gap:14px;align-items:center}
+.get li::before{content:"✓";font-family:"JetBrains Mono",monospace;color:var(--rg);font-size:13px}
+.report{border-radius:var(--rad);border:1px solid rgba(255,184,198,.25);background:linear-gradient(180deg,rgba(142,43,68,.25),rgba(20,2,10,.4));backdrop-filter:blur(14px);padding:24px;box-shadow:0 30px 80px -30px rgba(142,43,68,.7)}
+.rhead{display:flex;justify-content:space-between;opacity:.6;padding-bottom:16px;border-bottom:1px solid var(--edge)}
+.score{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:18px 0}
+.score div{border:1px solid var(--edge);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:4px}
+.score b{font-family:"JetBrains Mono",monospace;font-weight:500;font-size:26px;color:var(--rg)}
+.score b.warn{color:var(--amber)}
+.score .mono{font-size:10px;opacity:.55}
+.row{display:grid;grid-template-columns:1fr auto auto;gap:14px;align-items:center;padding:12px 0;border-top:1px solid var(--edge);font-size:15px}
+.row .v{font-size:13px;opacity:.75}
+.chip{font-size:12px;padding:5px 10px;border-radius:999px;white-space:nowrap}
+.chip.ok{background:rgba(255,184,198,.12);color:var(--rg)}
+.chip.watch{background:rgba(232,178,106,.14);color:var(--amber)}
+.note{margin-top:14px;opacity:.4;font-size:10.5px}
+
+/* NOT */
+.nots{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.nots div{border-top:1px solid var(--rg);padding-top:20px}
+.nots b{display:block;font-size:22px;font-weight:500;letter-spacing:-.02em;margin-bottom:10px}
+.nots p{font-weight:300;opacity:.65;line-height:1.55}
+
 /* STEPS */
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.steps{display:grid;gap:12px}
 .step{border-radius:var(--rad);border:1px solid var(--edge);background:var(--glass);padding:26px;min-height:300px;display:flex;flex-direction:column}
 .step .mono{color:var(--rg);display:flex;justify-content:space-between}
 .step h3{font-size:clamp(28px,2.8vw,40px);font-weight:500;letter-spacing:-.035em;margin:auto 0 12px}
@@ -129,7 +175,7 @@ details p{margin-top:14px;font-weight:300;line-height:1.6;opacity:.65;max-width:
 .big-seal{width:64px;height:64px;margin:0 auto 30px;display:block;transform:rotate(-4deg);filter:drop-shadow(0 0 24px rgba(255,184,198,.55))}
 .big-seal rect:first-child{fill:var(--r)}.big-seal rect+rect{stroke:var(--b)}.big-seal g{stroke:var(--b)}
 .wl-panel h2{margin:0 auto;font-size:clamp(48px,8.4vw,128px);position:relative}
-.wl-panel .lead{margin:22px auto 26px;position:relative}
+.wl-panel .lead{margin:22px auto 40px;position:relative}
 .count{display:flex;gap:10px;justify-content:center;margin-bottom:36px;position:relative}
 .count div{border:1px solid var(--edge);background:rgba(20,2,10,.35);border-radius:14px;padding:12px 16px;min-width:76px}
 .count b{display:block;font-family:"JetBrains Mono",monospace;font-weight:500;font-size:26px;color:var(--rg);text-shadow:0 0 14px rgba(255,184,198,.5)}
@@ -152,13 +198,18 @@ footer{padding:36px 0 44px;position:relative;z-index:1}
 @media(max-width:960px){
   .links{display:none}
   .bento{grid-template-columns:1fr 1fr;grid-auto-rows:230px}
-  .steps,.faq{grid-template-columns:1fr}
+  .faq,.results,.nots{grid-template-columns:1fr}
+  .steps,.zones{grid-template-columns:1fr 1fr}
+  .stats{grid-template-columns:1fr 1fr}.stats div:nth-child(3){border-left:0}.stats div:nth-child(n+3){border-top:1px solid var(--edge)}
   .step{min-height:220px}
   #sphere{right:-12%;top:70px;width:80vw;height:62%;bottom:auto;opacity:.85}
   .h2{display:none}.h1{right:6%;top:15%}.h3{right:auto;left:6%;top:24%}
 }
 @media(max-width:560px){
   .bento{grid-template-columns:1fr;grid-auto-rows:auto}
+  .steps,.zones{grid-template-columns:1fr}
+  .zone{min-height:0}.zone h3{margin-top:8px}
+  .row{grid-template-columns:1fr auto;font-size:14px}.row .v{display:none}
   .card,.card.big,.card.wide{grid-column:auto;grid-row:auto;min-height:210px}
   .card.big{min-height:340px}
   .pill{padding:10px 16px;font-size:14px}
@@ -184,7 +235,7 @@ footer{padding:36px 0 44px;position:relative;z-index:1}
     <path d="M51 15 V36 Q51 46 40 52"/>
   </g>
 </svg><span>MIRI</span></a>
-  <div class="links mono"><a href="#bilan">Le bilan</a><a href="#etapes">Protocole</a><a href="#faq">Questions</a></div>
+  <div class="links mono"><a href="#bilan">Le bilan</a><a href="#etapes">La visite</a><a href="#resultats">Résultats</a><a href="#faq">Questions</a></div>
   <a href="#liste" class="pill">Liste d'attente <span class="arr">→</span></a>
 </nav>
 
@@ -209,41 +260,99 @@ footer{padding:36px 0 44px;position:relative;z-index:1}
 
 <section id="bilan"><div class="wrap">
   <div class="head reveal">
-    <div><div class="kicker mono">01 — Le bilan</div><h2>Tout ce qu'un check-up classique ne regarde pas.</h2></div>
-    <p class="lead">Des capteurs de dernière génération, une prise de sang, et vos résultats le jour même.</p>
+    <div><div class="kicker mono">01 — Ce que fait MIRI</div><h2>Un check-up complet de tout le corps. En une seule visite.</h2></div>
+    <p class="lead">Aujourd'hui, pour faire le point sur sa santé, il faut voir un dermato, un cardiologue, faire une prise de sang, attendre des semaines. Chez MIRI, tout se fait au même endroit, en une heure environ.</p>
   </div>
-  <div class="bento">
-    <div class="card accent big reveal">
-      <div class="top mono"><span>Indicateurs</span><span>● Live</span></div>
+  <div class="stats reveal">
+    <div><b>≈ 1 h</b><span class="mono">Durée de la visite</span></div>
+    <div><b>4</b><span class="mono">Zones examinées</span></div>
+    <div><b>Jour J</b><span class="mono">Résultats expliqués</span></div>
+    <div><b>1</b><span class="mono">Médecin dédié</span></div>
+  </div>
+  <div class="zones">
+    <article class="zone accent reveal">
+      <div class="top mono"><span>Zone 01</span><span>♥</span></div>
       <svg class="ecg" viewBox="0 0 600 120" preserveAspectRatio="none"><path d="M0 60 H150 L170 60 L185 30 L200 95 L215 10 L232 80 L245 60 H330 L345 50 L360 60 H420 L438 60 L452 25 L468 100 L482 15 L498 78 L510 60 H600"/></svg>
-      <div><div class="num">+50</div><h3>indicateurs mesurés</h3><p>Cœur, peau, sang, métabolisme. Une photographie précise de votre santé aujourd'hui.</p></div>
-    </div>
-    <div class="card reveal"><div class="top mono"><span>Durée</span><span>T-00</span></div><div><div class="num">60</div><p>minutes, de l'arrivée aux résultats</p></div></div>
-    <div class="card reveal"><div class="top mono"><span>Invasif</span><span>0</span></div>
-      <svg class="ring" viewBox="0 0 100 100"><circle class="bgc" cx="50" cy="50" r="40"/><circle class="fg" cx="50" cy="50" r="40" transform="rotate(-90 50 50)"/></svg>
-      <div><h3>Sans aiguille</h3><p>Hors prise de sang, tout est non invasif.</p></div></div>
-    <div class="card wide reveal"><div class="top mono"><span>Restitution</span><span>1:1</span></div><div><h3>Un médecin, en face à face</h3><p>Vos résultats sont relus et expliqués avec vous, dans des mots simples, juste après la séance.</p></div></div>
+      <h3>Cœur &amp; circulation</h3>
+      <ul><li>Électrocardiogramme</li><li>Tension aux deux bras</li><li>Rythme et circulation sanguine</li></ul>
+      <p class="why"><span class="mono">Pourquoi</span>Les problèmes cardiovasculaires s'installent souvent sans aucun symptôme.</p>
+    </article>
+    <article class="zone reveal">
+      <div class="top mono"><span>Zone 02</span><span>◎</span></div>
+      <h3>Peau</h3>
+      <ul><li>Photo haute définition de tout le corps</li><li>Cartographie de vos grains de beauté</li><li>Comparaison d'une visite à l'autre</li></ul>
+      <p class="why"><span class="mono">Pourquoi</span>Un grain de beauté qui change, ça se repère beaucoup mieux quand on a une image de référence.</p>
+    </article>
+    <article class="zone reveal">
+      <div class="top mono"><span>Zone 03</span><span>◐</span></div>
+      <h3>Sang</h3>
+      <ul><li>Une petite prise de sang sur place</li><li>Cholestérol, glycémie, inflammation</li><li>Résultats pendant la visite</li></ul>
+      <p class="why"><span class="mono">Pourquoi</span>Ce sont les marqueurs de base pour anticiper diabète et maladies cardiaques.</p>
+    </article>
+    <article class="zone reveal">
+      <div class="top mono"><span>Zone 04</span><span>◇</span></div>
+      <h3>Corps &amp; métabolisme</h3>
+      <ul><li>Masse musculaire et masse grasse</li><li>Force de préhension</li><li>Examen des yeux</li></ul>
+      <p class="why"><span class="mono">Pourquoi</span>Le poids seul ne dit presque rien. La composition du corps, beaucoup plus.</p>
+    </article>
   </div>
 </div></section>
 
 <section id="etapes" style="padding-top:0"><div class="wrap">
-  <div class="head reveal"><div><div class="kicker mono">02 — Protocole</div><h2>Trois étapes. Une heure.</h2></div></div>
+  <div class="head reveal"><div><div class="kicker mono">02 — Votre visite</div><h2>Comment se passe une visite.</h2></div><p class="lead">Pas de salle d'attente, pas d'ordonnance à aller chercher. Vous arrivez, on s'occupe de tout.</p></div>
   <div class="steps">
-    <div class="step reveal" style="--w:33%"><span class="mono"><span>Étape 01</span><span>00:00</span></span><h3>Mesurer</h3><p>Vous entrez dans un espace calme. Nos capteurs et notre équipe s'occupent du reste.</p><div class="prog"><i></i></div></div>
-    <div class="step reveal" style="--w:66%"><span class="mono"><span>Étape 02</span><span>00:40</span></span><h3>Comprendre</h3><p>Un médecin parcourt vos résultats avec vous, à l'écran, point par point.</p><div class="prog"><i></i></div></div>
-    <div class="step reveal" style="--w:100%"><span class="mono"><span>Étape 03</span><span>∞</span></span><h3>Suivre</h3><p>Vos données restent dans votre espace MIRI. Revenez chaque année pour voir ce qui évolue.</p><div class="prog"><i></i></div></div>
+    <div class="step reveal" style="--w:25%"><span class="mono"><span>Étape 01</span><span>Avant</span></span><h3>Réserver</h3><p>Vous choisissez un créneau en ligne et répondez à un court questionnaire sur vos antécédents et vos habitudes.</p><div class="prog"><i></i></div></div>
+    <div class="step reveal" style="--w:50%"><span class="mono"><span>Étape 02</span><span>Sur place</span></span><h3>Le scan</h3><p>En sous-vêtements, dans une cabine privée. Les capteurs mesurent le cœur, la peau et le corps. Une infirmière fait la prise de sang.</p><div class="prog"><i></i></div></div>
+    <div class="step reveal" style="--w:75%"><span class="mono"><span>Étape 03</span><span>Juste après</span></span><h3>Le médecin</h3><p>Un médecin passe tous vos résultats en revue avec vous, répond à vos questions et vous oriente vers un spécialiste si besoin.</p><div class="prog"><i></i></div></div>
+    <div class="step reveal" style="--w:100%"><span class="mono"><span>Étape 04</span><span>Ensuite</span></span><h3>Le suivi</h3><p>Votre compte rendu est dans votre espace MIRI. L'année suivante, on compare pour voir ce qui a bougé.</p><div class="prog"><i></i></div></div>
+  </div>
+</div></section>
+
+<section id="resultats" style="padding-top:0"><div class="wrap results">
+  <div class="reveal">
+    <div class="kicker mono">03 — Vos résultats</div>
+    <h2>Un compte rendu que vous comprenez vraiment.</h2>
+    <p class="lead">Chaque indicateur est classé simplement : tout va bien, à surveiller, ou à voir avec un spécialiste. Pas de jargon, pas de PDF illisible.</p>
+    <ul class="get">
+      <li>Le bilan complet dans votre espace MIRI</li>
+      <li>Les explications du médecin, en clair</li>
+      <li>Une orientation vers un spécialiste si quelque chose doit être vérifié</li>
+      <li>Un compte rendu à partager avec votre médecin traitant</li>
+    </ul>
+  </div>
+  <div class="report reveal" aria-label="Exemple de compte rendu">
+    <div class="rhead mono"><span>Compte rendu · Exemple</span><span>Visite 01</span></div>
+    <div class="score"><div><b>36</b><span class="mono">Indicateurs normaux</span></div><div><b class="warn">2</b><span class="mono">À surveiller</span></div><div><b>0</b><span class="mono">À consulter</span></div></div>
+    <div class="row"><span>Tension artérielle</span><span class="mono v">12 / 8</span><span class="chip ok">Normal</span></div>
+    <div class="row"><span>Rythme cardiaque au repos</span><span class="mono v">62 bpm</span><span class="chip ok">Normal</span></div>
+    <div class="row"><span>Cholestérol LDL</span><span class="mono v">1,62 g/L</span><span class="chip watch">À surveiller</span></div>
+    <div class="row"><span>Glycémie à jeun</span><span class="mono v">0,91 g/L</span><span class="chip ok">Normal</span></div>
+    <div class="row"><span>Grains de beauté suivis</span><span class="mono v">47</span><span class="chip watch">1 à revoir</span></div>
+    <div class="row"><span>Force de préhension</span><span class="mono v">34 kg</span><span class="chip ok">Normal</span></div>
+    <p class="note mono">Valeurs fictives, pour illustration</p>
+  </div>
+</div></section>
+
+<section class="notlist" style="padding-top:0"><div class="wrap">
+  <div class="head reveal"><div><div class="kicker mono">04 — Pour être clair</div><h2>Ce que MIRI n'est pas.</h2></div></div>
+  <div class="nots reveal">
+    <div><b>Pas un remplaçant de votre médecin traitant.</b><p>MIRI vient en plus. Vous repartez avec un compte rendu à lui montrer.</p></div>
+    <div><b>Pas un service d'urgence.</b><p>En cas de symptôme aigu, appelez le 15.</p></div>
+    <div><b>Pas une appli qui devine.</b><p>Chaque résultat est relu par un médecin, en face de vous.</p></div>
   </div>
 </div></section>
 
 <section class="manifesto"><div class="wrap">
-  <div class="kicker mono">03 — Manifeste</div>
+  <div class="kicker mono">05 — Manifeste</div>
   <p id="mani">Votre corps vous parle depuis toujours. Vous ne l'entendez que quand il crie. MIRI vous apprend à l'écouter avant.</p>
 </div></section>
 
 <section id="faq"><div class="wrap faq">
-  <div class="reveal"><div class="kicker mono">04 — Questions</div><h2>Bon à savoir.</h2></div>
+  <div class="reveal"><div class="kicker mono">06 — Questions</div><h2>Bon à savoir.</h2></div>
   <div class="reveal">
-    <details open><summary>Quand MIRI ouvre-t-il&nbsp;?</summary><p>Nous préparons un premier espace à Paris. Les inscrits sur la liste d'attente seront prévenus en premier, avec un accès prioritaire.</p></details>
+    <details open><summary>Quand MIRI ouvre-t-il&nbsp;?</summary><p>Nous préparons un premier espace à Paris. La date n'est pas encore fixée : les inscrits sur la liste d'attente l'apprendront en premier, avec un accès prioritaire.</p></details>
+    <details><summary>C'est pour qui&nbsp;?</summary><p>Pour tous les adultes qui se sentent bien et veulent le vérifier. Pas besoin d'ordonnance ni de symptôme pour venir.</p></details>
+    <details><summary>Est-ce que ça fait mal&nbsp;?</summary><p>Non. Tout est non invasif, à part une petite prise de sang.</p></details>
     <details><summary>Combien ça coûtera&nbsp;?</summary><p>Le prix sera annoncé à l'ouverture. Les premiers inscrits bénéficieront d'un tarif de lancement.</p></details>
     <details><summary>Est-ce que ça remplace mon médecin traitant&nbsp;?</summary><p>Non. MIRI est complémentaire : vous repartez avec un compte rendu que vous pouvez partager avec votre médecin.</p></details>
     <details><summary>Et mes données&nbsp;?</summary><p>Elles seront hébergées en France, chez un hébergeur certifié pour les données de santé, et ne seront jamais revendues.</p></details>
@@ -263,10 +372,7 @@ footer{padding:36px 0 44px;position:relative;z-index:1}
   </g>
 </svg>
   <h2 class="reveal">Soyez parmi<br><span class="grad">les premiers.</span></h2>
-  <p class="lead reveal">Accès prioritaire et tarif de lancement pour les inscrits.</p>
-  <div class="count reveal" aria-label="Ouverture en 2027">
-    <div><b id="cd-d">--</b><span class="mono">Jours</span></div><div><b id="cd-h">--</b><span class="mono">Heures</span></div><div><b id="cd-m">--</b><span class="mono">Min</span></div><div><b id="cd-s">--</b><span class="mono">Sec</span></div>
-  </div>
+  <p class="lead reveal">Pas encore de date d'ouverture. Les inscrits seront prévenus en premier, avec un accès prioritaire et un tarif de lancement.</p>
   <form id="form" class="reveal" novalidate>
     <input type="email" name="email" placeholder="Votre e-mail" required autocomplete="email">
     <button class="pill" type="submit">Je m'inscris <span class="arr">→</span></button>
@@ -276,7 +382,7 @@ footer{padding:36px 0 44px;position:relative;z-index:1}
     </select>
   </form>
   <div class="msg" id="msg" role="status"></div>
-  <div class="fine mono">Pas de spam · Un e-mail le jour de l'ouverture</div>
+  <div class="fine mono">Pas de spam · Un e-mail quand on ouvre, c'est tout</div>
 </div></div>
 
 <footer><div class="wrap foot mono">
@@ -287,8 +393,6 @@ footer{padding:36px 0 44px;position:relative;z-index:1}
 <script>
 // Remplacez par votre endpoint (Formspree, Tally, Google Apps Script...). Laissez vide pour un test local.
 const FORM_ENDPOINT = "";
-// Date d'ouverture affichée dans le compte à rebours (à ajuster).
-const LAUNCH = new Date("2027-03-01T10:00:00+01:00");
 
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -391,17 +495,6 @@ const lightWords = () => {
   words.forEach((w, i) => w.classList.toggle('on', i < p * words.length));
 };
 addEventListener('scroll', lightWords, {passive:true}); lightWords();
-
-/* Compte à rebours */
-const pad = n => String(n).padStart(2, '0');
-const tick = () => {
-  let d = Math.max(0, LAUNCH - Date.now()) / 1000;
-  document.getElementById('cd-d').textContent = Math.floor(d / 86400);
-  document.getElementById('cd-h').textContent = pad(Math.floor(d % 86400 / 3600));
-  document.getElementById('cd-m').textContent = pad(Math.floor(d % 3600 / 60));
-  document.getElementById('cd-s').textContent = pad(Math.floor(d % 60));
-};
-tick(); setInterval(tick, 1000);
 
 /* Formulaire */
 const form = document.getElementById('form'), msg = document.getElementById('msg');
