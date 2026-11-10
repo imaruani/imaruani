@@ -76,8 +76,8 @@ function blood(T, cam, a=1, speed=.6) { PATHS.forEach((path, pi) => { for (let j
   const s = clamp(q[2]*.011, 3, 70); x.fillStyle = `rgba(91,15,34,${clamp(1.1 - s/60, .15, .95)*a})`; x.beginPath(); x.arc(q[0], q[1], s, 0, 6.283); x.fill(); } }); }
 function sparks(T, cam, a=1) { for (let i=0;i<90;i++){ const p = pts[(i*131) % pts.length], q = proj(cam, p[0], p[1], p[2]); if (!q) continue; const tw = .5 + .5*Math.sin(T*7 + i*1.7); if (tw < .6) continue;
   const s = clamp(q[2]*.012, 6, 40)*tw; x.save(); x.translate(q[0], q[1]); x.rotate(.785); x.fillStyle = `rgba(255,255,255,${tw*a})`; x.shadowColor='rgba(255,255,255,1)'; x.shadowBlur=20; x.fillRect(-s/2,-1.5,s,3); x.fillRect(-1.5,-s/2,3,s); x.restore(); } }
-function callouts(cam, lt) { [[-.2,.3,.1,'Peau',-1],[-.045,.44,.1,'Cœur',1],[.31,.1,.07,'Sang',1],[-.1,-.4,.05,'Corps entier',-1]].forEach(([px,py,pz,txt,side],i) => { const p = eo((lt - i*.12)/.3); if (p<=0) return; const q = proj(cam, px,py,pz); if (!q) return;
-  const ex = side>0 ? W-140 : 140, ey = q[1] - 70; x.strokeStyle = `rgba(91,15,34,${.85*p})`; x.lineWidth = 2.5; x.beginPath(); x.moveTo(q[0],q[1]); x.lineTo(lerp(q[0],ex,p), lerp(q[1],ey,p)); x.stroke();
+function callouts(cam, lt) { [[-.2,.3,.1,'Peau',-1],[-.045,.44,.1,'Cœur',1,30],[.31,.1,.07,'Sang',1],[-.1,-.4,.05,'Corps entier',-1]].forEach(([px,py,pz,txt,side,dy],i) => { const p = eo((lt - i*.12)/.3); if (p<=0) return; const q = proj(cam, px,py,pz); if (!q) return;
+  const ex = side>0 ? W-140 : 140, ey = q[1] + (dy ?? -70); x.strokeStyle = `rgba(91,15,34,${.85*p})`; x.lineWidth = 2.5; x.beginPath(); x.moveTo(q[0],q[1]); x.lineTo(lerp(q[0],ex,p), lerp(q[1],ey,p)); x.stroke();
   x.fillStyle = C.ink; x.beginPath(); x.arc(q[0],q[1],8,0,6.283); x.fill(); x.save(); x.globalAlpha = p; x.font = `500 30px ${MONO}`; x.letterSpacing='4px'; x.fillStyle = C.ink; x.textAlign = side>0 ? 'right' : 'left'; x.textBaseline='bottom'; x.fillText(txt.toUpperCase(), ex, ey-10); x.restore(); }); }
 
 /* ---------- Texte : les phrases du site ---------- */
