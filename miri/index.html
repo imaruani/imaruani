@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MIRI — Bientôt en France</title>
+<meta name="description" content="MIRI arrive en France. Un bilan complet de votre corps, en une heure. Rejoignez la liste d'attente.">
+<meta property="og:title" content="MIRI — Bientôt en France">
+<meta property="og:description" content="Un bilan complet de votre corps, en une heure. Rejoignez la liste d'attente.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bordeaux:#5B0F22;
+  --bordeaux-deep:#3E0816;
+  --rose:#F5DDE0;
+  --rose-soft:#FBEFF1;
+  --line:rgba(91,15,34,.18);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--rose);color:var(--bordeaux);font-family:Inter,system-ui,sans-serif;font-weight:400;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit}
+.serif{font-family:"Instrument Serif",Georgia,serif;font-weight:400}
+
+/* NAV */
+nav{position:fixed;inset:0 0 auto;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:22px clamp(16px,4vw,48px);mix-blend-mode:normal;transition:background .3s}
+nav.scrolled{background:rgba(245,221,224,.85);backdrop-filter:blur(12px)}
+.logo{font-family:"Instrument Serif",serif;font-size:28px;letter-spacing:.18em;text-decoration:none}
+.btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--bordeaux);border-radius:999px;padding:12px 22px;font-size:14px;text-decoration:none;background:transparent;color:var(--bordeaux);cursor:pointer;transition:all .25s;font-family:inherit}
+.btn:hover,.btn.fill{background:var(--bordeaux);color:var(--rose)}
+.btn.fill:hover{background:var(--bordeaux-deep)}
+
+/* HERO */
+.hero{min-height:100svh;display:grid;place-items:center;text-align:center;padding:120px 16px 60px;position:relative;overflow:hidden}
+.orb{position:absolute;width:min(90vw,820px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 35%,#8A2A40 0%,var(--bordeaux) 45%,var(--bordeaux-deep) 75%);filter:blur(2px);opacity:.95;animation:breathe 9s ease-in-out infinite}
+.orb::after{content:"";position:absolute;inset:18%;border-radius:50%;border:1px solid rgba(245,221,224,.25)}
+@keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
+.hero-inner{position:relative;color:var(--rose);max-width:760px}
+.eyebrow{font-size:12px;letter-spacing:.28em;text-transform:uppercase;opacity:.8}
+.hero h1{font-size:clamp(48px,9vw,120px);line-height:.95;margin:22px 0}
+.hero h1 em{font-style:italic}
+.hero p{font-size:clamp(16px,2vw,19px);font-weight:300;max-width:460px;margin:0 auto 34px;opacity:.9;line-height:1.55}
+.hero .btn{border-color:var(--rose);color:var(--rose)}
+.hero .btn:hover{background:var(--rose);color:var(--bordeaux)}
+
+/* SECTIONS */
+section{padding:clamp(80px,12vw,160px) clamp(16px,4vw,48px)}
+.wrap{max-width:1180px;margin:0 auto}
+.statement{font-size:clamp(32px,5vw,64px);line-height:1.1;max-width:980px}
+.statement em{font-style:italic;opacity:.7}
+
+.stats{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);margin-top:80px}
+.stat{padding:36px 24px 0 0}
+.stat + .stat{padding-left:24px;border-left:1px solid var(--line)}
+.stat b{display:block;font-family:"Instrument Serif",serif;font-weight:400;font-size:clamp(48px,6vw,84px);line-height:1}
+.stat span{font-size:14px;opacity:.75;display:block;margin-top:10px;max-width:220px;line-height:1.5}
+
+.dark{background:var(--bordeaux);color:var(--rose)}
+.dark .line{border-color:rgba(245,221,224,.2)}
+.steps-head{display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap;margin-bottom:64px}
+.steps-head h2{font-size:clamp(36px,5vw,64px);line-height:1}
+.steps-head p{max-width:360px;font-weight:300;opacity:.8;line-height:1.6}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.step{border:1px solid rgba(245,221,224,.2);border-radius:24px;padding:32px;min-height:320px;display:flex;flex-direction:column;justify-content:space-between;transition:background .3s}
+.step:hover{background:rgba(245,221,224,.05)}
+.step .n{font-size:13px;letter-spacing:.2em;opacity:.6}
+.step h3{font-size:34px;margin:auto 0 12px}
+.step p{font-weight:300;opacity:.8;line-height:1.6;font-size:15px}
+
+.split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,6vw,96px);align-items:center}
+.visual{aspect-ratio:4/5;border-radius:28px;background:linear-gradient(160deg,var(--rose-soft),#EBC3C9);position:relative;overflow:hidden;border:1px solid var(--line)}
+.visual svg{position:absolute;inset:0;width:100%;height:100%}
+.split h2{font-size:clamp(36px,4.5vw,58px);line-height:1.05;margin-bottom:24px}
+.split p{font-weight:300;line-height:1.7;opacity:.85;margin-bottom:28px}
+.list{list-style:none;border-top:1px solid var(--line)}
+.list li{padding:16px 0;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;font-size:15px}
+.list li span:last-child{opacity:.6}
+
+/* WAITLIST */
+.cta{text-align:center}
+.cta h2{font-size:clamp(44px,8vw,110px);line-height:.95;margin-bottom:24px}
+.cta h2 em{font-style:italic}
+.cta p{font-weight:300;opacity:.8;margin-bottom:40px}
+form{display:flex;gap:10px;max-width:520px;margin:0 auto;flex-wrap:wrap;justify-content:center}
+input,select{flex:1 1 240px;background:transparent;border:1px solid rgba(245,221,224,.45);border-radius:999px;padding:15px 22px;color:var(--rose);font:inherit;font-size:15px;outline:none}
+select{flex:1 1 100%;appearance:none;cursor:pointer}
+select option{color:var(--bordeaux)}
+input::placeholder{color:rgba(245,221,224,.6)}
+input:focus,select:focus{border-color:var(--rose)}
+.cta .btn{border-color:var(--rose);background:var(--rose);color:var(--bordeaux);flex:0 0 auto;padding:15px 28px}
+.cta .btn:hover{background:transparent;color:var(--rose)}
+.msg{margin-top:22px;min-height:22px;font-size:14px}
+.counter{margin-top:48px;font-size:13px;letter-spacing:.2em;text-transform:uppercase;opacity:.6}
+
+footer{padding:32px clamp(16px,4vw,48px);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:13px;background:var(--bordeaux-deep);color:rgba(245,221,224,.7)}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .9s ease,transform .9s ease}
+.reveal.in{opacity:1;transform:none}
+
+@media(max-width:860px){
+  .stats,.steps,.split{grid-template-columns:1fr}
+  .stat + .stat{padding-left:0;border-left:0;border-top:1px solid var(--line)}
+  .stat{padding:28px 0}
+  .step{min-height:220px}
+  nav .btn{padding:10px 16px}
+  .orb{width:640px}
+  .hero-inner{max-width:340px}
+}
+@media (prefers-reduced-motion:reduce){.orb{animation:none}.reveal{opacity:1;transform:none;transition:none}}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="#" class="logo">MIRI</a>
+  <a href="#liste" class="btn">Rejoindre la liste</a>
+</nav>
+
+<header class="hero">
+  <div class="orb" aria-hidden="true"></div>
+  <div class="hero-inner">
+    <div class="eyebrow">Paris · Bientôt</div>
+    <h1 class="serif">Connaissez-vous <em>vraiment</em> votre corps&nbsp;?</h1>
+    <p>Un bilan de santé complet, sans aiguille ni attente. Une heure pour voir ce que les rendez-vous classiques ne montrent pas.</p>
+    <a href="#liste" class="btn">Être parmi les premiers →</a>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <p class="statement serif reveal">La médecine attend souvent que quelque chose aille mal. <em>MIRI préfère regarder avant.</em></p>
+    <div class="stats reveal">
+      <div class="stat"><b>60</b><span>minutes, du check-in aux résultats</span></div>
+      <div class="stat"><b>+50</b><span>indicateurs de santé mesurés à chaque visite</span></div>
+      <div class="stat"><b>1</b><span>médecin pour vous expliquer tout, en face à face</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="dark">
+  <div class="wrap">
+    <div class="steps-head reveal">
+      <h2 class="serif">Comment ça marche</h2>
+      <p>Une expérience pensée comme un rituel, pas comme une salle d'attente.</p>
+    </div>
+    <div class="steps">
+      <div class="step reveal"><span class="n">01</span><h3 class="serif">Mesurer</h3><p>Cœur, peau, circulation, composition corporelle, prise de sang. Tout en une seule séance, au même endroit.</p></div>
+      <div class="step reveal"><span class="n">02</span><h3 class="serif">Comprendre</h3><p>Un médecin parcourt vos résultats avec vous, sur écran, dans un langage clair.</p></div>
+      <div class="step reveal"><span class="n">03</span><h3 class="serif">Suivre</h3><p>Vos données restent dans votre espace. On compare d'une année à l'autre pour voir ce qui change.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap split">
+    <div class="visual reveal" aria-hidden="true">
+      <svg viewBox="0 0 400 500" fill="none" stroke="#5B0F22" stroke-width="1">
+        <g opacity=".35">
+          <circle cx="200" cy="250" r="60"/><circle cx="200" cy="250" r="110"/><circle cx="200" cy="250" r="160"/><circle cx="200" cy="250" r="210"/>
+        </g>
+        <path d="M40 260 H140 L160 210 L180 310 L200 180 L220 290 L240 250 H360" stroke-width="2"/>
+        <circle cx="200" cy="180" r="5" fill="#5B0F22"/>
+      </svg>
+    </div>
+    <div class="reveal">
+      <h2 class="serif">Pensé pour celles et ceux qui préfèrent savoir.</h2>
+      <p>MIRI ouvre bientôt son premier espace en France. On commence petit, avec une liste d'attente, pour construire l'expérience avec vous.</p>
+      <ul class="list">
+        <li><span>Cardio &amp; tension</span><span>✓</span></li>
+        <li><span>Examen de la peau</span><span>✓</span></li>
+        <li><span>Bilan sanguin</span><span>✓</span></li>
+        <li><span>Composition corporelle</span><span>✓</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="dark cta" id="liste">
+  <div class="wrap">
+    <h2 class="serif reveal">Bientôt <em>en France.</em></h2>
+    <p class="reveal">Inscrivez-vous pour un accès prioritaire et un tarif de lancement.</p>
+    <form id="form" class="reveal" novalidate>
+      <input type="email" name="email" placeholder="Votre e-mail" required autocomplete="email">
+      <button class="btn" type="submit">Je veux en être</button>
+      <select name="ville" aria-label="Ville">
+        <option value="">Votre ville (facultatif)</option>
+        <option>Paris</option><option>Lyon</option><option>Marseille</option><option>Bordeaux</option><option>Lille</option><option>Nice</option><option>Autre</option>
+      </select>
+    </form>
+    <div class="msg" id="msg" role="status"></div>
+    <div class="counter">Ouverture des premières places · 2027</div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 MIRI</span>
+  <span>Teaser. Aucun service médical n'est proposé pour l'instant.</span>
+</footer>
+
+<script>
+// Remplacez par votre endpoint (Formspree, Tally, Google Apps Script...). Laissez vide pour un test local.
+const FORM_ENDPOINT = "";
+
+const nav = document.getElementById('nav');
+addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40), {passive:true});
+
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), {threshold:.15});
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+const form = document.getElementById('form'), msg = document.getElementById('msg');
+form.addEventListener('submit', async e => {
+  e.preventDefault();
+  const email = form.email.value.trim();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { msg.textContent = "Merci d'entrer un e-mail valide."; return; }
+  const data = { email, ville: form.ville.value, date: new Date().toISOString() };
+  msg.textContent = "Envoi…";
+  try {
+    if (FORM_ENDPOINT) {
+      const r = await fetch(FORM_ENDPOINT, { method:'POST', headers:{'Content-Type':'application/json','Accept':'application/json'}, body: JSON.stringify(data) });
+      if (!r.ok) throw new Error();
+    } else {
+      try { const l = JSON.parse(localStorage.getItem('miri_waitlist') || '[]'); l.push(data); localStorage.setItem('miri_waitlist', JSON.stringify(l)); } catch {}
+    }
+    form.reset();
+    msg.textContent = "C'est noté. Vous serez parmi les premiers informés ♡";
+  } catch { msg.textContent = "Oups, réessayez dans un instant."; }
+});
+</script>
+</body>
+</html>
