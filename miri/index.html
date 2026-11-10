@@ -51,7 +51,7 @@ nav{position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:30;width
 .corner{position:absolute;width:22px;height:22px;border-color:rgba(245,221,224,.4);border-style:solid;z-index:2}
 .c1{top:96px;left:24px;border-width:1px 0 0 1px}.c2{top:96px;right:24px;border-width:1px 1px 0 0}
 .c3{bottom:24px;left:24px;border-width:0 0 1px 1px}.c4{bottom:24px;right:24px;border-width:0 1px 1px 0}
-.hero-copy{position:relative;z-index:3;padding:0 clamp(24px,5vw,72px) clamp(56px,8vw,96px);max-width:1000px}
+.hero-copy{position:relative;z-index:3;padding:0 clamp(24px,5vw,72px) clamp(40px,6vw,72px);max-width:1000px}
 .tag{display:inline-flex;gap:10px;align-items:center;padding:8px 14px;border-radius:999px;border:1px solid var(--edge);background:var(--glass);margin-bottom:28px}
 .tag i{width:7px;height:7px;border-radius:50%;background:var(--rg);box-shadow:0 0 10px var(--rg);animation:blink 1.6s infinite}
 @keyframes blink{50%{opacity:.25}}
@@ -61,18 +61,18 @@ h1{font-size:clamp(52px,9vw,140px);line-height:.9;font-weight:500;letter-spacing
 .ctas{display:flex;gap:10px;flex-wrap:wrap}
 
 /* MARQUEE */
-.marquee{position:relative;z-index:1;overflow:hidden;padding:22px 0;border-block:1px solid var(--edge);background:rgba(245,221,224,.02)}
+.marquee{position:relative;z-index:1;overflow:hidden;padding:16px 0;border-block:1px solid var(--edge);background:rgba(245,221,224,.02)}
 .track{display:flex;width:max-content;animation:mq 45s linear infinite}
 .track span{display:flex;gap:14px;align-items:center;white-space:nowrap;padding-right:44px;opacity:.7}
 .track span::before{content:"";width:6px;height:6px;border:1px solid var(--rg);transform:rotate(45deg)}
 @keyframes mq{to{transform:translateX(-50%)}}
 
 /* SECTIONS */
-section{padding:clamp(90px,11vw,160px) 0;position:relative}
-.kicker{color:var(--rg);margin-bottom:20px;display:flex;gap:10px;align-items:center}
+section{padding:clamp(56px,7vw,96px) 0;position:relative}
+.kicker{color:var(--rg);margin-bottom:12px;display:flex;gap:10px;align-items:center}
 h2{font-size:clamp(40px,5.6vw,84px);line-height:.96;font-weight:500;letter-spacing:-.045em;max-width:940px}
-.lead{font-size:clamp(17px,1.5vw,20px);font-weight:300;line-height:1.55;max-width:500px;opacity:.65;margin-top:22px}
-.head{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap;margin-bottom:56px}
+.lead{font-size:clamp(17px,1.5vw,20px);font-weight:300;line-height:1.5;max-width:500px;opacity:.65;margin-top:14px}
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:32px}
 
 /* BENTO */
 .bento{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:270px;gap:12px}
@@ -103,7 +103,7 @@ h2{font-size:clamp(40px,5.6vw,84px);line-height:.96;font-weight:500;letter-spaci
 .stats b{font-size:clamp(28px,3vw,44px);font-weight:500;letter-spacing:-.04em}
 .stats .mono{opacity:.55;font-size:11px}
 .zones{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.zone{border-radius:var(--rad);padding:26px;display:flex;flex-direction:column;gap:16px;position:relative;overflow:hidden;background:var(--glass);border:1px solid var(--edge);min-height:360px;transition:border-color .3s,transform .3s}
+.zone{border-radius:var(--rad);padding:26px;display:flex;flex-direction:column;gap:16px;position:relative;overflow:hidden;background:var(--glass);border:1px solid var(--edge);min-height:300px;transition:border-color .3s,transform .3s}
 .zone:hover{border-color:rgba(255,184,198,.4);transform:translateY(-3px)}
 .zone.accent{background:linear-gradient(160deg,var(--b2),var(--b) 60%,#3A0716);border-color:rgba(255,184,198,.25)}
 .zone .top{display:flex;justify-content:space-between;opacity:.6}
@@ -113,7 +113,7 @@ h2{font-size:clamp(40px,5.6vw,84px);line-height:.96;font-weight:500;letter-spaci
 .zone li::before{content:"";flex:none;width:5px;height:5px;border:1px solid var(--rg);transform:rotate(45deg) translateY(-2px)}
 .why{font-size:14px;font-weight:300;opacity:.7;line-height:1.5;border-top:1px solid var(--edge);padding-top:14px}
 .why .mono{display:block;color:var(--rg);font-size:10.5px;margin-bottom:4px;opacity:1}
-.zone .ecg{top:16%}
+.zone .ecg{position:relative;top:auto;left:auto;right:auto;height:64px;margin:0 -26px;width:calc(100% + 52px)}
 .steps{grid-template-columns:repeat(4,1fr)}
 
 /* RESULTS */
@@ -148,11 +148,11 @@ h2{font-size:clamp(40px,5.6vw,84px);line-height:.96;font-weight:500;letter-spaci
 .facts b{font-size:clamp(48px,6vw,88px);font-weight:500;letter-spacing:-.05em;line-height:.9;color:var(--rg);text-shadow:0 0 40px rgba(255,184,198,.25)}
 .facts p{font-weight:300;opacity:.75;line-height:1.5;max-width:340px}
 .src{opacity:.4;font-size:10.5px;margin-top:16px}
-.punch{font-size:clamp(28px,3.6vw,52px);font-weight:500;letter-spacing:-.04em;line-height:1.05;margin-top:24px;max-width:900px}
+.punch{font-size:clamp(28px,3.6vw,52px);font-weight:500;letter-spacing:-.04em;line-height:1.05;margin-top:8px;max-width:900px}
 
 /* STEPS */
 .steps{display:grid;gap:12px}
-.step{border-radius:var(--rad);border:1px solid var(--edge);background:var(--glass);padding:26px;min-height:300px;display:flex;flex-direction:column}
+.step{border-radius:var(--rad);border:1px solid var(--edge);background:var(--glass);padding:24px;min-height:220px;display:flex;flex-direction:column}
 .step .mono{color:var(--rg);display:flex;justify-content:space-between}
 .step h3{font-size:clamp(28px,2.8vw,40px);font-weight:500;letter-spacing:-.035em;margin:auto 0 12px}
 .step p{font-weight:300;line-height:1.55;opacity:.65;max-width:360px}
@@ -168,7 +168,7 @@ h2{font-size:clamp(40px,5.6vw,84px);line-height:.96;font-weight:500;letter-spaci
 
 /* FAQ */
 .faq{display:grid;grid-template-columns:1fr 1.4fr;gap:48px}
-details{border-top:1px solid var(--edge);padding:24px 0}
+details{border-top:1px solid var(--edge);padding:18px 0}
 details:last-child{border-bottom:1px solid var(--edge)}
 summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:20px;font-size:clamp(18px,1.6vw,22px);font-weight:500;letter-spacing:-.02em}
 summary::-webkit-details-marker{display:none}
@@ -178,7 +178,7 @@ details p{margin-top:14px;font-weight:300;line-height:1.6;opacity:.65;max-width:
 
 /* WAITLIST */
 .wl{padding:0 clamp(12px,2vw,24px) 12px;position:relative;z-index:1}
-.wl-panel{border-radius:32px;position:relative;overflow:hidden;text-align:center;padding:clamp(56px,9vw,130px) clamp(20px,5vw,64px);background:radial-gradient(80% 120% at 50% 0%,var(--b2) 0%,var(--b) 40%,#25040F 100%);border:1px solid rgba(255,184,198,.25);box-shadow:0 0 120px -20px rgba(142,43,68,.7) inset}
+.wl-panel{border-radius:32px;position:relative;overflow:hidden;text-align:center;padding:clamp(44px,6vw,88px) clamp(20px,5vw,64px);background:radial-gradient(80% 120% at 50% 0%,var(--b2) 0%,var(--b) 40%,#25040F 100%);border:1px solid rgba(255,184,198,.25);box-shadow:0 0 120px -20px rgba(142,43,68,.7) inset}
 .wl-panel::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(245,221,224,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(245,221,224,.06) 1px,transparent 1px);background-size:40px 40px;mask-image:radial-gradient(circle at 50% 100%,#000,transparent 70%);pointer-events:none}
 .big-seal{width:64px;height:64px;margin:0 auto 30px;display:block;transform:rotate(-4deg);filter:drop-shadow(0 0 24px rgba(255,184,198,.55))}
 .big-seal rect:first-child{fill:var(--r)}.big-seal rect+rect{stroke:var(--b)}.big-seal g{stroke:var(--b)}
@@ -283,22 +283,26 @@ footer{padding:36px 0 44px;position:relative;z-index:1}
       <div class="top mono"><span>Peau</span><span>◎</span></div>
       <h3>Votre peau, scannée en entier.</h3>
       <ul><li>Imagerie du corps entier, sans rayons</li><li>Carte de tous vos grains de beauté</li><li>Masse musculaire et masse grasse</li></ul>
+      <p class="why"><span class="mono">Pourquoi</span>Un grain de beauté qui change se repère bien mieux avec une image de référence.</p>
     </article>
     <article class="zone accent reveal">
       <div class="top mono"><span>Cœur</span><span>♥</span></div>
       <svg class="ecg" viewBox="0 0 600 120" preserveAspectRatio="none"><path d="M0 60 H150 L170 60 L185 30 L200 95 L215 10 L232 80 L245 60 H330 L345 50 L360 60 H420 L438 60 L452 25 L468 100 L482 15 L498 78 L510 60 H600"/></svg>
-      <h3>Votre cœur, à la loupe.</h3>
+      <h3>Votre cœur, écouté de près.</h3>
       <ul><li>Tension artérielle</li><li>Électrocardiogramme</li><li>Bilan du cœur et des vaisseaux</li></ul>
+      <p class="why"><span class="mono">Pourquoi</span>L'hypertension ne se sent pas. Elle se mesure.</p>
     </article>
     <article class="zone reveal">
       <div class="top mono"><span>Bilan sanguin</span><span>◐</span></div>
       <h3>Une prise de sang, sans attendre.</h3>
       <ul><li>Cholestérol, glycémie, inflammation</li><li>Analysée sur place</li><li>Résultats pendant la visite</li></ul>
+      <p class="why"><span class="mono">Pourquoi</span>Pas besoin de revenir, ni d'attendre les résultats du labo.</p>
     </article>
     <article class="zone reveal">
       <div class="top mono"><span>Médecin</span><span>◇</span></div>
       <h3>Un médecin, pour tout comprendre.</h3>
       <ul><li>Vos résultats expliqués le jour même</li><li>En face à face</li><li>Le temps de poser vos questions</li></ul>
+      <p class="why"><span class="mono">Pourquoi</span>Des chiffres sans explication ne servent à rien.</p>
     </article>
   </div>
 </div></section>
