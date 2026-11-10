@@ -165,6 +165,18 @@ h2{font-size:clamp(40px,5.6vw,84px);line-height:.96;font-weight:500;letter-spaci
 .hero{background:radial-gradient(60% 50% at 70% 45%,rgba(91,15,34,.35),transparent 70%)}
 body::after{opacity:.5}
 
+
+/* FUTUR */
+.zone::after,.step::after{content:"";position:absolute;left:0;right:0;height:60px;top:-60px;pointer-events:none;background:linear-gradient(180deg,transparent,rgba(255,184,198,.10) 70%,rgba(255,184,198,.55) 100%);border-bottom:1px solid rgba(255,184,198,.6);animation:cardscan 5.5s cubic-bezier(.5,0,.5,1) infinite;opacity:.8}
+.step{position:relative;overflow:hidden}
+.zone:nth-child(2)::after{animation-delay:1.2s}.zone:nth-child(3)::after{animation-delay:2.4s}.zone:nth-child(4)::after{animation-delay:3.6s}
+.step:nth-child(2)::after{animation-delay:.9s}.step:nth-child(3)::after{animation-delay:1.8s}.step:nth-child(4)::after{animation-delay:2.7s}
+@keyframes cardscan{0%{top:-60px}55%,100%{top:110%}}
+.zone .top span:last-child{font-family:"JetBrains Mono",monospace;color:var(--rg)}
+.zone .top .live{display:inline-flex;gap:6px;align-items:center}
+.zone .top .live::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--rg);box-shadow:0 0 8px var(--rg);animation:blink 1.6s infinite}
+h2{text-shadow:0 0 40px rgba(255,184,198,.12)}
+
 /* STEPS */
 .steps{display:grid;gap:12px}
 .step{border-radius:var(--rad);border:1px solid var(--edge);background:var(--glass);padding:24px;min-height:220px;display:flex;flex-direction:column}
@@ -272,11 +284,10 @@ footer{padding:36px 0 44px;position:relative;z-index:1}
   <div class="hud h2" aria-hidden="true"><span class="mono">SpO₂</span><b><span id="spo">98</span><small>%</small></b><div class="bar"><i style="width:92%"></i></div></div>
   <div class="hud h3" aria-hidden="true"><span class="mono">Scan · zones</span><b><span id="zones">0</span><small>/ 50</small></b><div class="bar"><i id="zBar" style="width:0"></i></div></div>
   <div class="hero-copy">
-    <div class="tag mono"><i></i>Bientôt · Quelque part à Paris</div>
+    <div class="tag mono"><i></i>Pré-lancement · Paris</div>
     <h1 data-decode>Vous ne vous êtes<br><span class="grad">jamais vu comme ça.</span></h1>
-    <p>Une heure. Un scan. Et tout ce que votre corps <span class="redact" data-tap>sait depuis des années</span>.</p>
-    <div class="ctas"><a href="#liste" class="pill">Demander une invitation <span class="arr">→</span></a><a href="#bilan" class="pill ghost">Ce qu'on peut dire</a></div>
-    <div class="hint mono">Bougez la souris. Touchez l'écran.</div>
+    <p>Une heure. Un scan. Et tout ce que votre corps sait depuis des années.</p>
+    <div class="ctas"><a href="#liste" class="pill">Demander une invitation <span class="arr">→</span></a><a href="#bilan" class="pill ghost">Découvrir le bilan</a></div>
   </div>
 </header>
 
@@ -288,7 +299,7 @@ footer{padding:36px 0 44px;position:relative;z-index:1}
 <section id="bilan"><div class="wrap">
   <div class="head reveal">
     <div><div class="kicker mono">Le bilan MIRI</div><h2 data-decode>Tout ce qu'un check-up classique ne voit pas.</h2></div>
-    <p class="lead">On ne vous dira pas tout ici. Juste ça : peau, cœur, sang, et un médecin. En une heure, au même endroit. Touchez une ligne pour la révéler.</p>
+    <p class="lead">Peau, cœur, sang, et un médecin pour tout vous expliquer. En une heure, au même endroit.</p>
   </div>
   <div class="stats reveal">
     <div><b>≈ 1 h</b><span class="mono">Durée de la visite</span></div>
@@ -298,28 +309,28 @@ footer{padding:36px 0 44px;position:relative;z-index:1}
   </div>
   <div class="zones">
     <article class="zone reveal">
-      <div class="top mono"><span>Peau</span><span>◎</span></div>
+      <div class="top mono"><span>Peau</span><span class="live" data-live="p">--</span></div>
       <h3>Votre peau, scannée en entier.</h3>
-      <ul><li><span class="redact" data-tap>Imagerie du corps entier, sans rayons</span></li><li><span class="redact" data-tap>Carte de tous vos grains de beauté</span></li><li><span class="redact" data-tap>Masse musculaire et masse grasse</span></li></ul>
+      <ul><li>Imagerie du corps entier, sans rayons</li><li>Carte de tous vos grains de beauté</li><li>Masse musculaire et masse grasse</li></ul>
       <p class="why"><span class="mono">Pourquoi</span>Un grain de beauté qui change se repère bien mieux avec une image de référence.</p>
     </article>
     <article class="zone accent reveal">
-      <div class="top mono"><span>Cœur</span><span>♥</span></div>
+      <div class="top mono"><span>Cœur</span><span class="live" data-live="c">--</span></div>
       <svg class="ecg" viewBox="0 0 600 120" preserveAspectRatio="none"><path d="M0 60 H150 L170 60 L185 30 L200 95 L215 10 L232 80 L245 60 H330 L345 50 L360 60 H420 L438 60 L452 25 L468 100 L482 15 L498 78 L510 60 H600"/></svg>
       <h3>Votre cœur, écouté de près.</h3>
-      <ul><li><span class="redact" data-tap>Tension artérielle</span></li><li><span class="redact" data-tap>Électrocardiogramme</span></li><li><span class="redact" data-tap>Bilan du cœur et des vaisseaux</span></li></ul>
+      <ul><li>Tension artérielle</li><li>Électrocardiogramme</li><li>Bilan du cœur et des vaisseaux</li></ul>
       <p class="why"><span class="mono">Pourquoi</span>L'hypertension ne se sent pas. Elle se mesure.</p>
     </article>
     <article class="zone reveal">
-      <div class="top mono"><span>Bilan sanguin</span><span>◐</span></div>
+      <div class="top mono"><span>Bilan sanguin</span><span class="live" data-live="s">--</span></div>
       <h3>Une prise de sang, sans attendre.</h3>
-      <ul><li><span class="redact" data-tap>Cholestérol, glycémie, inflammation</span></li><li><span class="redact" data-tap>Analysée sur place</span></li><li><span class="redact" data-tap>Résultats pendant la visite</span></li></ul>
+      <ul><li>Cholestérol, glycémie, inflammation</li><li>Analysée sur place</li><li>Résultats pendant la visite</li></ul>
       <p class="why"><span class="mono">Pourquoi</span>Pas besoin de revenir, ni d'attendre les résultats du labo.</p>
     </article>
     <article class="zone reveal">
-      <div class="top mono"><span>Médecin</span><span>◇</span></div>
+      <div class="top mono"><span>Médecin</span><span class="live" data-live="m">--</span></div>
       <h3>Un médecin, pour tout comprendre.</h3>
-      <ul><li><span class="redact" data-tap>Vos résultats expliqués le jour même</span></li><li><span class="redact" data-tap>En face à face</span></li><li><span class="redact" data-tap>Le temps de poser vos questions</span></li></ul>
+      <ul><li>Vos résultats expliqués le jour même</li><li>En face à face</li><li>Le temps de poser vos questions</li></ul>
       <p class="why"><span class="mono">Pourquoi</span>Des chiffres sans explication ne servent à rien.</p>
     </article>
   </div>
@@ -445,7 +456,8 @@ const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
       let Y = py * cxx - Z * sx; Z = py * sx + Z * cxx;
       const depth = (Z + .3) / .6, near = Math.abs(py - scan) < .025;
       const sx2 = cx + X * R, sy2 = cy - Y * R, dl = Math.hypot(sx2 - fx, sy2 - fy), lit = Math.max(0, 1 - dl / LR);
-      const base = (.05 + Math.max(0, Math.min(1, depth)) * .12) + lit * lit * .85;
+      const flick = .92 + .08 * Math.sin(a * 90 + py * 40);
+      const base = ((.2 + Math.max(0, Math.min(1, depth)) * .5) + lit * lit * .4) * flick;
       x.fillStyle = near ? 'rgba(255,184,198,.95)' : `rgba(245,221,224,${base})`;
       const s = near ? 2.1 : .9 + Math.max(0, Math.min(1, depth)) * .9;
       x.fillRect(cx + X * R - s / 2, cy - Y * R - s / 2, s, s);
@@ -481,13 +493,24 @@ function decode(el) {
 const dio = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { setTimeout(() => decode(e.target), e.target.tagName === 'H1' ? 300 : 0); dio.unobserve(e.target); } }), {threshold: .4});
 document.querySelectorAll('[data-decode]').forEach(el => dio.observe(el));
 
-/* Lignes masquées : touchez pour révéler */
-document.querySelectorAll('.redact').forEach(el => {
-  el.setAttribute('role', 'button'); el.tabIndex = 0; el.setAttribute('aria-label', 'Révéler : ' + el.textContent);
-  const open = () => { if (el.classList.contains('open')) return; el.classList.add('open'); el.removeAttribute('role'); el.removeAttribute('tabindex'); };
-  el.addEventListener('click', open);
-  el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } });
-});
+
+
+/* Petites mesures en direct sur les cartes */
+(() => {
+  const els = [...document.querySelectorAll('[data-live]')];
+  let k = 0;
+  const tick = () => {
+    k++;
+    els.forEach(el => {
+      const t = el.dataset.live;
+      if (t === 'p') el.textContent = 'Scan ' + String(40 + (k * 3) % 60).padStart(2, '0') + '%';
+      if (t === 'c') el.textContent = (58 + Math.round(Math.random() * 6)) + ' bpm';
+      if (t === 's') el.textContent = 'Analyse ' + ['·  ', '·· ', '···'][k % 3];
+      if (t === 'm') el.textContent = 'En ligne';
+    });
+  };
+  tick(); setInterval(tick, 900);
+})();
 
 /* HUD */
 let z = 0;
