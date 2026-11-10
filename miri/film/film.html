@@ -1,0 +1,117 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>html,body{margin:0;background:#000}canvas{display:block}</style>
+</head><body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+const W = 1080, H = 1920, c = document.getElementById('c'), x = c.getContext('2d');
+const C = { night:'#0A0105', blush:'#F5DDE0', glow:'#FFB8C6', deep:'#C9516C', wine:'#3E0816' };
+const SANS = '"Inter Tight","Inter",sans-serif', MONO = '"JetBrains Mono",monospace';
+const clamp = (v,a=0,b=1) => Math.max(a, Math.min(b, v));
+const eo = t => 1 - Math.pow(1 - clamp(t), 3);
+const eio = t => { t = clamp(t); return t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t+2, 3)/2; };
+const lerp = (a,b,t) => a + (b-a)*t;
+const hash = (a,b) => { let h = (a*374761393 + b*668265263) | 0; h = (h ^ (h >>> 13)) * 1274126177; return ((h ^ (h >>> 16)) >>> 0) / 4294967296; };
+let FRAME = 0;
+const beat = t => { const k = (t % 1) ; return Math.exp(-Math.pow((k-.08)/.05,2)) + .65*Math.exp(-Math.pow((k-.3)/.06,2)); };
+
+/* ---------- Images ---------- */
+const IMG = {}; const NAMES = ['01','02','04','05','06','07','08','09','10','12'];
+// zone utile de chaque image (fractions) : la 12 est une image large posée sur fond noir
+const CROP = { '12': [0, .235, 1, .53] };
+const loadAll = () => Promise.all(NAMES.map(n => new Promise(res => { const im = new Image(); im.onload = () => { IMG[n] = im; res(); }; im.src = n + '.jpg'; })));
+
+// plan : image + mouvement de caméra. z = zoom, (px,py) = point visé dans l'image (0..1)
+function shot(name, p, cam) {
+  const im = IMG[name], cr = CROP[name] || [0,0,1,1];
+  const sx0 = cr[0]*im.width, sy0 = cr[1]*im.height, sw0 = cr[2]*im.width, sh0 = cr[3]*im.height;
+  const z = lerp(cam.z0 ?? 1, cam.z1 ?? 1.12, p), px = lerp(cam.x0 ?? .5, cam.x1 ?? .5, p), py = lerp(cam.y0 ?? .5, cam.y1 ?? .5, p);
+  const base = Math.max(W/sw0, H/sh0) * z, vw = W/base, vh = H/base;
+  const cx = clamp(sx0 + px*sw0, sx0 + vw/2, sx0 + sw0 - vw/2), cy = clamp(sy0 + py*sh0, sy0 + vh/2, sy0 + sh0 - vh/2);
+  x.imageSmoothingQuality = 'high';
+  x.drawImage(im, cx - vw/2, cy - vh/2, vw, vh, 0, 0, W, H);
+}
+function grade(strength=1) { // étalonnage : ombres bordeaux, vignette, grain
+  x.save(); x.globalCompositeOperation = 'soft-light'; x.fillStyle = `rgba(142,43,68,${.28*strength})`; x.fillRect(0,0,W,H); x.restore();
+  const g = x.createRadialGradient(W/2,H*.5,W*.35,W/2,H*.5,H*.75); g.addColorStop(0,'rgba(0,0,0,0)'); g.addColorStop(1,'rgba(4,0,2,.78)'); x.fillStyle = g; x.fillRect(0,0,W,H);
+  for (let i=0;i<1600;i++){ const r=hash(i,FRAME), r2=hash(i+9000,FRAME); x.fillStyle=`rgba(255,235,238,${.02+r*.05})`; x.fillRect(r*W, r2*H, 2, 2); }
+}
+function scrim(y0, y1, a=.7) { const g = x.createLinearGradient(0,y0,0,y1); g.addColorStop(0,'rgba(6,0,3,0)'); g.addColorStop(.35,`rgba(6,0,3,${a})`); g.addColorStop(.65,`rgba(6,0,3,${a})`); g.addColorStop(1,'rgba(6,0,3,0)'); x.fillStyle = g; x.fillRect(0,y0,W,y1-y0); }
+function scanline(p, o={}) { // ligne de lumière qui traverse l'image
+  const y = lerp(o.y0 ?? H*.2, o.y1 ?? H*.8, p);
+  const g = x.createLinearGradient(0,y-220,0,y); g.addColorStop(0,'rgba(255,184,198,0)'); g.addColorStop(1,'rgba(255,184,198,.22)');
+  x.save(); x.globalCompositeOperation = 'screen'; x.fillStyle = g; x.fillRect(0,y-220,W,220);
+  x.shadowColor = 'rgba(255,184,198,1)'; x.shadowBlur = 40; x.fillStyle = '#FFE9EE'; x.fillRect(0,y-2,W,4); x.restore();
+}
+function glowPulse(cx, cy, r, a) { x.save(); x.globalCompositeOperation = 'screen'; const g = x.createRadialGradient(cx,cy,0,cx,cy,r); g.addColorStop(0,`rgba(255,184,198,${a})`); g.addColorStop(1,'rgba(255,184,198,0)'); x.fillStyle = g; x.fillRect(cx-r,cy-r,r*2,r*2); x.restore(); }
+function flare(p, y) { // reflet anamorphique qui passe
+  const cx = lerp(-200, W+200, p); x.save(); x.globalCompositeOperation = 'screen';
+  const g = x.createLinearGradient(cx-520,0,cx+520,0); g.addColorStop(0,'rgba(255,184,198,0)'); g.addColorStop(.5,'rgba(255,205,215,.55)'); g.addColorStop(1,'rgba(255,184,198,0)');
+  x.fillStyle = g; x.fillRect(cx-520, y-5, 1040, 10); x.globalAlpha = .35; x.fillRect(cx-520, y-34, 1040, 68); x.restore();
+}
+
+/* ---------- Texte ---------- */
+function slam(word, lt, o={}) {
+  const size = o.size || 210, sc = 1.1 - .1*eo(lt/.32);
+  x.save(); x.translate(W/2, o.y ?? H*.5); x.scale(sc, sc);
+  x.font = `600 ${size}px ${SANS}`; x.letterSpacing = `${-size*.05}px`; x.textAlign = 'center'; x.textBaseline = 'middle'; x.globalAlpha = clamp(lt/.07);
+  if (o.grad) { const g = x.createLinearGradient(-W*.4,0,W*.4,0); g.addColorStop(0,'#FFE3EA'); g.addColorStop(.5,C.glow); g.addColorStop(1,C.deep); x.fillStyle = g; } else x.fillStyle = C.blush;
+  x.shadowColor = 'rgba(6,0,3,.85)'; x.shadowBlur = 50; x.fillText(word, 0, 0);
+  x.shadowColor = 'rgba(255,184,198,.4)'; x.shadowBlur = 36; x.fillText(word, 0, 0); x.restore();
+}
+function tag(txt, y, a=1, align='center', px=W/2, size=26) { x.save(); x.globalAlpha = a; x.font = `500 ${size}px ${MONO}`; x.letterSpacing = `${size*.2}px`; x.fillStyle = C.glow; x.textAlign = align; x.textBaseline = 'middle'; x.shadowColor='rgba(6,0,3,.9)'; x.shadowBlur=20; x.fillText(txt.toUpperCase(), px, y); x.restore(); }
+function frameMarks(a=1) { x.strokeStyle = `rgba(245,221,224,${.45*a})`; x.lineWidth = 2; const m = 70, s = 46, t = 270, b = H-440;
+  [[m,t,1,1],[W-m,t,-1,1],[m,b,1,-1],[W-m,b,-1,-1]].forEach(([px,py,dx,dy]) => { x.beginPath(); x.moveTo(px,py+dy*s); x.lineTo(px,py); x.lineTo(px+dx*s,py); x.stroke(); }); }
+function pillar(word, label, lt) { scrim(H*.36, H*.68, .55); slam(word, lt, { y: H*.5 }); tag(label, H*.585, clamp((lt-.1)/.15)); }
+
+/* ---------- Plans ---------- */
+const S = {
+  facade: (lt,d) => { shot('01', eio(lt/d)*.9, { z0: 1.0, z1: 1.28, x0: .5, x1: .62, y0: .42, y1: .36 }); grade(); flare(clamp((lt-.5)/1.4), H*.33); tag('Paris · Bientôt', H*.745, eo((lt-.5)/.5)); frameMarks(eo(lt/.6)*.7); },
+  couloir:(lt,d) => { shot('02', Math.pow(lt/d, 1.6), { z0: 1.0, z1: 1.9, y0: .5, y1: .47 }); grade(); glowPulse(W/2, H*.47, 300 + lt*500, .25 + lt*.25); },
+  w1:     (lt,d) => { shot('02', 1, { z0: 1.9, z1: 2.0, y0: .47, y1: .47 }); x.fillStyle='rgba(6,0,3,.55)'; x.fillRect(0,0,W,H); grade(.5); slam('Votre', lt); },
+  w2:     (lt,d) => { shot('12', lt/d, { z0: 1.0, z1: 1.06 }); x.fillStyle='rgba(6,0,3,.35)'; x.fillRect(0,0,W,H); grade(.6); slam('corps,', lt); },
+  w3:     (lt,d) => { shot('12', lt/d, { z0: 1.06, z1: 1.16 }); x.fillStyle='rgba(6,0,3,.3)'; x.fillRect(0,0,W,H); grade(.6); glowPulse(W/2,H*.5,700,.18); slam('vu en', lt, { y: H*.445 }); slam('entier.', lt-.12, { y: H*.555, grad: true }); },
+  pied:   (lt,d) => { shot('04', eo(lt/d), { z0: 1.25, z1: 1.05, x0: .62, x1: .55, y0: .62, y1: .55 }); grade(); glowPulse(W*.6, H*.66, 520, .12 + .25*eo(lt/.5)); },
+  peau:   (lt,d) => { shot('05', lt/d, { z0: 1.12, z1: 1.2, x0: .5, x1: .5, y0: .5, y1: .52 }); grade(); scanline(eio(lt/d), { y0: H*.3, y1: H*.78 }); pillar('Peau', 'Imagerie du corps entier', lt); },
+  coeur:  (lt,d) => { shot('06', lt/d, { z0: 1.05, z1: 1.16, x0: .5, x1: .56, y0: .45, y1: .5 }); grade(); glowPulse(W*.62, H*.56, 420, .22*beat(lt*1.5 + .9)); pillar('Cœur', 'ECG · Tension', lt); },
+  sang:   (lt,d) => { shot('08', lt/d, { z0: 1.0, z1: 1.14, y0: .55, y1: .5 }); grade(); flare(clamp(lt/d), H*.4); pillar('Sang', 'Analysé sur place', lt); },
+  medecin:(lt,d) => { shot('09', lt/d, { z0: 1.0, z1: 1.12, x0: .5, x1: .52, y0: .45, y1: .42 }); grade(); glowPulse(W*.5, H*.36, 420, .14 + .1*Math.sin(lt*6)); pillar('Médecin', 'Vos résultats, expliqués', lt); },
+  profil: (lt,d) => { shot('07', eio(lt/d), { z0: 1.3, z1: 1.08, x0: .55, x1: .45, y0: .36, y1: .42 }); grade(); scanline(eio(lt/d), { y0: H*.25, y1: H*.7 }); },
+  chiffre:(lt,d) => { shot('12', lt/d, { z0: 1.2, z1: 1.3 }); x.fillStyle='rgba(6,0,3,.4)'; x.fillRect(0,0,W,H); grade(.6); const n = Math.min(60, Math.round(eo(lt/.45)*60)); slam(n + ' min', lt, { size: 250, grad: true }); tag('Pour tout savoir', H*.6, clamp((lt-.1)/.15)); },
+  montage:(lt,d) => { const order = ['04','05','06','08','07','09','02','12','10']; const k = Math.floor(lt/.1) % order.length; shot(order[k], (lt%.1)/.1, { z0: 1.15, z1: 1.2 }); grade(); if (k % 3 === 0) scanline(((lt%.1)/.1), { y0: H*.3, y1: H*.7 }); },
+  regard: (lt,d) => { shot('10', eio(lt/d), { z0: 1.0, z1: 1.16, x0: .5, x1: .5, y0: .34, y1: .3 }); grade(); glowPulse(W*.5, H*.2, 600, .1 + .12*eo(lt/1));
+    scrim(H*.5, H*.82, .72); const L = ["Tout ce qu'un", 'check-up classique', 'ne voit pas.'];
+    x.font = `600 96px ${SANS}`; x.letterSpacing = '-4px'; x.textAlign = 'center'; x.textBaseline = 'alphabetic';
+    L.forEach((l,i) => { const p = eo((lt - .25 - i*.16)/.3); if (p<=0) return; x.save(); x.globalAlpha = p; x.translate(0,(1-p)*50);
+      if (i===2) { const g = x.createLinearGradient(W*.2,0,W*.8,0); g.addColorStop(0,'#FFE3EA'); g.addColorStop(1,C.deep); x.fillStyle = g; } else x.fillStyle = C.blush;
+      x.shadowColor='rgba(6,0,3,.9)'; x.shadowBlur=30; x.fillText(l, W/2, H*.62 + i*108); x.restore(); }); },
+  fin:    (lt,d) => { shot('12', eo(lt/d), { z0: 1.35, z1: 1.0 }); grade(.8); glowPulse(W/2, H*.42, 760, .1 + .1*beat(lt*.9));
+    scrim(H*.42, H*.8, .6);
+    const rev = eio((lt-.3)/.7), y0 = H*.56 - 110, y1 = H*.56 + 110, yy = lerp(y0, y1, rev);
+    x.save(); x.beginPath(); x.rect(0,0,W,yy); x.clip(); x.fillStyle = C.blush; x.font = `600 200px ${SANS}`; x.letterSpacing = '46px'; x.textAlign='center'; x.textBaseline='middle'; x.shadowColor='rgba(255,184,198,.6)'; x.shadowBlur=46; x.fillText('MIRI', W/2+23, H*.56); x.restore();
+    if (rev > 0 && rev < 1) { x.save(); x.fillStyle='#FFE9EE'; x.shadowColor='rgba(255,184,198,1)'; x.shadowBlur=30; x.fillRect(W*.14, yy-2, W*.72, 4); x.restore(); }
+    tag('Bientôt à Paris', H*.56 + 150, eo((lt-1)/.4));
+    const p3 = eo((lt-1.5)/.5);
+    if (p3 > 0) { x.save(); x.globalAlpha = p3; const bw=720,bh=108,bx=W/2-bw/2,by=H*.69; x.shadowColor='rgba(255,184,198,.75)'; x.shadowBlur=46; x.fillStyle=C.blush; x.beginPath(); x.roundRect(bx,by,bw,bh,54); x.fill();
+      x.shadowBlur=0; x.fillStyle=C.wine; x.font=`500 40px ${SANS}`; x.letterSpacing='0px'; x.textAlign='center'; x.textBaseline='middle'; x.fillText('Recevez votre invitation · lien en bio', W/2, by+bh/2+2); x.restore(); }
+    frameMarks(eo((lt-.2)/.6)*.6); }
+};
+const PLAN = [['facade',2.2],['couloir',1.5],['w1',.5],['w2',.55],['w3',.95],['pied',1.2],['peau',.9],['coeur',.9],['sang',.9],['medecin',1.0],['profil',1.3],['chiffre',1.0],['montage',.9],['regard',2.6],['fin',4.2]];
+const SCENES = []; { let t = 0; for (const [k,d] of PLAN) { SCENES.push([t, t+d, S[k], d, k]); t += d; } }
+const DURATION = SCENES[SCENES.length-1][1];
+function draw(t) {
+  FRAME = Math.round(t*30);
+  x.setTransform(1,0,0,1,0,0); x.globalAlpha=1; x.shadowBlur=0; x.letterSpacing='0px'; x.globalCompositeOperation='source-over'; x.fillStyle = C.night; x.fillRect(0,0,W,H);
+  const s = SCENES.find(([a,b]) => t>=a && t<b) || SCENES[SCENES.length-1], lt = t - s[0];
+  s[2](lt, s[3]);
+  // éclair de coupe (2 images)
+  if (s[0] > 0 && lt < .07 && s[4] !== 'montage') { x.fillStyle = `rgba(255,214,222,${.32*(1-lt/.07)})`; x.fillRect(0,0,W,H); }
+  if (t < .5) { x.fillStyle = `rgba(0,0,0,${1 - t/.5})`; x.fillRect(0,0,W,H); }
+  if (t > DURATION-.5) { x.fillStyle = `rgba(0,0,0,${clamp((t-(DURATION-.5))/.5)})`; x.fillRect(0,0,W,H); }
+}
+window.ready = Promise.all([loadAll(), document.fonts.load(`600 200px "Inter Tight"`), document.fonts.load(`500 40px "Inter Tight"`), document.fonts.load(`500 26px "JetBrains Mono"`)]).catch(()=>{}).then(()=>document.fonts.ready);
+window.draw = draw; window.DURATION = DURATION;
+if (!location.search.includes('rec')) { const t0 = performance.now(); const loop = () => { draw(((performance.now()-t0)/1000) % DURATION); requestAnimationFrame(loop); }; window.ready.then(loop); }
+</script>
+</body></html>
