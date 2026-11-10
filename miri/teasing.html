@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MIRI · Bientôt à Paris</title>
+<meta name="description" content="Votre corps a des choses à vous dire. Bientôt à Paris. Laissez votre e-mail pour recevoir votre invitation.">
+<meta property="og:title" content="MIRI · Bientôt à Paris">
+<meta property="og:description" content="Votre corps a des choses à vous dire. Recevez votre invitation.">
+<meta name="theme-color" content="#12020A">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* Une seule scène : une silhouette derrière une arche de verre dépoli, un texte court, un champ e-mail. Tout le reste s'efface. */
+:root{
+  color-scheme:dark;
+  --night:#12020A; --wine:#3E0816; --bordeaux:#5B0F22; --rosewood:#8E2B44; --blush:#F5DDE0; --glow:#F2A9B6; --muted:rgba(245,221,224,.62); --edge:rgba(245,221,224,.16);
+  --serif:"Instrument Serif","Cormorant Garamond",Georgia,serif; --sans:"Inter Tight",system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--night);color:var(--blush);font-family:var(--sans);-webkit-font-smoothing:antialiased;line-height:1.5;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(90% 70% at 70% 30%,rgba(91,15,34,.55),transparent 70%)}
+.wrap{position:relative;z-index:1;max-width:1120px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+a{color:inherit}
+
+.top{display:flex;justify-content:space-between;align-items:center;padding-block:22px}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-size:26px;letter-spacing:.2em;text-decoration:none}
+.brand svg{width:28px;height:28px;transform:rotate(-4deg)}
+.where{font-size:13px;color:var(--muted);letter-spacing:.04em}
+
+/* SCÈNE */
+.scene{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(24px,5vw,72px);align-items:center;padding-block:clamp(16px,4vw,48px) clamp(48px,7vw,96px)}
+.copy{min-width:0}
+.eyebrow{font-family:var(--serif);font-style:italic;font-size:20px;color:var(--glow);margin-bottom:14px}
+h1{font-family:var(--serif);font-weight:400;font-size:clamp(44px,6.4vw,92px);line-height:.98;letter-spacing:-.015em;text-wrap:balance}
+h1 em{font-style:italic;color:var(--glow)}
+.sub{font-size:clamp(17px,1.5vw,20px);font-weight:300;color:var(--muted);max-width:460px;margin:22px 0 30px}
+
+/* ARCHE */
+.arch-wrap{display:grid;place-items:center;min-width:0}
+.arch{position:relative;width:min(100%,360px);aspect-ratio:3/4.5;border-radius:999px 999px 14px 14px;overflow:hidden;
+  background:radial-gradient(70% 55% at 50% 38%,#FFE1E6 0%,#F2A9B6 26%,#C9516C 52%,#6B1529 78%,#3E0816 100%);
+  box-shadow:0 0 0 1px rgba(245,221,224,.18),0 0 140px 10px rgba(201,81,108,.35),0 40px 80px -30px #000;animation:breathe 7s ease-in-out infinite}
+@keyframes breathe{50%{box-shadow:0 0 0 1px rgba(245,221,224,.22),0 0 190px 30px rgba(201,81,108,.5),0 40px 80px -30px #000}}
+.figure{position:absolute;left:50%;bottom:-4%;width:78%;transform:translateX(-50%);filter:blur(9px);opacity:.78;animation:approach 9s ease-in-out infinite;transform-origin:50% 100%}
+@keyframes approach{0%,100%{transform:translateX(-50%) scale(1);filter:blur(11px);opacity:.66}50%{transform:translateX(-49%) scale(1.06);filter:blur(6px);opacity:.86}}
+.glass{position:absolute;inset:0;background:linear-gradient(115deg,rgba(255,255,255,.22) 0%,transparent 28%,transparent 62%,rgba(255,255,255,.1) 100%);mix-blend-mode:soft-light}
+.grain{position:absolute;inset:0;opacity:.22;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.sill{width:min(100%,420px);height:1px;background:linear-gradient(90deg,transparent,var(--edge),transparent);margin-top:18px}
+.caption{font-family:var(--serif);font-style:italic;color:var(--muted);font-size:17px;margin-top:12px;text-align:center}
+
+/* FORMULAIRE */
+form{display:flex;gap:8px;flex-wrap:wrap;max-width:520px}
+.field{flex:1 1 240px;min-width:0;position:relative}
+input[type=email]{width:100%;background:rgba(245,221,224,.06);border:1px solid var(--edge);border-radius:999px;padding:17px 22px;color:var(--blush);font:inherit;font-size:16px;outline:none;transition:border-color .2s,background .2s}
+input[type=email]::placeholder{color:rgba(245,221,224,.45)}
+input[type=email]:focus{border-color:var(--glow);background:rgba(245,221,224,.1)}
+.btn{flex:0 0 auto;border:0;border-radius:999px;padding:17px 26px;background:var(--blush);color:var(--wine);font:inherit;font-size:16px;font-weight:500;cursor:pointer;transition:transform .2s,box-shadow .3s}
+.btn:hover{transform:translateY(-1px);box-shadow:0 10px 40px -10px rgba(242,169,182,.8)}
+.btn:focus-visible,input:focus-visible,a:focus-visible,button:focus-visible{outline:2px solid var(--glow);outline-offset:3px}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.promise{font-size:14px;color:var(--muted);margin-top:14px;max-width:520px}
+.promise b{color:var(--blush);font-weight:500}
+.err{color:#F3B08E;font-size:14px;min-height:20px;margin-top:8px}
+.done{max-width:520px;border:1px solid var(--edge);border-radius:20px;padding:22px 24px;background:rgba(245,221,224,.05)}
+.done h2{font-family:var(--serif);font-weight:400;font-size:32px;line-height:1.05;margin-bottom:8px}
+.done p{color:var(--muted);font-weight:300}
+.share{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;align-items:center}
+.share input{flex:1 1 200px;min-width:0;background:transparent;border:1px solid var(--edge);border-radius:999px;padding:11px 16px;color:var(--muted);font:inherit;font-size:14px}
+.ghost{border:1px solid var(--edge);background:transparent;color:var(--blush);border-radius:999px;padding:11px 18px;font:inherit;font-size:14px;cursor:pointer}
+
+/* INDICES */
+.hints{border-top:1px solid var(--edge);padding-block:clamp(40px,6vw,72px)}
+.hints h2{font-family:var(--serif);font-weight:400;font-style:italic;font-size:22px;color:var(--glow);margin-bottom:26px}
+.rows{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:clamp(20px,3vw,40px)}
+.row b{display:block;font-family:var(--serif);font-weight:400;font-size:clamp(30px,3.4vw,44px);line-height:1.02;margin-bottom:8px}
+.row p{color:var(--muted);font-weight:300;max-width:300px}
+
+/* DERNIER APPEL */
+.last{text-align:center;padding-block:clamp(48px,7vw,96px);border-top:1px solid var(--edge)}
+.last h2{font-family:var(--serif);font-weight:400;font-size:clamp(38px,5.4vw,72px);line-height:1;letter-spacing:-.01em;text-wrap:balance;margin-bottom:26px}
+.last h2 em{font-style:italic;color:var(--glow)}
+.last form,.last .done{margin:0 auto;text-align:left}
+.last .promise{margin:14px auto 0;text-align:center}
+
+footer{border-top:1px solid var(--edge);padding-block:24px 110px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:12.5px;color:rgba(245,221,224,.45)}
+footer p{max-width:560px}
+
+/* BARRE MOBILE */
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:5;padding:12px max(16px,env(safe-area-inset-right,0px)) calc(12px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));background:linear-gradient(transparent,rgba(18,2,10,.95) 35%);display:none;justify-content:center;transform:translateY(110%);transition:transform .35s}
+.bar.on{transform:none}
+.bar a{display:block;width:min(100%,520px);text-align:center;text-decoration:none;border-radius:999px;padding:15px 20px;background:var(--blush);color:var(--wine);font-weight:500}
+
+@media (max-width:820px){
+  .scene{grid-template-columns:1fr}
+  .arch-wrap{order:-1}
+  .arch{width:min(40vw,156px)}
+  .sill{margin-top:12px}
+  .scene{gap:18px;padding-top:4px}
+  .sub{margin:16px 0 22px}
+  .caption{display:none}
+  .where{display:none}
+  .top{justify-content:center}
+  .bar{display:flex}
+  form .btn{flex:1 1 100%}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <a class="brand" href="#" aria-label="MIRI">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><rect x="2" y="2" width="60" height="60" rx="10" fill="#F5DDE0"/><g fill="none" stroke="#5B0F22" stroke-width="3.4" stroke-linecap="round"><path d="M13 20 Q20 21 28 25"/><path d="M14 31 Q20 32 27 35"/><path d="M12 42 Q21 44 30 49"/><path d="M38 18 V36"/><path d="M51 15 V36 Q51 46 40 52"/></g></svg>
+      <span>MIRI</span>
+    </a>
+    <span class="where">Paris · Ouverture prochaine</span>
+  </div>
+
+  <main class="scene">
+    <div class="copy">
+      <p class="eyebrow">Bientôt, à Paris</p>
+      <h1>Votre corps a des choses <em>à vous dire.</em></h1>
+      <p class="sub">Une heure pour les entendre. Dans un lieu qui n'existe pas encore tout à fait. Laissez votre e‑mail, on vous écrira avant tout le monde.</p>
+
+      <div data-slot>
+        <form novalidate data-form>
+          <label class="field"><span class="hp">Votre e-mail</span><input id="email-1" type="email" name="email" placeholder="Votre e-mail" autocomplete="email" inputmode="email" required></label>
+          <input class="hp" type="text" name="site" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <button class="btn" type="submit">Recevoir mon invitation</button>
+        </form>
+        <p class="err" role="alert" data-err></p>
+        <p class="promise"><b>Les premiers inscrits seront les premiers invités.</b> Un seul e-mail, le jour où les portes s'ouvrent.</p>
+      </div>
+    </div>
+
+    <div class="arch-wrap" aria-hidden="true">
+      <div class="arch">
+        <svg class="figure" viewBox="0 0 200 320"><g fill="#3E0816"><ellipse cx="100" cy="62" rx="34" ry="40"/><path d="M84 96 h32 v22 c34 6 58 22 64 60 l8 142 H12 l8 -142 c6 -38 30 -54 64 -60 z"/></g></svg>
+        <div class="glass"></div>
+        <div class="grain"></div>
+      </div>
+      <div class="sill"></div>
+      <p class="caption">Quelqu'un vous attend. C'est vous.</p>
+    </div>
+  </main>
+
+  <section class="hints">
+    <h2>Ce qu'on peut déjà vous dire</h2>
+    <div class="rows">
+      <div class="row"><b>Une heure.</b><p>Pas une de plus. Vous entrez, et le temps s'arrête un peu.</p></div>
+      <div class="row"><b>Votre corps, en entier.</b><p>Peau, cœur, sang. Ce qu'on ne regarde jamais d'un seul coup.</p></div>
+      <div class="row"><b>Quelqu'un pour vous expliquer.</b><p>Un médecin, en face de vous, avec le temps de tout vous dire.</p></div>
+    </div>
+  </section>
+
+  <section class="last" id="invitation">
+    <h2>Le reste, on vous <em>l'écrit.</em></h2>
+    <div data-slot>
+      <form novalidate data-form>
+        <label class="field"><span class="hp">Votre e-mail</span><input id="email-2" type="email" name="email" placeholder="Votre e-mail" autocomplete="email" inputmode="email" required></label>
+        <input class="hp" type="text" name="site" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <button class="btn" type="submit">Recevoir mon invitation</button>
+      </form>
+      <p class="err" role="alert" data-err></p>
+      <p class="promise">Places limitées à l'ouverture. Les invitations partent dans l'ordre des inscriptions.</p>
+    </div>
+  </section>
+
+  <footer>
+    <p>En laissant votre e-mail, vous acceptez de recevoir les messages de MIRI au sujet de son ouverture. Vous pourrez vous désinscrire à tout moment. MIRI ne remplace pas votre médecin traitant.</p>
+    <span>© 2026 MIRI · Paris</span>
+  </footer>
+</div>
+
+<div class="bar" id="bar"><a href="#invitation">Recevoir mon invitation</a></div>
+
+<script>
+// Adresse du service qui reçoit les e-mails (Formspree, Tally, Brevo, Google Apps Script...). Vide = aperçu : rien n'est envoyé.
+const FORM_ENDPOINT = "";
+
+const source = (() => { try { return new URLSearchParams(location.search).get('s') || document.referrer || 'direct'; } catch { return 'direct'; } })();
+const ok = v => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+
+function showDone() {
+  document.querySelectorAll('[data-slot]').forEach(slot => {
+    slot.innerHTML = `<div class="done" role="status"><h2>C'est noté.</h2><p>Vous êtes sur la liste. On vous écrira avant tout le monde.</p>
+      <div class="share"><input type="text" readonly value="${location.href.split('#')[0].replace(/"/g, '')}" aria-label="Lien à partager"><button class="ghost" type="button" data-copy>Copier le lien</button></div>
+      <p style="margin-top:10px;font-size:14px">Vous connaissez quelqu'un qui voudrait en être ?</p></div>`;
+  });
+  document.getElementById('bar').remove();
+  document.querySelectorAll('[data-copy]').forEach(b => b.addEventListener('click', async () => {
+    const field = b.previousElementSibling;
+    try { await navigator.clipboard.writeText(field.value); b.textContent = 'Lien copié'; } catch { field.select(); b.textContent = 'Sélectionné, copiez-le'; }
+  }));
+}
+
+document.querySelectorAll('[data-form]').forEach(form => {
+  const err = form.parentElement.querySelector('[data-err]');
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const email = form.email.value.trim();
+    if (form.site.value) return;                       // champ piège pour les robots
+    if (!ok(email)) { err.textContent = "Cette adresse ne semble pas complète. Vérifiez-la et réessayez."; form.email.focus(); return; }
+    err.textContent = '';
+    const btn = form.querySelector('.btn'); btn.disabled = true; btn.textContent = 'Un instant…';
+    try {
+      if (FORM_ENDPOINT) {
+        const r = await fetch(FORM_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify({ email, source, date: new Date().toISOString() }) });
+        if (!r.ok) throw new Error();
+      }
+      showDone();
+    } catch {
+      btn.disabled = false; btn.textContent = 'Recevoir mon invitation';
+      err.textContent = "L'inscription n'est pas passée. Réessayez dans un instant.";
+    }
+  });
+});
+
+// Barre mobile : apparaît quand le premier formulaire sort de l'écran
+const bar = document.getElementById('bar'), first = document.querySelector('[data-form]'), last = document.getElementById('invitation');
+if ('IntersectionObserver' in window) {
+  const seen = new Map();
+  const io = new IntersectionObserver(es => { es.forEach(e => seen.set(e.target, e.isIntersecting)); if (bar.isConnected) bar.classList.toggle('on', !seen.get(first) && !seen.get(last)); });
+  io.observe(first); io.observe(last);
+}
+</script>
+</body>
+</html>
