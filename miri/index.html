@@ -285,7 +285,7 @@ footer{padding:36px 0 44px;position:relative;z-index:1}
   <div class="hud h3" aria-hidden="true"><span class="mono">Scan · zones</span><b><span id="zones">0</span><small>/ 50</small></b><div class="bar"><i id="zBar" style="width:0"></i></div></div>
   <div class="hero-copy">
     <div class="tag mono"><i></i>Pré-lancement · Paris</div>
-    <h1 data-decode>Vous ne vous êtes<br><span class="grad">jamais vu comme ça.</span></h1>
+    <h1>Vous ne vous êtes<br><span class="grad">jamais vu comme ça.</span></h1>
     <p>Une heure. Un scan. Et tout ce que votre corps sait depuis des années.</p>
     <div class="ctas"><a href="#liste" class="pill">Demander une invitation <span class="arr">→</span></a><a href="#bilan" class="pill ghost">Découvrir le bilan</a></div>
   </div>
@@ -298,7 +298,7 @@ footer{padding:36px 0 44px;position:relative;z-index:1}
 
 <section id="bilan"><div class="wrap">
   <div class="head reveal">
-    <div><div class="kicker mono">Le bilan MIRI</div><h2 data-decode>Tout ce qu'un check-up classique ne voit pas.</h2></div>
+    <div><div class="kicker mono">Le bilan MIRI</div><h2>Tout ce qu'un check-up classique ne voit pas.</h2></div>
     <p class="lead">Peau, cœur, sang, et un médecin pour tout vous expliquer. En une heure, au même endroit.</p>
   </div>
   <div class="stats reveal">
@@ -337,7 +337,7 @@ footer{padding:36px 0 44px;position:relative;z-index:1}
 </div></section>
 
 <section id="etapes" style="padding-top:0"><div class="wrap">
-  <div class="head reveal"><div><div class="kicker mono">La visite</div><h2 data-decode>Vous arrivez. On s'occupe du reste.</h2></div><p class="lead">Pas de salle d'attente, pas d'ordonnance, pas de deuxième rendez-vous.</p></div>
+  <div class="head reveal"><div><div class="kicker mono">La visite</div><h2>Vous arrivez. On s'occupe du reste.</h2></div><p class="lead">Pas de salle d'attente, pas d'ordonnance, pas de deuxième rendez-vous.</p></div>
   <div class="steps">
     <div class="step reveal" style="--w:25%"><span class="mono"><span>Avant</span></span><h3>Vous réservez</h3><p>Un créneau en ligne et un court questionnaire.</p><div class="prog"><i></i></div></div>
     <div class="step reveal" style="--w:50%"><span class="mono"><span>Sur place</span></span><h3>On vous scanne</h3><p>Cabine privée. On mesure la peau, le cœur, et on fait la prise de sang.</p><div class="prog"><i></i></div></div>
@@ -352,7 +352,7 @@ footer{padding:36px 0 44px;position:relative;z-index:1}
 </div></section>
 
 <section id="faq"><div class="wrap faq">
-  <div class="reveal"><div class="kicker mono">Questions</div><h2 data-decode>Bon à savoir.</h2></div>
+  <div class="reveal"><div class="kicker mono">Questions</div><h2>Bon à savoir.</h2></div>
   <div class="reveal">
     <details open><summary>Quand MIRI ouvre-t-il&nbsp;?</summary><p>Nous préparons un premier espace à Paris. La date n'est pas encore fixée : les inscrits sur la liste d'attente l'apprendront en premier, avec un accès prioritaire.</p></details>
     <details><summary>Est-ce que ça fait mal&nbsp;?</summary><p>Non. Tout est non invasif, à part une petite prise de sang.</p></details>
@@ -374,7 +374,7 @@ footer{padding:36px 0 44px;position:relative;z-index:1}
     <path d="M51 15 V36 Q51 46 40 52"/>
   </g>
 </svg>
-  <h2 class="reveal" data-decode>Vous en<br><span class="grad">serez&nbsp;?</span></h2>
+  <h2 class="reveal">Vous en<br><span class="grad">serez&nbsp;?</span></h2>
   <p class="lead reveal">Les portes ouvrent bientôt. Les invitations partiront dans l'ordre des demandes.</p>
   <form id="form" class="reveal" novalidate>
     <input type="email" name="email" placeholder="Votre e-mail" required autocomplete="email">
@@ -474,24 +474,6 @@ const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 
 
-/* Texte qui se décode */
-const GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#%&*+=?/<>ミリ';
-function decode(el) {
-  if (el.dataset.done) return; el.dataset.done = 1;
-  const nodes = []; const walk = n => { n.childNodes.forEach(k => k.nodeType === 3 ? nodes.push([k, k.textContent]) : walk(k)); }; walk(el);
-  if (reduce) return;
-  const total = nodes.reduce((n, [, t]) => n + t.length, 0), dur = Math.min(1400, 400 + total * 22), t0 = performance.now();
-  const step = now => {
-    const p = Math.min(1, (now - t0) / dur); let idx = 0;
-    nodes.forEach(([n, t]) => {
-      n.textContent = [...t].map(ch => { const k = idx++; return ch === ' ' || ch === ' ' || k / total < p ? ch : GLYPHS[(Math.random() * GLYPHS.length) | 0]; }).join('');
-    });
-    if (p < 1) requestAnimationFrame(step); else nodes.forEach(([n, t]) => n.textContent = t);
-  };
-  requestAnimationFrame(step);
-}
-const dio = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { setTimeout(() => decode(e.target), e.target.tagName === 'H1' ? 300 : 0); dio.unobserve(e.target); } }), {threshold: .4});
-document.querySelectorAll('[data-decode]').forEach(el => dio.observe(el));
 
 
 
