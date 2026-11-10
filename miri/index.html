@@ -154,7 +154,7 @@ h2{font-size:clamp(40px,5.6vw,84px);line-height:.96;font-weight:500;letter-spaci
 .steps{display:grid;gap:12px}
 .step{border-radius:var(--rad);border:1px solid var(--edge);background:var(--glass);padding:24px;min-height:220px;display:flex;flex-direction:column}
 .step .mono{color:var(--rg);display:flex;justify-content:space-between}
-.step h3{font-size:clamp(28px,2.8vw,40px);font-weight:500;letter-spacing:-.035em;margin:auto 0 12px}
+.step h3{font-size:clamp(26px,2.6vw,36px);font-weight:500;letter-spacing:-.035em;margin:auto 0 8px;padding-top:20px}
 .step p{font-weight:300;line-height:1.55;opacity:.65;max-width:360px}
 .prog{height:2px;background:var(--edge);margin-top:22px;border-radius:2px;overflow:hidden}
 .prog i{display:block;height:100%;width:0;background:var(--rg);box-shadow:0 0 10px var(--rg);transition:width 1.6s ease .3s}
@@ -210,7 +210,7 @@ footer{padding:36px 0 44px;position:relative;z-index:1}
   .facts div{min-height:0}
   .steps,.zones{grid-template-columns:1fr 1fr}
   .stats{grid-template-columns:1fr 1fr}.stats div:nth-child(3){border-left:0}.stats div:nth-child(n+3){border-top:1px solid var(--edge)}
-  .step{min-height:220px}
+  .step{min-height:0}
   #sphere{right:-12%;top:70px;width:80vw;height:62%;bottom:auto;opacity:.85}
   .h2{display:none}.h1{right:6%;top:15%}.h3{right:auto;left:6%;top:24%}
 }
@@ -218,6 +218,8 @@ footer{padding:36px 0 44px;position:relative;z-index:1}
   .bento{grid-template-columns:1fr;grid-auto-rows:auto}
   .steps,.zones{grid-template-columns:1fr}
   .zone{min-height:0}.zone h3{margin-top:8px}
+  .step,.zone{padding:20px}.steps,.zones{gap:8px}
+  .step h3{padding-top:12px}.prog{margin-top:14px}
   .row{grid-template-columns:1fr auto;font-size:14px}.row .v{display:none}
   .card,.card.big,.card.wide{grid-column:auto;grid-row:auto;min-height:210px}
   .card.big{min-height:340px}
