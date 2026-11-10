@@ -1,0 +1,128 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>html,body{margin:0;background:#fff}canvas{display:block}</style>
+</head><body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+const W = 1080, H = 1920, c = document.getElementById('c'), x = c.getContext('2d');
+const C = { ink:'#5B0F22', ink2:'#8E2B44', rose:'#F2A9B6', pale:'#FBE3E7', white:'#FFFFFF' };
+const SANS = '"Inter Tight","Inter",sans-serif', MONO = '"JetBrains Mono",monospace';
+const clamp = (v,a=0,b=1) => Math.max(a, Math.min(b, v));
+const eo = t => 1 - Math.pow(1 - clamp(t), 3);
+const eio = t => { t = clamp(t); return t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t+2, 3)/2; };
+const lerp = (a,b,t) => a + (b-a)*t;
+const hash = (a,b) => { let h = (a*374761393 + b*668265263) | 0; h = (h ^ (h >>> 13)) * 1274126177; return ((h ^ (h >>> 16)) >>> 0) / 4294967296; };
+let seed = 11; const rnd = () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+const beat = t => { const k = t % 1; return Math.exp(-Math.pow((k-.08)/.05,2)) + .65*Math.exp(-Math.pow((k-.3)/.06,2)); };
+
+/* ---------- Corps : nuage de points 3D ---------- */
+const pts = [];
+const cap = (a, b, r0, r1, n, zs=.8) => { const ax=[b[0]-a[0],b[1]-a[1],b[2]-a[2]], L=Math.hypot(...ax)||1, d=ax.map(v=>v/L);
+  let u = Math.abs(d[1])<.9 ? [d[2],0,-d[0]] : [1,0,0]; const ul=Math.hypot(...u); u=u.map(v=>v/ul);
+  const v=[d[1]*u[2]-d[2]*u[1], d[2]*u[0]-d[0]*u[2], d[0]*u[1]-d[1]*u[0]];
+  for (let i=0;i<n;i++){ const t=rnd(), th=rnd()*6.283, r=r0+(r1-r0)*t, cx=Math.cos(th)*r, sy=Math.sin(th)*r;
+    pts.push([a[0]+ax[0]*t+u[0]*cx+v[0]*sy, a[1]+ax[1]*t+u[1]*cx+v[1]*sy, (a[2]+ax[2]*t+u[2]*cx+v[2]*sy)*zs, rnd(), rnd()]); } };
+const ell = (c0, rx, ry, rz, n) => { for (let i=0;i<n;i++){ const y=1-2*rnd(), r=Math.sqrt(1-y*y), th=rnd()*6.283; pts.push([c0[0]+Math.cos(th)*r*rx, c0[1]+y*ry, c0[2]+Math.sin(th)*r*rz, rnd(), rnd()]); } };
+ell([0,.83,0],.095,.12,.105,800); cap([0,.64,0],[0,.73,0],.045,.042,150,1); cap([0,.55,0],[0,.16,0],.19,.135,1800,.62);
+cap([-.2,.57,0],[.2,.57,0],.06,.06,400,1); cap([0,.17,0],[0,-.02,0],.135,.16,760,.65);
+for (const s of [-1,1]) { cap([s*.23,.56,0],[s*.29,.28,.02],.055,.042,440,1); cap([s*.29,.28,.02],[s*.33,.02,.06],.042,.03,360,1); ell([s*.34,-.05,.07],.03,.05,.022,120);
+  cap([s*.085,-.02,0],[s*.1,-.46,0],.085,.055,800,1); cap([s*.1,-.46,0],[s*.11,-.88,-.01],.055,.035,600,1); cap([s*.11,-.91,-.02],[s*.115,-.93,.09],.035,.03,120,1); }
+// trajets du sang : du cœur vers la tête, les bras et les jambes
+const HEART = [-.045,.44,.06];
+const PATHS = [ [[-.045,.44],[0,.6],[0,.8]], [[-.045,.44],[-.2,.56],[-.29,.28],[-.33,.0]], [[-.045,.44],[.2,.56],[.29,.28],[.33,.0]], [[-.045,.44],[-.07,.1],[-.1,-.45],[-.11,-.88]], [[-.045,.44],[.07,.1],[.1,-.45],[.11,-.88]] ];
+const along = (path, t) => { const n = path.length-1, f = clamp(t)*n, i = Math.min(n-1, Math.floor(f)), k = f - i; return [lerp(path[i][0],path[i+1][0],k), lerp(path[i][1],path[i+1][1],k)]; };
+
+/* ---------- Décor lumineux ---------- */
+function bg(t, warm=0) {
+  const g = x.createLinearGradient(0,0,0,H); g.addColorStop(0,'#FFE6EC'); g.addColorStop(.5,'#F9C3CE'); g.addColorStop(1,'#EE94A9'); x.fillStyle = g; x.fillRect(0,0,W,H);
+  // halos de lumière qui dérivent
+  [[.3,.25,900,.75],[.75,.6,800,.5],[.45,.9,700,.35]].forEach(([px,py,r,a],i) => { const cx = W*px + Math.sin(t*.6+i*2)*120, cy = H*py + Math.cos(t*.5+i)*140;
+    const rg = x.createRadialGradient(cx,cy,0,cx,cy,r); rg.addColorStop(0,`rgba(255,255,255,${a})`); rg.addColorStop(1,'rgba(255,255,255,0)'); x.fillStyle = rg; x.fillRect(0,0,W,H); });
+  if (warm) { x.fillStyle = `rgba(255,255,255,${warm})`; x.fillRect(0,0,W,H); }
+}
+function grain() { for (let i=0;i<900;i++){ const r=hash(i,FRAME), r2=hash(i+7000,FRAME); x.fillStyle=`rgba(91,15,34,${.015+r*.03})`; x.fillRect(r*W, r2*H, 2, 2); } }
+let FRAME = 0;
+
+// cam : { cx, cy, R, rot } ; o.light = hauteur de la bande de lumière (coord. corps) ; o.reveal = 0..1 ; o.scatter = dispersion
+function body(t, cam, o={}) {
+  const ay = cam.rot, sy=Math.sin(ay), cyy=Math.cos(ay), ax=.06, sx=Math.sin(ax), cxx=Math.cos(ax), R = cam.R;
+  const light = o.light ?? 9, band = o.band ?? .09, sc = o.scatter || 0, a0 = o.alpha ?? 1;
+  for (let i=0;i<pts.length;i++) { const p = pts[i];
+    let px = p[0], py = p[1], pz = p[2];
+    if (sc > 0) { const ang = p[3]*6.283, rad = (1.2 + p[4]*2.2)*sc; px += Math.cos(ang)*rad; py += Math.sin(ang*1.7)*rad; pz += Math.sin(ang)*rad; }
+    let X = px*cyy - pz*sy, Z = px*sy + pz*cyy, Y = py*cxx - Z*sx; Z = py*sx + Z*cxx;
+    const dep = clamp((Z+.3)/.6), d = Math.abs(p[1]-light), lit = Math.max(0, 1 - d/band), passed = p[1] > light ? 1 : 0;
+    const X2 = cam.cx + X*R, Y2 = cam.cy - Y*R; if (X2 < -20 || X2 > W+20 || Y2 < -20 || Y2 > H+20) continue;
+    const rev = (o.reveal ?? 0) + passed*(o.passGain ?? 0);
+    if (lit > 0) { const s = 3 + lit*6; x.fillStyle = `rgba(255,255,255,${(.6+lit*.4)*a0})`; x.fillRect(X2-s/2, Y2-s/2, s, s); }
+    else { const s = (1.6 + dep*2.2) * (R/700); x.fillStyle = rev > .5 ? `rgba(110,22,45,${(.4+dep*.55)*a0})` : `rgba(201,81,108,${(.3+dep*.45)*a0})`; x.fillRect(X2-s/2, Y2-s/2, s, s); }
+  }
+  if (light < 2 && light > -2) { // la bande de lumière elle-même
+    const yS = cam.cy - light*R; x.save(); x.shadowColor='rgba(255,255,255,1)'; x.shadowBlur=60; x.strokeStyle='rgba(255,255,255,.95)'; x.lineWidth=6; x.beginPath(); x.ellipse(cam.cx, yS, R*.46, R*.07, 0, 0, 6.283); x.stroke();
+    const g = x.createLinearGradient(0,yS-R*.25,0,yS+R*.25); g.addColorStop(0,'rgba(255,255,255,0)'); g.addColorStop(.5,'rgba(255,255,255,.5)'); g.addColorStop(1,'rgba(255,255,255,0)'); x.shadowBlur=0; x.fillStyle=g; x.fillRect(0,yS-R*.25,W,R*.5); x.restore(); }
+}
+const proj = (cam, px, py, pz=0) => { const sy=Math.sin(cam.rot), cyy=Math.cos(cam.rot); return [cam.cx + (px*cyy - pz*sy)*cam.R, cam.cy - py*cam.R]; };
+function heart(t, cam, a=1) { const [hx,hy] = proj(cam, ...HEART), b = beat(t*1.25);
+  for (let k=0;k<3;k++){ const ph = ((t*1.25 + k/3) % 1), r = cam.R*(.05 + ph*.34); x.strokeStyle = `rgba(142,43,68,${(1-ph)*.55*a})`; x.lineWidth = 4; x.beginPath(); x.arc(hx,hy,r,0,6.283); x.stroke(); }
+  const rg = x.createRadialGradient(hx,hy,0,hx,hy,cam.R*(.1+b*.07)); rg.addColorStop(0,`rgba(201,81,108,${.95*a})`); rg.addColorStop(.6,`rgba(201,81,108,${.45*a})`); rg.addColorStop(1,'rgba(201,81,108,0)'); x.fillStyle = rg; x.beginPath(); x.arc(hx,hy,cam.R*.18,0,6.283); x.fill(); }
+function blood(t, cam, a=1) { x.save(); x.lineCap='round';
+  PATHS.forEach((path, pi) => { for (let k=0;k<26;k++){ const ph = (t*.55 + k/26 + pi*.13) % 1, [bx,by] = along(path, ph), [X,Y] = proj(cam, bx, by, .05), s = cam.R*.012*(1.3 - ph*.5);
+    x.fillStyle = `rgba(91,15,34,${(.9 - ph*.5)*a})`; x.beginPath(); x.arc(X + Math.sin(k*3+t*4)*3, Y, s, 0, 6.283); x.fill(); } }); x.restore(); }
+function sparks(t, cam, a=1) { for (let i=0;i<70;i++){ const p = pts[(i*97) % pts.length], [X,Y] = proj(cam, p[0], p[1], p[2]), tw = .5 + .5*Math.sin(t*6 + i*1.7);
+  if (tw < .55) continue; const s = 5 + tw*9; x.save(); x.translate(X,Y); x.rotate(.785); x.fillStyle = `rgba(255,255,255,${tw*a})`; x.shadowColor='rgba(255,255,255,1)'; x.shadowBlur=18; x.fillRect(-s/2,-1.5,s,3); x.fillRect(-1.5,-s/2,3,s); x.restore(); } }
+function callouts(t, cam, lt) { const items = [[.0,.83,.0,'Peau', -1],[-.045,.44,.06,'Cœur', 1],[.31,.12,.05,'Sang', 1],[-.1,-.4,.0,'Corps entier', -1]];
+  items.forEach(([px,py,pz,txt,side],i) => { const p = eo((lt - i*.14)/.35); if (p<=0) return; const [X,Y] = proj(cam, px,py,pz), ex = side>0 ? W-150 : 150, ey = Y - 60;
+    x.strokeStyle = `rgba(91,15,34,${.8*p})`; x.lineWidth = 2.5; x.beginPath(); x.moveTo(X,Y); x.lineTo(lerp(X,ex,p), lerp(Y,ey,p)); x.stroke();
+    x.fillStyle = C.ink; x.beginPath(); x.arc(X,Y,7,0,6.283); x.fill();
+    x.save(); x.globalAlpha = p; x.font = `500 30px ${MONO}`; x.letterSpacing='4px'; x.fillStyle = C.ink; x.textAlign = side>0 ? 'right' : 'left'; x.textBaseline='bottom'; x.fillText(txt.toUpperCase(), ex, ey-10); x.restore(); }); }
+
+/* ---------- Texte ---------- */
+function slam(word, lt, o={}) { const size = o.size || 220, sc = 1.12 - .12*eo(lt/.3);
+  x.save(); x.translate(W/2, o.y ?? H*.5); x.scale(sc, sc); x.font = `600 ${size}px ${SANS}`; x.letterSpacing = `${-size*.05}px`; x.textAlign='center'; x.textBaseline='middle'; x.globalAlpha = clamp(lt/.06);
+  if (o.light) { const g = x.createLinearGradient(-W*.35,0,W*.35,0); g.addColorStop(0,'#E0607F'); g.addColorStop(1,'#B03A5B'); x.fillStyle = g; x.shadowColor='rgba(255,255,255,.95)'; x.shadowBlur=40; } else { x.fillStyle = C.ink; x.shadowColor='rgba(255,255,255,.9)'; x.shadowBlur=40; }
+  x.fillText(word, 0, 0); x.restore(); }
+function tag(txt, y, a=1, col=C.ink) { x.save(); x.globalAlpha = a; x.font = `500 28px ${MONO}`; x.letterSpacing = '6px'; x.fillStyle = col; x.textAlign='center'; x.textBaseline='middle'; x.fillText(txt.toUpperCase(), W/2, y); x.restore(); }
+function veil(a) { x.fillStyle = `rgba(255,236,240,${a})`; x.fillRect(0,0,W,H); }
+function flash(lt, d=.14) { if (lt < d) { x.fillStyle = `rgba(255,255,255,${.55*(1-lt/d)})`; x.fillRect(0,0,W,H); } }
+
+/* ---------- Scènes : la caméra ne s'arrête jamais ---------- */
+const S = {
+  // le corps se forme dans la lumière
+  naissance: (lt,d,T) => { bg(T, .5*(1-eo(lt/.8))); const p = eio(lt/d); body(T, { cx: W/2, cy: H*.5, R: lerp(1100, 760, p), rot: T*.9 }, { scatter: 1 - eo(lt/(d*.85)), alpha: eo(lt/.4) }); },
+  w1: (lt,d,T) => { bg(T); body(T, { cx: W/2, cy: H*.5, R: 760 + lt*60, rot: T*.9 }, { alpha: .55 }); veil(.28); slam('Votre corps,', lt, { size: 170 }); },
+  w2: (lt,d,T) => { bg(T); const l = lerp(1.0, -.95, eio(lt/d)); body(T, { cx: W/2, cy: H*.5, R: 800 + lt*50, rot: T*.9 }, { light: l, passGain: 1, alpha: .8 }); veil(.2); slam('en pleine', lt, { y: H*.445, size: 190 }); slam('lumière.', lt-.12, { y: H*.56, size: 190, light: true }); },
+  peau: (lt,d,T) => { bg(T); const cam = { cx: W/2 - 60 + lt*40, cy: H*.5 + .55*1900, R: 1900 + lt*160, rot: T*.9 }; body(T, cam, { light: lerp(.78, .34, eio(lt/d)), band: .05, passGain: 1 }); sparks(T, cam, eo(lt/.3)); slam('Peau', lt, { y: H*.5 }); tag('La lumière passe. Tout se voit.', H*.585, clamp((lt-.1)/.15)); },
+  coeur:(lt,d,T) => { bg(T); const cam = { cx: W/2 + 40, cy: H*.44 + .44*(2100 + lt*200), R: 2100 + lt*200, rot: .25 + Math.sin(T*.8)*.25 }; body(T, cam, { reveal: 1, alpha: .75 }); heart(T, cam); slam('Cœur', lt, { y: H*.6 }); tag('Écouté battement par battement', H*.685, clamp((lt-.1)/.15)); },
+  sang: (lt,d,T) => { bg(T); const cam = { cx: W/2, cy: H*.5 + .1*900, R: 900 + lt*90, rot: Math.sin(T*.7)*.35 }; body(T, cam, { reveal: 1, alpha: .5 }); blood(T, cam); heart(T, cam, .7); slam('Sang', lt, { y: H*.5 }); tag('Analysé sur place', H*.585, clamp((lt-.1)/.15)); },
+  medecin:(lt,d,T) => { bg(T); const cam = { cx: W/2, cy: H*.47, R: 700 + lt*40, rot: Math.sin(T*.6)*.3 }; body(T, cam, { reveal: 1, alpha: .85 }); heart(T, cam, .8); callouts(T, cam, lt); slam('Un médecin', lt, { y: H*.2, size: 130 }); slam('vous explique tout.', lt-.1, { y: H*.265, size: 100 }); },
+  chiffre:(lt,d,T) => { bg(T); body(T, { cx: W/2, cy: H*.5, R: 820 + lt*80, rot: T*.9 }, { light: lerp(-.95, 1.0, eio(lt/d)), passGain: 0, reveal: 0, alpha: .6 }); veil(.25); const n = Math.min(60, Math.round(eo(lt/.45)*60)); slam(n + ' min', lt, { size: 260 }); tag('Pour tout savoir', H*.6, clamp((lt-.1)/.15)); },
+  phrase:(lt,d,T) => { bg(T, .15); const cam = { cx: W/2, cy: H*.5, R: 780 + lt*70, rot: T*.9 }; body(T, cam, { light: lerp(1.0, -.95, eio(lt/1.6)), passGain: 1, alpha: .75 }); sparks(T, cam, .8); veil(.3);
+    const L = ['La lumière révèle', 'ce qu\'un check-up', 'ne voit pas.']; x.font = `600 104px ${SANS}`; x.letterSpacing='-4px'; x.textAlign='center'; x.textBaseline='alphabetic';
+    L.forEach((l,i) => { const p = eo((lt - .1 - i*.16)/.3); if (p<=0) return; x.save(); x.globalAlpha = p; x.translate(0,(1-p)*50); x.fillStyle = i===2 ? '#C9476A' : C.ink; x.shadowColor = 'rgba(255,255,255,.95)'; x.shadowBlur = 30; x.fillText(l, W/2, H*.45 + i*116); x.restore(); }); },
+  fin: (lt,d,T) => { bg(T, .1); const cam = { cx: W/2, cy: H*.37, R: 470 + Math.sin(lt)*10, rot: T*.9 }; body(T, cam, { light: Math.sin(lt*1.6)*.95, reveal: 1, alpha: .9 }); heart(T, cam, .6);
+    const rev = eio((lt-.2)/.7), y0 = H*.6 - 110, y1 = H*.6 + 110, yy = lerp(y0,y1,rev);
+    x.save(); x.beginPath(); x.rect(0,0,W,yy); x.clip(); x.fillStyle = C.ink; x.font = `600 200px ${SANS}`; x.letterSpacing='46px'; x.textAlign='center'; x.textBaseline='middle'; x.fillText('MIRI', W/2+23, H*.6); x.restore();
+    if (rev > 0 && rev < 1) { x.save(); x.fillStyle='#fff'; x.shadowColor='rgba(255,255,255,1)'; x.shadowBlur=40; x.fillRect(W*.12, yy-3, W*.76, 6); x.restore(); }
+    tag('Bientôt à Paris', H*.6 + 150, eo((lt-.9)/.4));
+    const p3 = eo((lt-1.3)/.5); if (p3 > 0) { x.save(); x.globalAlpha = p3; const bw=740,bh=110,bx=W/2-bw/2,by=H*.715; x.shadowColor='rgba(91,15,34,.35)'; x.shadowBlur=40; x.shadowOffsetY=14; x.fillStyle=C.ink; x.beginPath(); x.roundRect(bx,by,bw,bh,55); x.fill();
+      x.shadowBlur=0; x.shadowOffsetY=0; x.fillStyle='#FFF4F6'; x.font=`500 40px ${SANS}`; x.letterSpacing='0px'; x.textAlign='center'; x.textBaseline='middle'; x.fillText('Recevez votre invitation · lien en bio', W/2, by+bh/2+2); x.restore(); } }
+};
+const PLAN = [['naissance',1.7],['w1',.6],['w2',1.3],['peau',1.2],['coeur',1.2],['sang',1.2],['medecin',1.6],['chiffre',1.0],['phrase',2.1],['fin',3.6]];
+const SCENES = []; { let t = 0; for (const [k,d] of PLAN) { SCENES.push([t, t+d, S[k], d]); t += d; } }
+const DURATION = SCENES[SCENES.length-1][1];
+function draw(t) {
+  FRAME = Math.round(t*30);
+  x.setTransform(1,0,0,1,0,0); x.globalAlpha=1; x.shadowBlur=0; x.shadowOffsetY=0; x.letterSpacing='0px';
+  const s = SCENES.find(([a,b]) => t>=a && t<b) || SCENES[SCENES.length-1], lt = t - s[0];
+  s[2](lt, s[3], t);
+  grain();
+  if (s[0] > 0) flash(lt);
+  if (t < .35) { x.fillStyle = `rgba(255,255,255,${1 - t/.35})`; x.fillRect(0,0,W,H); }
+  if (t > DURATION-.45) { x.fillStyle = `rgba(255,255,255,${clamp((t-(DURATION-.45))/.45)})`; x.fillRect(0,0,W,H); }
+}
+window.ready = Promise.all([document.fonts.load(`600 200px "Inter Tight"`), document.fonts.load(`500 40px "Inter Tight"`), document.fonts.load(`500 28px "JetBrains Mono"`)]).catch(()=>{}).then(()=>document.fonts.ready);
+window.draw = draw; window.DURATION = DURATION;
+if (!location.search.includes('rec')) { const t0 = performance.now(); const loop = () => { draw(((performance.now()-t0)/1000) % DURATION); requestAnimationFrame(loop); }; window.ready.then(loop); }
+</script>
+</body></html>
