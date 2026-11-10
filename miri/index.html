@@ -248,7 +248,6 @@ footer{padding:36px 0 44px;position:relative;z-index:1}
 </head>
 <body>
 <div id="glow" aria-hidden="true"></div>
-<div id="boot" aria-hidden="true"><div class="mono"><span id="bootTxt"></span><i></i></div></div>
 
 <nav>
   <a href="#" class="logo" aria-label="MIRI"><svg class="seal" viewBox="0 0 64 64" aria-hidden="true">
@@ -462,16 +461,6 @@ const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 })();
 
 
-/* Intro */
-(() => {
-  const boot = document.getElementById('boot'), out = document.getElementById('bootTxt');
-  if (reduce) { boot.classList.add('off'); return; }
-  const lines = ['Initialisation du scan', 'Calibrage des capteurs', 'Accès restreint'];
-  let i = 0;
-  const next = () => { if (i >= lines.length) { setTimeout(() => boot.classList.add('off'), 250); return; } out.textContent = lines[i++]; setTimeout(next, 420); };
-  next();
-  setTimeout(() => boot.classList.add('off'), 2200);
-})();
 
 /* Texte qui se décode */
 const GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#%&*+=?/<>ミリ';
@@ -489,7 +478,7 @@ function decode(el) {
   };
   requestAnimationFrame(step);
 }
-const dio = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { setTimeout(() => decode(e.target), e.target.tagName === 'H1' ? 2300 : 0); dio.unobserve(e.target); } }), {threshold: .4});
+const dio = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { setTimeout(() => decode(e.target), e.target.tagName === 'H1' ? 300 : 0); dio.unobserve(e.target); } }), {threshold: .4});
 document.querySelectorAll('[data-decode]').forEach(el => dio.observe(el));
 
 /* Lignes masquées : touchez pour révéler */
