@@ -76,7 +76,7 @@ function blood(T, cam, a=1, speed=.6) { PATHS.forEach((path, pi) => { for (let j
   const s = clamp(q[2]*.011, 3, 70); x.fillStyle = `rgba(91,15,34,${clamp(1.1 - s/60, .15, .95)*a})`; x.beginPath(); x.arc(q[0], q[1], s, 0, 6.283); x.fill(); } }); }
 function sparks(T, cam, a=1) { for (let i=0;i<90;i++){ const p = pts[(i*131) % pts.length], q = proj(cam, p[0], p[1], p[2]); if (!q) continue; const tw = .5 + .5*Math.sin(T*7 + i*1.7); if (tw < .6) continue;
   const s = clamp(q[2]*.012, 6, 40)*tw; x.save(); x.translate(q[0], q[1]); x.rotate(.785); x.fillStyle = `rgba(255,255,255,${tw*a})`; x.shadowColor='rgba(255,255,255,1)'; x.shadowBlur=20; x.fillRect(-s/2,-1.5,s,3); x.fillRect(-1.5,-s/2,3,s); x.restore(); } }
-function callouts(cam, lt) { [[-.19,.52,.1,'Peau',-1],[-.045,.44,.1,'Cœur',1],[.31,.1,.07,'Sang',1],[-.1,-.4,.05,'Corps entier',-1]].forEach(([px,py,pz,txt,side],i) => { const p = eo((lt - i*.12)/.3); if (p<=0) return; const q = proj(cam, px,py,pz); if (!q) return;
+function callouts(cam, lt) { [[-.2,.3,.1,'Peau',-1],[-.045,.44,.1,'Cœur',1],[.31,.1,.07,'Sang',1],[-.1,-.4,.05,'Corps entier',-1]].forEach(([px,py,pz,txt,side],i) => { const p = eo((lt - i*.12)/.3); if (p<=0) return; const q = proj(cam, px,py,pz); if (!q) return;
   const ex = side>0 ? W-140 : 140, ey = q[1] - 70; x.strokeStyle = `rgba(91,15,34,${.85*p})`; x.lineWidth = 2.5; x.beginPath(); x.moveTo(q[0],q[1]); x.lineTo(lerp(q[0],ex,p), lerp(q[1],ey,p)); x.stroke();
   x.fillStyle = C.ink; x.beginPath(); x.arc(q[0],q[1],8,0,6.283); x.fill(); x.save(); x.globalAlpha = p; x.font = `500 30px ${MONO}`; x.letterSpacing='4px'; x.fillStyle = C.ink; x.textAlign = side>0 ? 'right' : 'left'; x.textBaseline='bottom'; x.fillText(txt.toUpperCase(), ex, ey-10); x.restore(); }); }
 
@@ -97,13 +97,13 @@ const S = {
   // recul brutal : le corps entier
   entier: (lt,d,T) => { bg(T); const cam = camOf({ ty:.42, yaw:.25, pitch:-.1, dist:.5, f:1300 }, { ty:-.1, yaw:1.3, pitch:.1, dist:3.0, f:1300 }, eo(lt/(d*.7)), T); body(cam, { rev: 1, light: Math.sin(lt*3)*.9 }); veil(.15); if (lt > .15) scrim(H*.5, 560, .75*clamp((lt-.15)/.15)); line('Votre corps,', lt-.15, H*.445, 150); line('vu en entier.', lt-.6, H*.555, 170, true); bars(); },
   // la caméra rase la peau du dos
-  peau: (lt,d,T) => { bg(T); const cam = camOf({ tx:-.2, ty:.5, tz:-.1, yaw:2.6, pitch:.5, dist:.5, f:900, roll:.3 }, { tx:.18, ty:.3, tz:-.08, yaw:3.4, pitch:.25, dist:.42, f:900, roll:-.15 }, eio(lt/d), T, .012); body(cam, { rev: 0, light: lerp(.62, .12, eio(lt/d)), pass: 1, dir: 1, band: .04 }); sparks(T, cam); duo('Votre peau,', 'scannée en entier.', lt-.1, H*.5, 104, 124); bars(); },
+  peau: (lt,d,T) => { bg(T); const cam = camOf({ tx:0, ty:.46, tz:0, yaw:1.6, pitch:.55, dist:.62, f:900, roll:.3 }, { tx:0, ty:.34, tz:0, yaw:5.6, pitch:.2, dist:.55, f:900, roll:-.2 }, eio(lt/d), T, .012); body(cam, { rev: 0, light: lerp(.62, .12, eio(lt/d)), pass: 1, dir: 1, band: .04 }); sparks(T, cam); duo('Votre peau,', 'vue sous tous les angles.', lt-.1, H*.5, 110, 92); bars(); },
   // vue du dessus qui plonge dans le cœur
   coeur: (lt,d,T) => { bg(T); const cam = camOf({ tx:-.045, ty:.44, tz:.06, yaw:.6, pitch:1.25, dist:1.9, f:1300, roll:.5 }, { tx:-.045, ty:.44, tz:.06, yaw:.05, pitch:.12, dist:.42, f:1300, roll:0 }, eio(lt/d), T, .008); body(cam, { rev: 1, alpha: .8 }); heart(T, cam); duo('Votre cœur,', 'écouté de près.', lt-.1, H*.64, 104, 130); bars(); },
   // travelling le long du bras, avec le sang
   sang: (lt,d,T) => { bg(T); const p = eio(lt/d), a = along(PATHS[1], lerp(.15, .95, p)); const cam = camOf({ tx:a[0], ty:a[1], tz:a[2], yaw:-1.0, pitch:.35, dist:.5, f:1000, roll:-.5 }, { tx:a[0], ty:a[1], tz:a[2], yaw:-.3, pitch:.15, dist:.75, f:1000, roll:-.2 }, p, T, .01); body(cam, { rev: 1, alpha: .55 }); blood(T, cam, 1, .9); duo('Une prise de sang,', 'sans attendre.', lt-.1, H*.5, 92, 136); bars(); },
   // plan large qui tourne, avec les repères
-  medecin: (lt,d,T) => { bg(T); const cam = camOf({ ty:-.08, yaw:-.5, pitch:.05, dist:2.9, f:1500, roll:-.04 }, { ty:-.08, yaw:.35, pitch:.12, dist:2.6, f:1500, roll:.03 }, lt/d, T); body(cam, { rev: 1 }); heart(T, cam, .8); callouts(cam, lt-.15); duo('Un médecin,', 'pour tout comprendre.', lt-.1, H*.215, 96, 104); bars(); },
+  medecin: (lt,d,T) => { bg(T); const cam = camOf({ ty:-.08, yaw:-.5, pitch:.05, dist:2.9, f:1500, roll:-.04 }, { ty:-.08, yaw:.35, pitch:.12, dist:2.6, f:1500, roll:.03 }, lt/d, T); body(cam, { rev: 1 }); heart(T, cam, .8); if (lt > .1) scrim(H*.232, 560, .78*clamp((lt-.1)/.15)); line('Une consultation', lt-.1, H*.175, 92); line('par un médecin', lt-.22, H*.23, 92); line('qui vous explique.', lt-.34, H*.292, 108, true); callouts(cam, lt-.5); bars(); },
   // montage : un angle par 4 images
   montage: (lt,d,T) => { bg(T); const A = [ { ty:.4, yaw:.3, pitch:-.6, dist:.7, f:1000, roll:.3 }, { ty:-.5, yaw:2.2, pitch:.9, dist:1.2, f:1200, roll:-.4 }, { tx:.3, ty:.1, yaw:-1.2, pitch:.2, dist:.45, f:900, roll:.6 }, { ty:.1, yaw:3.6, pitch:-.2, dist:2.2, f:1500 }, { tx:-.045, ty:.44, yaw:.1, pitch:.3, dist:.5, f:1200, roll:-.2 }, { ty:-.7, yaw:.9, pitch:-.9, dist:.6, f:1000, roll:.2 } ];
     const k = Math.floor(lt/.13) % A.length, cam = mkcam({ ...A[k], dist: A[k].dist * (1 - ((lt%.13)/.13)*.12) }); body(cam, { rev: k%2, light: (k%3===0) ? .3 : 9 }); if (k===4) heart(T, cam); if (k===2) blood(T, cam); bars(); },
@@ -120,7 +120,7 @@ const S = {
     const p3 = eo((lt-1.2)/.5); if (p3 > 0) { x.save(); x.globalAlpha = p3; const bw=740,bh=110,bx=W/2-bw/2,by=H*.715; x.shadowColor='rgba(91,15,34,.35)'; x.shadowBlur=40; x.shadowOffsetY=14; x.fillStyle=C.ink; x.beginPath(); x.roundRect(bx,by,bw,bh,55); x.fill();
       x.shadowBlur=0; x.shadowOffsetY=0; x.fillStyle='#FFF0F3'; x.font=`500 40px ${SANS}`; x.letterSpacing='0px'; x.textAlign='center'; x.textBaseline='middle'; x.fillText('Demander une invitation · lien en bio', W/2, by+bh/2+2); x.restore(); } }
 };
-const PLAN = [['montee',1.5],['entier',1.7],['peau',1.4],['coeur',1.4],['sang',1.4],['medecin',1.5],['montage',.8],['phrase',2.0],['serez',1.2],['fin',3.4]];
+const PLAN = [['montee',1.5],['entier',1.7],['peau',1.4],['coeur',1.4],['sang',1.4],['medecin',1.8],['montage',.8],['phrase',2.0],['serez',1.2],['fin',3.4]];
 const SCENES = []; { let t = 0; for (const [k,d] of PLAN) { SCENES.push([t, t+d, S[k], d, k]); t += d; } }
 const DURATION = SCENES[SCENES.length-1][1];
 function draw(t) {
