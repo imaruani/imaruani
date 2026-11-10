@@ -7,6 +7,7 @@
 <meta name="description" content="MIRI arrive en France. Un bilan complet de votre corps, en une heure. Rejoignez la liste d'attente.">
 <meta property="og:title" content="MIRI — Bientôt en France">
 <meta property="og:description" content="Un bilan complet de votre corps, en une heure. Rejoignez la liste d'attente.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%20%3Crect%20x%3D%222%22%20y%3D%222%22%20width%3D%2260%22%20height%3D%2260%22%20rx%3D%2210%22%20fill%3D%22%235B0F22%22/%3E%20%3Crect%20x%3D%226%22%20y%3D%226%22%20width%3D%2252%22%20height%3D%2252%22%20rx%3D%227%22%20fill%3D%22none%22%20stroke%3D%22%23F5DDE0%22%20stroke-width%3D%221.2%22%20opacity%3D%22.55%22/%3E%20%3Cg%20fill%3D%22none%22%20stroke%3D%22%23F5DDE0%22%20stroke-width%3D%223.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%20%3Cpath%20d%3D%22M13%2020%20Q20%2021%2028%2025%22/%3E%20%3Cpath%20d%3D%22M14%2031%20Q20%2032%2027%2035%22/%3E%20%3Cpath%20d%3D%22M12%2042%20Q21%2044%2030%2049%22/%3E%20%3Cpath%20d%3D%22M38%2018%20V36%22/%3E%20%3Cpath%20d%3D%22M51%2015%20V36%20Q51%2046%2040%2052%22/%3E%20%3C/g%3E%20%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
@@ -27,7 +28,11 @@ a{color:inherit}
 /* NAV */
 nav{position:fixed;inset:0 0 auto;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:22px clamp(16px,4vw,48px);mix-blend-mode:normal;transition:background .3s}
 nav.scrolled{background:rgba(245,221,224,.85);backdrop-filter:blur(12px)}
-.logo{font-family:"Instrument Serif",serif;font-size:28px;letter-spacing:.18em;text-decoration:none}
+.logo{display:flex;align-items:center;gap:12px;font-family:"Instrument Serif",serif;font-size:28px;letter-spacing:.18em;text-decoration:none}
+.logo .seal{width:34px;height:34px;transform:rotate(-4deg);transition:transform .4s}
+.logo:hover .seal{transform:rotate(0)}
+.big-seal{width:72px;height:72px;margin:0 auto 28px;display:block;transform:rotate(-4deg)}
+.big-seal rect:first-child{fill:#F5DDE0}.big-seal rect+rect{stroke:#5B0F22}.big-seal g{stroke:#5B0F22}
 .btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--bordeaux);border-radius:999px;padding:12px 22px;font-size:14px;text-decoration:none;background:transparent;color:var(--bordeaux);cursor:pointer;transition:all .25s;font-family:inherit}
 .btn:hover,.btn.fill{background:var(--bordeaux);color:var(--rose)}
 .btn.fill:hover{background:var(--bordeaux-deep)}
@@ -114,14 +119,24 @@ footer{padding:32px clamp(16px,4vw,48px);display:flex;justify-content:space-betw
 <body>
 
 <nav id="nav">
-  <a href="#" class="logo">MIRI</a>
+  <a href="#" class="logo" aria-label="MIRI"><svg class="seal" viewBox="0 0 64 64" aria-hidden="true">
+  <rect x="2" y="2" width="60" height="60" rx="10" fill="#5B0F22"/>
+  <rect x="6" y="6" width="52" height="52" rx="7" fill="none" stroke="#F5DDE0" stroke-width="1.2" opacity=".55"/>
+  <g fill="none" stroke="#F5DDE0" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M13 20 Q20 21 28 25"/>
+    <path d="M14 31 Q20 32 27 35"/>
+    <path d="M12 42 Q21 44 30 49"/>
+    <path d="M38 18 V36"/>
+    <path d="M51 15 V36 Q51 46 40 52"/>
+  </g>
+</svg><span>MIRI</span></a>
   <a href="#liste" class="btn">Rejoindre la liste</a>
 </nav>
 
 <header class="hero">
   <div class="orb" aria-hidden="true"></div>
   <div class="hero-inner">
-    <div class="eyebrow">Paris · Bientôt</div>
+    <div class="eyebrow">ミリ · Paris · Bientôt</div>
     <h1 class="serif">Connaissez-vous <em>vraiment</em> votre corps&nbsp;?</h1>
     <p>Un bilan de santé complet, sans aiguille ni attente. Une heure pour voir ce que les rendez-vous classiques ne montrent pas.</p>
     <a href="#liste" class="btn">Être parmi les premiers →</a>
@@ -179,6 +194,17 @@ footer{padding:32px clamp(16px,4vw,48px);display:flex;justify-content:space-betw
 
 <section class="dark cta" id="liste">
   <div class="wrap">
+    <svg class="big-seal reveal" viewBox="0 0 64 64" aria-hidden="true">
+  <rect x="2" y="2" width="60" height="60" rx="10" fill="#5B0F22"/>
+  <rect x="6" y="6" width="52" height="52" rx="7" fill="none" stroke="#F5DDE0" stroke-width="1.2" opacity=".55"/>
+  <g fill="none" stroke="#F5DDE0" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M13 20 Q20 21 28 25"/>
+    <path d="M14 31 Q20 32 27 35"/>
+    <path d="M12 42 Q21 44 30 49"/>
+    <path d="M38 18 V36"/>
+    <path d="M51 15 V36 Q51 46 40 52"/>
+  </g>
+</svg>
     <h2 class="serif reveal">Bientôt <em>en France.</em></h2>
     <p class="reveal">Inscrivez-vous pour un accès prioritaire et un tarif de lancement.</p>
     <form id="form" class="reveal" novalidate>
@@ -195,7 +221,7 @@ footer{padding:32px clamp(16px,4vw,48px);display:flex;justify-content:space-betw
 </section>
 
 <footer>
-  <span>© 2026 MIRI</span>
+  <span>© 2026 MIRI · ミリ</span>
   <span>Teaser. Aucun service médical n'est proposé pour l'instant.</span>
 </footer>
 
