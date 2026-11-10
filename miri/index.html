@@ -10,115 +10,138 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%20%3Crect%20x%3D%222%22%20y%3D%222%22%20width%3D%2260%22%20height%3D%2260%22%20rx%3D%2210%22%20fill%3D%22%235B0F22%22/%3E%20%3Crect%20x%3D%226%22%20y%3D%226%22%20width%3D%2252%22%20height%3D%2252%22%20rx%3D%227%22%20fill%3D%22none%22%20stroke%3D%22%23F5DDE0%22%20stroke-width%3D%221.2%22%20opacity%3D%22.55%22/%3E%20%3Cg%20fill%3D%22none%22%20stroke%3D%22%23F5DDE0%22%20stroke-width%3D%223.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%20%3Cpath%20d%3D%22M13%2020%20Q20%2021%2028%2025%22/%3E%20%3Cpath%20d%3D%22M14%2031%20Q20%2032%2027%2035%22/%3E%20%3Cpath%20d%3D%22M12%2042%20Q21%2044%2030%2049%22/%3E%20%3Cpath%20d%3D%22M38%2018%20V36%22/%3E%20%3Cpath%20d%3D%22M51%2015%20V36%20Q51%2046%2040%2052%22/%3E%20%3C/g%3E%20%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{
-  --bordeaux:#5B0F22;
-  --bordeaux-deep:#3E0816;
-  --rose:#F5DDE0;
-  --rose-soft:#FBEFF1;
-  --line:rgba(91,15,34,.18);
-}
+:root{--b:#5B0F22;--bd:#3E0816;--b2:#7A1E34;--r:#F5DDE0;--rs:#FBEFF1;--line:rgba(91,15,34,.14);--rad:28px}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{background:var(--rose);color:var(--bordeaux);font-family:Inter,system-ui,sans-serif;font-weight:400;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-a{color:inherit}
-.serif{font-family:"Instrument Serif",Georgia,serif;font-weight:400}
+body{background:var(--rs);color:var(--b);font-family:"Inter Tight",system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden;letter-spacing:-.01em}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1320px;margin:0 auto;padding:0 clamp(16px,3vw,32px)}
 
 /* NAV */
-nav{position:fixed;inset:0 0 auto;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:22px clamp(16px,4vw,48px);mix-blend-mode:normal;transition:background .3s}
-nav.scrolled{background:rgba(245,221,224,.85);backdrop-filter:blur(12px)}
-.logo{display:flex;align-items:center;gap:12px;font-family:"Instrument Serif",serif;font-size:28px;letter-spacing:.18em;text-decoration:none}
-.logo .seal{width:34px;height:34px;transform:rotate(-4deg);transition:transform .4s}
+nav{position:fixed;top:0;left:0;right:0;z-index:30;padding:14px clamp(16px,3vw,32px);transition:background .3s,box-shadow .3s}
+nav.scrolled{background:rgba(251,239,241,.88);backdrop-filter:blur(14px);box-shadow:0 1px 0 var(--line)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;max-width:1320px;margin:0 auto}
+.logo{display:flex;align-items:center;gap:10px;font-weight:600;font-size:20px;letter-spacing:.14em}
+.logo .seal{width:30px;height:30px;transform:rotate(-4deg);transition:transform .4s}
 .logo:hover .seal{transform:rotate(0)}
-.big-seal{width:72px;height:72px;margin:0 auto 28px;display:block;transform:rotate(-4deg)}
-.big-seal rect:first-child{fill:#F5DDE0}.big-seal rect+rect{stroke:#5B0F22}.big-seal g{stroke:#5B0F22}
-.btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--bordeaux);border-radius:999px;padding:12px 22px;font-size:14px;text-decoration:none;background:transparent;color:var(--bordeaux);cursor:pointer;transition:all .25s;font-family:inherit}
-.btn:hover,.btn.fill{background:var(--bordeaux);color:var(--rose)}
-.btn.fill:hover{background:var(--bordeaux-deep)}
+.links{display:flex;gap:30px;font-size:15px}
+.links a{opacity:.75;transition:opacity .2s}.links a:hover{opacity:1}
+nav:not(.scrolled) .logo,nav:not(.scrolled) .links{color:var(--r)}
+nav:not(.scrolled) .pill{background:var(--r);color:var(--b)}
+.pill{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:12px 22px;font-size:15px;font-weight:500;background:var(--b);color:var(--r);border:0;cursor:pointer;font-family:inherit;transition:transform .2s,background .2s}
+.pill:hover{transform:translateY(-1px)}
+.pill.ghost{background:transparent;border:1px solid currentColor;color:inherit}
+.pill.light{background:var(--r);color:var(--b)}
 
 /* HERO */
-.hero{min-height:100svh;display:grid;place-items:center;text-align:center;padding:120px 16px 60px;position:relative;overflow:hidden}
-.orb{position:absolute;width:min(90vw,820px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 35%,#8A2A40 0%,var(--bordeaux) 45%,var(--bordeaux-deep) 75%);filter:blur(2px);opacity:.95;animation:breathe 9s ease-in-out infinite}
-.orb::after{content:"";position:absolute;inset:18%;border-radius:50%;border:1px solid rgba(245,221,224,.25)}
-@keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
-.hero-inner{position:relative;color:var(--rose);max-width:760px}
-.eyebrow{font-size:12px;letter-spacing:.28em;text-transform:uppercase;opacity:.8}
-.hero h1{font-size:clamp(48px,9vw,120px);line-height:.95;margin:22px 0}
-.hero h1 em{font-style:italic}
-.hero p{font-size:clamp(16px,2vw,19px);font-weight:300;max-width:460px;margin:0 auto 34px;opacity:.9;line-height:1.55}
-.hero .btn{border-color:var(--rose);color:var(--rose)}
-.hero .btn:hover{background:var(--rose);color:var(--bordeaux)}
+.hero{padding:10px}
+.hero-panel{position:relative;min-height:calc(100svh - 20px);border-radius:var(--rad);overflow:hidden;background:radial-gradient(120% 90% at 75% 40%,#8E2B44 0%,var(--b) 45%,var(--bd) 100%);color:var(--r);display:flex;align-items:flex-end}
+.scan{position:absolute;right:-8%;top:50%;transform:translateY(-50%);width:min(70vw,880px);aspect-ratio:1}
+.scan circle{fill:none;stroke:rgba(245,221,224,.16)}
+.scan .beam{position:absolute;left:10%;right:10%;height:2px;top:50%;background:linear-gradient(90deg,transparent,rgba(245,221,224,.8),transparent);box-shadow:0 0 30px 6px rgba(245,221,224,.25);animation:scan 6s ease-in-out infinite}
+@keyframes scan{0%,100%{top:18%}50%{top:82%}}
+.scan .dot{position:absolute;width:10px;height:10px;border-radius:50%;background:var(--r);box-shadow:0 0 0 6px rgba(245,221,224,.15);animation:pulse 2.4s ease-in-out infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 14px rgba(245,221,224,0)}}
+.hero-copy{position:relative;padding:clamp(24px,5vw,64px);max-width:980px}
+.tag{display:inline-flex;gap:8px;align-items:center;font-size:13px;padding:7px 14px;border-radius:999px;background:rgba(245,221,224,.12);border:1px solid rgba(245,221,224,.2);margin-bottom:28px}
+.tag i{width:7px;height:7px;border-radius:50%;background:var(--r);display:block}
+h1{font-size:clamp(48px,8.4vw,128px);line-height:.92;font-weight:500;letter-spacing:-.045em}
+.hero-copy p{font-size:clamp(17px,1.6vw,21px);font-weight:300;max-width:480px;margin:26px 0 34px;opacity:.85;line-height:1.45}
+.ctas{display:flex;gap:10px;flex-wrap:wrap}
 
-/* SECTIONS */
-section{padding:clamp(80px,12vw,160px) clamp(16px,4vw,48px)}
-.wrap{max-width:1180px;margin:0 auto}
-.statement{font-size:clamp(32px,5vw,64px);line-height:1.1;max-width:980px}
-.statement em{font-style:italic;opacity:.7}
+/* MARQUEE */
+.marquee{overflow:hidden;padding:34px 0;border-bottom:1px solid var(--line)}
+.track{display:flex;gap:48px;width:max-content;animation:mq 40s linear infinite;font-size:clamp(20px,2.4vw,30px);font-weight:400;letter-spacing:-.02em}
+.track span{display:flex;gap:48px;align-items:center;white-space:nowrap}
+.track span::after{content:"◦";opacity:.4}
+@keyframes mq{to{transform:translateX(-50%)}}
 
-.stats{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);margin-top:80px}
-.stat{padding:36px 24px 0 0}
-.stat + .stat{padding-left:24px;border-left:1px solid var(--line)}
-.stat b{display:block;font-family:"Instrument Serif",serif;font-weight:400;font-size:clamp(48px,6vw,84px);line-height:1}
-.stat span{font-size:14px;opacity:.75;display:block;margin-top:10px;max-width:220px;line-height:1.5}
+/* SECTION */
+section{padding:clamp(80px,10vw,140px) 0}
+.kicker{font-size:14px;font-weight:500;opacity:.6;margin-bottom:18px}
+h2{font-size:clamp(38px,5.4vw,80px);line-height:.98;font-weight:500;letter-spacing:-.04em;max-width:900px}
+.lead{font-size:clamp(17px,1.5vw,20px);font-weight:300;line-height:1.5;max-width:520px;opacity:.8;margin-top:22px}
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap;margin-bottom:56px}
 
-.dark{background:var(--bordeaux);color:var(--rose)}
-.dark .line{border-color:rgba(245,221,224,.2)}
-.steps-head{display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap;margin-bottom:64px}
-.steps-head h2{font-size:clamp(36px,5vw,64px);line-height:1}
-.steps-head p{max-width:360px;font-weight:300;opacity:.8;line-height:1.6}
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.step{border:1px solid rgba(245,221,224,.2);border-radius:24px;padding:32px;min-height:320px;display:flex;flex-direction:column;justify-content:space-between;transition:background .3s}
-.step:hover{background:rgba(245,221,224,.05)}
-.step .n{font-size:13px;letter-spacing:.2em;opacity:.6}
-.step h3{font-size:34px;margin:auto 0 12px}
-.step p{font-weight:300;opacity:.8;line-height:1.6;font-size:15px}
+/* BENTO */
+.bento{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:260px;gap:12px}
+.card{border-radius:var(--rad);padding:28px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden;background:var(--r)}
+.card.dark{background:var(--b);color:var(--r)}
+.card.mid{background:var(--b2);color:var(--r)}
+.card.big{grid-column:span 2;grid-row:span 2}
+.card.wide{grid-column:span 2}
+.card .num{font-size:clamp(56px,7vw,110px);font-weight:500;letter-spacing:-.05em;line-height:.9}
+.card h3{font-size:24px;font-weight:500;letter-spacing:-.02em}
+.card p{font-size:15px;font-weight:300;opacity:.8;line-height:1.5;max-width:340px;margin-top:8px}
+.card .ico{width:44px;height:44px;border-radius:50%;border:1px solid currentColor;display:grid;place-items:center;opacity:.7;font-size:18px}
+.card.big svg{position:absolute;right:-60px;bottom:-60px;width:360px;opacity:.5}
+@media(max-width:560px){.card.big svg{top:-90px;bottom:auto;right:-90px;width:280px;opacity:.35}}
 
-.split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,6vw,96px);align-items:center}
-.visual{aspect-ratio:4/5;border-radius:28px;background:linear-gradient(160deg,var(--rose-soft),#EBC3C9);position:relative;overflow:hidden;border:1px solid var(--line)}
-.visual svg{position:absolute;inset:0;width:100%;height:100%}
-.split h2{font-size:clamp(36px,4.5vw,58px);line-height:1.05;margin-bottom:24px}
-.split p{font-weight:300;line-height:1.7;opacity:.85;margin-bottom:28px}
-.list{list-style:none;border-top:1px solid var(--line)}
-.list li{padding:16px 0;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;font-size:15px}
-.list li span:last-child{opacity:.6}
+/* STEPS */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.step{border-top:1px solid var(--b);padding-top:22px}
+.step b{display:block;font-size:14px;font-weight:500;margin-bottom:60px;opacity:.6}
+.step h3{font-size:clamp(26px,2.6vw,36px);font-weight:500;letter-spacing:-.03em;margin-bottom:12px}
+.step p{font-weight:300;line-height:1.55;opacity:.8;max-width:360px}
+
+/* MANIFESTO */
+.manifesto{background:var(--r)}
+.manifesto p{font-size:clamp(30px,4.4vw,64px);line-height:1.08;font-weight:400;letter-spacing:-.035em;max-width:1150px}
+.manifesto p span{opacity:.35}
+
+/* FAQ */
+.faq{display:grid;grid-template-columns:1fr 1.4fr;gap:48px}
+details{border-top:1px solid var(--line);padding:24px 0}
+details:last-child{border-bottom:1px solid var(--line)}
+summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:20px;font-size:clamp(18px,1.6vw,22px);font-weight:500;letter-spacing:-.02em}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-weight:300;font-size:26px;line-height:1;transition:transform .3s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{margin-top:14px;font-weight:300;line-height:1.6;opacity:.8;max-width:620px}
 
 /* WAITLIST */
-.cta{text-align:center}
-.cta h2{font-size:clamp(44px,8vw,110px);line-height:.95;margin-bottom:24px}
-.cta h2 em{font-style:italic}
-.cta p{font-weight:300;opacity:.8;margin-bottom:40px}
-form{display:flex;gap:10px;max-width:520px;margin:0 auto;flex-wrap:wrap;justify-content:center}
-input,select{flex:1 1 240px;background:transparent;border:1px solid rgba(245,221,224,.45);border-radius:999px;padding:15px 22px;color:var(--rose);font:inherit;font-size:15px;outline:none}
+.wl{padding:10px}
+.wl-panel{border-radius:var(--rad);background:var(--b);color:var(--r);padding:clamp(48px,8vw,120px) clamp(20px,5vw,64px);text-align:center;position:relative;overflow:hidden}
+.big-seal{width:64px;height:64px;margin:0 auto 32px;display:block;transform:rotate(-4deg)}
+.big-seal rect:first-child{fill:var(--r)}.big-seal rect+rect{stroke:var(--b)}.big-seal g{stroke:var(--b)}
+.wl-panel h2{margin:0 auto;font-size:clamp(46px,8vw,120px)}
+.wl-panel .lead{margin:22px auto 40px}
+form{display:flex;gap:8px;max-width:560px;margin:0 auto;flex-wrap:wrap;justify-content:center}
+input,select{flex:1 1 260px;background:rgba(245,221,224,.08);border:1px solid rgba(245,221,224,.3);border-radius:999px;padding:15px 22px;color:var(--r);font:inherit;font-size:15px;outline:none}
 select{flex:1 1 100%;appearance:none;cursor:pointer}
-select option{color:var(--bordeaux)}
-input::placeholder{color:rgba(245,221,224,.6)}
-input:focus,select:focus{border-color:var(--rose)}
-.cta .btn{border-color:var(--rose);background:var(--rose);color:var(--bordeaux);flex:0 0 auto;padding:15px 28px}
-.cta .btn:hover{background:transparent;color:var(--rose)}
-.msg{margin-top:22px;min-height:22px;font-size:14px}
-.counter{margin-top:48px;font-size:13px;letter-spacing:.2em;text-transform:uppercase;opacity:.6}
+select option{color:var(--b)}
+input::placeholder{color:rgba(245,221,224,.55)}
+input:focus,select:focus{border-color:var(--r)}
+.msg{margin-top:20px;min-height:22px;font-size:15px}
+.fine{margin-top:36px;font-size:13px;opacity:.55}
 
-footer{padding:32px clamp(16px,4vw,48px);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:13px;background:var(--bordeaux-deep);color:rgba(245,221,224,.7)}
+footer{padding:40px 0 48px}
+.foot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;font-size:14px;opacity:.7}
 
-.reveal{opacity:0;transform:translateY(24px);transition:opacity .9s ease,transform .9s ease}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
 .reveal.in{opacity:1;transform:none}
 
-@media(max-width:860px){
-  .stats,.steps,.split{grid-template-columns:1fr}
-  .stat + .stat{padding-left:0;border-left:0;border-top:1px solid var(--line)}
-  .stat{padding:28px 0}
-  .step{min-height:220px}
-  nav .btn{padding:10px 16px}
-  .orb{width:640px}
-  .hero-inner{max-width:340px}
+@media(max-width:960px){
+  .links{display:none}
+  .bento{grid-template-columns:1fr 1fr;grid-auto-rows:220px}
+  .steps,.faq{grid-template-columns:1fr}
+  .steps{gap:40px}.step b{margin-bottom:24px}
+  .scan{right:-35%;top:28%;width:120vw}
 }
-@media (prefers-reduced-motion:reduce){.orb{animation:none}.reveal{opacity:1;transform:none;transition:none}}
+@media(max-width:560px){
+  .bento{grid-template-columns:1fr;grid-auto-rows:auto}
+  .card,.card.big,.card.wide{grid-column:auto;grid-row:auto;min-height:200px}
+  .card.big{min-height:340px}
+  nav .pill{padding:10px 16px;font-size:14px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}.reveal{opacity:1;transform:none;transition:none}}
 </style>
 </head>
 <body>
 
-<nav id="nav">
+<nav id="nav"><div class="nav-in">
   <a href="#" class="logo" aria-label="MIRI"><svg class="seal" viewBox="0 0 64 64" aria-hidden="true">
   <rect x="2" y="2" width="60" height="60" rx="10" fill="#5B0F22"/>
   <rect x="6" y="6" width="52" height="52" rx="7" fill="none" stroke="#F5DDE0" stroke-width="1.2" opacity=".55"/>
@@ -130,71 +153,75 @@ footer{padding:32px clamp(16px,4vw,48px);display:flex;justify-content:space-betw
     <path d="M51 15 V36 Q51 46 40 52"/>
   </g>
 </svg><span>MIRI</span></a>
-  <a href="#liste" class="btn">Rejoindre la liste</a>
-</nav>
+  <div class="links"><a href="#bilan">Le bilan</a><a href="#etapes">Comment ça marche</a><a href="#faq">Questions</a></div>
+  <a href="#liste" class="pill">Liste d'attente</a>
+</div></nav>
 
 <header class="hero">
-  <div class="orb" aria-hidden="true"></div>
-  <div class="hero-inner">
-    <div class="eyebrow">ミリ · Paris · Bientôt</div>
-    <h1 class="serif">Connaissez-vous <em>vraiment</em> votre corps&nbsp;?</h1>
-    <p>Un bilan de santé complet, sans aiguille ni attente. Une heure pour voir ce que les rendez-vous classiques ne montrent pas.</p>
-    <a href="#liste" class="btn">Être parmi les premiers →</a>
+  <div class="hero-panel">
+    <div class="scan" aria-hidden="true">
+      <svg viewBox="0 0 100 100" width="100%" height="100%"><circle cx="50" cy="50" r="12"/><circle cx="50" cy="50" r="22"/><circle cx="50" cy="50" r="32"/><circle cx="50" cy="50" r="42"/><circle cx="50" cy="50" r="49.5"/></svg>
+      <div class="beam"></div>
+      <div class="dot" style="left:42%;top:36%"></div>
+      <div class="dot" style="left:60%;top:58%;animation-delay:.8s"></div>
+      <div class="dot" style="left:35%;top:66%;animation-delay:1.6s"></div>
+    </div>
+    <div class="hero-copy">
+      <div class="tag"><i></i>Bientôt à Paris</div>
+      <h1>Votre corps,<br>vu en entier.</h1>
+      <p>Un bilan de santé complet, en une heure, sans aiguille ni attente. Et un médecin pour tout vous expliquer.</p>
+      <div class="ctas"><a href="#liste" class="pill light">Rejoindre la liste d'attente</a><a href="#bilan" class="pill ghost">Découvrir</a></div>
+    </div>
   </div>
 </header>
 
-<section>
-  <div class="wrap">
-    <p class="statement serif reveal">La médecine attend souvent que quelque chose aille mal. <em>MIRI préfère regarder avant.</em></p>
-    <div class="stats reveal">
-      <div class="stat"><b>60</b><span>minutes, du check-in aux résultats</span></div>
-      <div class="stat"><b>+50</b><span>indicateurs de santé mesurés à chaque visite</span></div>
-      <div class="stat"><b>1</b><span>médecin pour vous expliquer tout, en face à face</span></div>
-    </div>
-  </div>
-</section>
+<div class="marquee" aria-hidden="true"><div class="track">
+  <span>Cœur</span><span>Tension artérielle</span><span>Grains de beauté</span><span>Circulation</span><span>Composition corporelle</span><span>Glycémie</span><span>Cholestérol</span><span>Rétine</span><span>Force de préhension</span>
+  <span>Cœur</span><span>Tension artérielle</span><span>Grains de beauté</span><span>Circulation</span><span>Composition corporelle</span><span>Glycémie</span><span>Cholestérol</span><span>Rétine</span><span>Force de préhension</span>
+</div></div>
 
-<section class="dark">
-  <div class="wrap">
-    <div class="steps-head reveal">
-      <h2 class="serif">Comment ça marche</h2>
-      <p>Une expérience pensée comme un rituel, pas comme une salle d'attente.</p>
-    </div>
-    <div class="steps">
-      <div class="step reveal"><span class="n">01</span><h3 class="serif">Mesurer</h3><p>Cœur, peau, circulation, composition corporelle, prise de sang. Tout en une seule séance, au même endroit.</p></div>
-      <div class="step reveal"><span class="n">02</span><h3 class="serif">Comprendre</h3><p>Un médecin parcourt vos résultats avec vous, sur écran, dans un langage clair.</p></div>
-      <div class="step reveal"><span class="n">03</span><h3 class="serif">Suivre</h3><p>Vos données restent dans votre espace. On compare d'une année à l'autre pour voir ce qui change.</p></div>
-    </div>
+<section id="bilan"><div class="wrap">
+  <div class="head reveal">
+    <div><div class="kicker">Le bilan MIRI</div><h2>Tout ce qu'un check-up classique ne regarde pas.</h2></div>
+    <p class="lead">Des capteurs de dernière génération, une prise de sang, et vos résultats le jour même.</p>
   </div>
-</section>
-
-<section>
-  <div class="wrap split">
-    <div class="visual reveal" aria-hidden="true">
-      <svg viewBox="0 0 400 500" fill="none" stroke="#5B0F22" stroke-width="1">
-        <g opacity=".35">
-          <circle cx="200" cy="250" r="60"/><circle cx="200" cy="250" r="110"/><circle cx="200" cy="250" r="160"/><circle cx="200" cy="250" r="210"/>
-        </g>
-        <path d="M40 260 H140 L160 210 L180 310 L200 180 L220 290 L240 250 H360" stroke-width="2"/>
-        <circle cx="200" cy="180" r="5" fill="#5B0F22"/>
-      </svg>
+  <div class="bento">
+    <div class="card dark big reveal">
+      <div class="ico">◎</div>
+      <div><div class="num">+50</div><h3>indicateurs mesurés</h3><p>Cœur, peau, sang, métabolisme. Une photographie précise de votre santé aujourd'hui.</p></div>
+      <svg viewBox="0 0 100 100" fill="none" stroke="#F5DDE0" stroke-width=".4"><circle cx="50" cy="50" r="15"/><circle cx="50" cy="50" r="28"/><circle cx="50" cy="50" r="41"/></svg>
     </div>
-    <div class="reveal">
-      <h2 class="serif">Pensé pour celles et ceux qui préfèrent savoir.</h2>
-      <p>MIRI ouvre bientôt son premier espace en France. On commence petit, avec une liste d'attente, pour construire l'expérience avec vous.</p>
-      <ul class="list">
-        <li><span>Cardio &amp; tension</span><span>✓</span></li>
-        <li><span>Examen de la peau</span><span>✓</span></li>
-        <li><span>Bilan sanguin</span><span>✓</span></li>
-        <li><span>Composition corporelle</span><span>✓</span></li>
-      </ul>
-    </div>
+    <div class="card reveal"><div class="ico">◷</div><div><div class="num">60</div><p>minutes, de l'arrivée aux résultats</p></div></div>
+    <div class="card mid reveal"><div class="ico">◐</div><div><h3>Sans aiguille</h3><p>Hors prise de sang, tout est non invasif.</p></div></div>
+    <div class="card wide reveal"><div class="ico">◇</div><div><h3>Un médecin, en face à face</h3><p>Vos résultats sont relus et expliqués avec vous, dans des mots simples, juste après la séance.</p></div></div>
   </div>
-</section>
+</div></section>
 
-<section class="dark cta" id="liste">
-  <div class="wrap">
-    <svg class="big-seal reveal" viewBox="0 0 64 64" aria-hidden="true">
+<section id="etapes" style="padding-top:0"><div class="wrap">
+  <div class="head reveal"><div><div class="kicker">Comment ça marche</div><h2>Trois étapes. Une heure.</h2></div></div>
+  <div class="steps">
+    <div class="step reveal"><b>01</b><h3>Mesurer</h3><p>Vous entrez dans un espace calme. Nos capteurs et notre équipe s'occupent du reste.</p></div>
+    <div class="step reveal"><b>02</b><h3>Comprendre</h3><p>Un médecin parcourt vos résultats avec vous, à l'écran, point par point.</p></div>
+    <div class="step reveal"><b>03</b><h3>Suivre</h3><p>Vos données restent dans votre espace MIRI. Revenez chaque année pour voir ce qui évolue.</p></div>
+  </div>
+</div></section>
+
+<section class="manifesto"><div class="wrap">
+  <p class="reveal">On attend souvent d'avoir mal pour consulter. <span>MIRI part de l'idée inverse : mieux vaut regarder avant, calmement, et savoir.</span></p>
+</div></section>
+
+<section id="faq"><div class="wrap faq">
+  <div class="reveal"><div class="kicker">Questions</div><h2>Bon à savoir.</h2></div>
+  <div class="reveal">
+    <details open><summary>Quand MIRI ouvre-t-il&nbsp;?</summary><p>Nous préparons un premier espace à Paris. Les inscrits sur la liste d'attente seront prévenus en premier, avec un accès prioritaire.</p></details>
+    <details><summary>Combien ça coûtera&nbsp;?</summary><p>Le prix sera annoncé à l'ouverture. Les premiers inscrits bénéficieront d'un tarif de lancement.</p></details>
+    <details><summary>Est-ce que ça remplace mon médecin traitant&nbsp;?</summary><p>Non. MIRI est complémentaire : vous repartez avec un compte rendu que vous pouvez partager avec votre médecin.</p></details>
+    <details><summary>Et mes données&nbsp;?</summary><p>Elles seront hébergées en France, chez un hébergeur certifié pour les données de santé, et ne seront jamais revendues.</p></details>
+  </div>
+</div></section>
+
+<div class="wl" id="liste"><div class="wl-panel">
+  <svg class="big-seal reveal" viewBox="0 0 64 64" aria-hidden="true">
   <rect x="2" y="2" width="60" height="60" rx="10" fill="#5B0F22"/>
   <rect x="6" y="6" width="52" height="52" rx="7" fill="none" stroke="#F5DDE0" stroke-width="1.2" opacity=".55"/>
   <g fill="none" stroke="#F5DDE0" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round">
@@ -205,34 +232,34 @@ footer{padding:32px clamp(16px,4vw,48px);display:flex;justify-content:space-betw
     <path d="M51 15 V36 Q51 46 40 52"/>
   </g>
 </svg>
-    <h2 class="serif reveal">Bientôt <em>en France.</em></h2>
-    <p class="reveal">Inscrivez-vous pour un accès prioritaire et un tarif de lancement.</p>
-    <form id="form" class="reveal" novalidate>
-      <input type="email" name="email" placeholder="Votre e-mail" required autocomplete="email">
-      <button class="btn" type="submit">Je veux en être</button>
-      <select name="ville" aria-label="Ville">
-        <option value="">Votre ville (facultatif)</option>
-        <option>Paris</option><option>Lyon</option><option>Marseille</option><option>Bordeaux</option><option>Lille</option><option>Nice</option><option>Autre</option>
-      </select>
-    </form>
-    <div class="msg" id="msg" role="status"></div>
-    <div class="counter">Ouverture des premières places · 2027</div>
-  </div>
-</section>
+  <h2 class="reveal">Soyez parmi<br>les premiers.</h2>
+  <p class="lead reveal">Accès prioritaire et tarif de lancement pour les inscrits.</p>
+  <form id="form" class="reveal" novalidate>
+    <input type="email" name="email" placeholder="Votre e-mail" required autocomplete="email">
+    <button class="pill light" type="submit">Je m'inscris</button>
+    <select name="ville" aria-label="Ville">
+      <option value="">Votre ville (facultatif)</option>
+      <option>Paris</option><option>Lyon</option><option>Marseille</option><option>Bordeaux</option><option>Lille</option><option>Nice</option><option>Autre</option>
+    </select>
+  </form>
+  <div class="msg" id="msg" role="status"></div>
+  <div class="fine">Pas de spam. Un e-mail le jour de l'ouverture, c'est tout.</div>
+</div></div>
 
-<footer>
+<footer><div class="wrap foot">
   <span>© 2026 MIRI · ミリ</span>
   <span>Teaser. Aucun service médical n'est proposé pour l'instant.</span>
-</footer>
+</div></footer>
 
 <script>
 // Remplacez par votre endpoint (Formspree, Tally, Google Apps Script...). Laissez vide pour un test local.
 const FORM_ENDPOINT = "";
 
 const nav = document.getElementById('nav');
-addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40), {passive:true});
+const onScroll = () => nav.classList.toggle('scrolled', scrollY > innerHeight * .8);
+addEventListener('scroll', onScroll, {passive:true}); onScroll();
 
-const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), {threshold:.15});
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), {threshold:.12});
 document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
 const form = document.getElementById('form'), msg = document.getElementById('msg');
