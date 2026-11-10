@@ -1,0 +1,112 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500&display=swap" rel="stylesheet">
+<style>html,body{margin:0;background:#000}canvas{display:block}</style>
+</head><body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+const W = 1080, H = 1920, c = document.getElementById('c'), x = c.getContext('2d');
+const C = { night:'#0C0106', wine:'#3E0816', blush:'#F5DDE0', glow:'#F2A9B6' };
+const SERIF = '"Instrument Serif",Georgia,serif', SANS = '"Inter Tight",sans-serif';
+const clamp = (v,a=0,b=1) => Math.max(a, Math.min(b, v));
+const eo = t => 1 - Math.pow(1 - clamp(t), 3);
+const eio = t => { t = clamp(t); return t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t+2, 3)/2; };
+const hash = (a,b) => { let h = (a*374761393 + b*668265263) | 0; h = (h ^ (h >>> 13)) * 1274126177; return ((h ^ (h >>> 16)) >>> 0) / 4294967296; };
+let FRAME = 0;
+// battement : deux pulsations rapprochées, comme un cœur
+const beat = t => { const k = (t % 1.1) / 1.1; return Math.exp(-Math.pow((k-.08)/.05,2)) + .7*Math.exp(-Math.pow((k-.3)/.06,2)); };
+
+function bg(a=1) {
+  x.fillStyle = C.night; x.fillRect(0,0,W,H);
+  const g = x.createRadialGradient(W/2,H*.45,0,W/2,H*.45,W*.95); g.addColorStop(0,`rgba(91,15,34,${.55*a})`); g.addColorStop(1,'rgba(12,1,6,0)');
+  x.fillStyle = g; x.fillRect(0,0,W,H);
+}
+function archPath(cx, top, w, h) { const r = w/2; x.beginPath(); x.moveTo(cx-r, top+h); x.lineTo(cx-r, top+r); x.arc(cx, top+r, r, Math.PI, 0); x.lineTo(cx+r, top+h); x.closePath(); }
+// o.open : 0 = fente de lumière, 1 = arche entière. o.sharp : netteté de la silhouette. o.fig : présence de la silhouette. o.pulse : battement.
+function arch(o) {
+  const w = o.w || 560, h = w*1.5, cx = W/2, top = (o.cy || H*.46) - h/2, open = o.open ?? 1, pulse = o.pulse || 0, a = o.alpha ?? 1;
+  x.save(); x.globalAlpha = a;
+  x.save(); x.beginPath(); x.rect(cx - (w/2)*open - 3, 0, w*open + 6, H); x.clip();
+  x.shadowColor = `rgba(201,81,108,${.55 + pulse*.4})`; x.shadowBlur = 140 + pulse*120;
+  archPath(cx, top, w, h);
+  const g = x.createRadialGradient(cx, top+h*.38, 0, cx, top+h*.38, h*.72);
+  g.addColorStop(0, '#FFE6EA'); g.addColorStop(.24, '#F2A9B6'); g.addColorStop(.5, '#C9516C'); g.addColorStop(.78, '#6B1529'); g.addColorStop(1, '#3E0816');
+  x.fillStyle = g; x.fill(); x.shadowBlur = 0;
+  archPath(cx, top, w, h); x.clip();
+  if (pulse > 0) { x.fillStyle = `rgba(255,230,234,${pulse*.22})`; x.fillRect(cx-w, top, w*2, h); }
+  const fig = o.fig ?? 1;
+  if (fig > 0) {
+    const sc = (o.scale || 1) * w/200 * .8, fy = top + h + 14, sway = Math.sin((o.t||0)*.7)*6;
+    x.filter = `blur(${Math.max(0, 26 - (o.sharp||0)*20)}px)`; x.globalAlpha = a * fig * (.62 + (o.sharp||0)*.25);
+    x.fillStyle = C.wine; x.translate(cx + sway, fy); x.scale(sc, sc);
+    x.beginPath(); x.ellipse(0, -258, 34, 40, 0, 0, 6.283); x.fill();
+    x.beginPath(); x.moveTo(-16,-224); x.lineTo(16,-224); x.lineTo(16,-202); x.bezierCurveTo(50,-196,74,-180,80,-142); x.lineTo(88,0); x.lineTo(-88,0); x.lineTo(-80,-142); x.bezierCurveTo(-74,-180,-50,-196,-16,-202); x.closePath(); x.fill();
+    x.setTransform(1,0,0,1,0,0); x.filter = 'none';
+  }
+  x.restore();
+  // reflet du verre
+  x.save(); archPath(cx, top, w, h); x.clip(); const gl = x.createLinearGradient(cx-w/2, top, cx+w/2, top+h); gl.addColorStop(0,'rgba(255,255,255,.16)'); gl.addColorStop(.3,'rgba(255,255,255,0)'); gl.addColorStop(1,'rgba(255,255,255,.05)'); x.globalAlpha = a*open; x.fillStyle = gl; x.fillRect(cx-w/2, top, w, h); x.restore();
+  x.restore();
+}
+function text(lines, lt, o={}) {
+  const size = o.size || 118, lh = size*1.04, y0 = (o.y || H/2) - (lines.length-1)*lh/2;
+  x.textAlign = 'center'; x.textBaseline = 'middle';
+  let wi = 0;
+  lines.forEach((ln, i) => {
+    const it = ln.startsWith('*'), s = it ? ln.slice(1) : ln;
+    x.font = `${it ? 'italic ' : ''}400 ${size}px ${SERIF}`;
+    const words = s.split(' '), sp = x.measureText(' ').width, ws = words.map(w => x.measureText(w).width), lw = ws.reduce((a,b)=>a+b,0) + sp*(words.length-1);
+    let px = W/2 - lw/2;
+    words.forEach((w, k) => {
+      const p = eo((lt - (o.start||0) - wi*(o.step ?? .13)) / (o.fade || .5)); wi++;
+      if (p > 0) { x.save(); x.globalAlpha = p * (o.alpha ?? 1); x.fillStyle = it ? C.glow : C.blush; x.shadowColor = 'rgba(12,1,6,.9)'; x.shadowBlur = 30; x.textAlign = 'left'; x.fillText(w, px, y0 + i*lh + (1-p)*22); x.restore(); }
+      px += ws[k] + sp;
+    });
+  });
+}
+function small(txt, y, a=1, italic=true) { x.save(); x.globalAlpha = a; x.font = `${italic?'italic ':''}400 46px ${SERIF}`; x.fillStyle = C.glow; x.textAlign='center'; x.textBaseline='middle'; x.fillText(txt, W/2, y); x.restore(); }
+function grain() { for (let i=0;i<1400;i++){ const r=hash(i,FRAME), r2=hash(i+7000,FRAME); x.fillStyle=`rgba(245,221,224,${.025+r*.05})`; x.fillRect(r*W, r2*H, 2, 2); } }
+function vignette() { const g = x.createRadialGradient(W/2,H/2,W*.4,W/2,H/2,H*.72); g.addColorStop(0,'rgba(0,0,0,0)'); g.addColorStop(1,'rgba(0,0,0,.8)'); x.fillStyle=g; x.fillRect(0,0,W,H); }
+
+/* ---------- Scènes ---------- */
+const S = {
+  // une fente de lumière s'ouvre dans le noir
+  door: lt => { x.fillStyle = C.night; x.fillRect(0,0,W,H); arch({ open: .012 + eio((lt-.5)/1.9)*.99, fig: clamp((lt-1.6)/.8), t: lt, alpha: eo(lt/.5), pulse: 0 }); },
+  hook: lt => { bg(); arch({ t: lt+2.6, alpha: .38, pulse: 0 }); x.fillStyle='rgba(12,1,6,.45)'; x.fillRect(0,0,W,H); text(['Votre corps', 'a des choses', '*à vous dire.'], lt, { start: .1 }); },
+  pulse:lt => { bg(); const b = beat(lt + .9); arch({ t: lt+5, pulse: b, scale: 1 + lt*.03, w: 560 + lt*26, sharp: .15 }); small('Depuis longtemps.', H*.82, clamp((lt-.5)/.5)); },
+  w:    (lt, word, k) => { bg(.6); arch({ t: k*3, alpha: .3, w: 900, cy: H*.5 + (k%2 ? 120 : -120), fig: 0, pulse: beat(lt+.95)*.6 }); x.fillStyle='rgba(12,1,6,.35)'; x.fillRect(0,0,W,H); text([word], lt, { size: 170, step: 0, fade: .16 }); },
+  wait: lt => { bg(); const sh = eio(lt/2.4); arch({ t: lt+9, sharp: sh*.9, scale: 1 + sh*.12, w: 600, pulse: beat(lt+.4)*.35 });
+    text(['Quelqu\'un', 'vous attend.'], lt, { y: H*.2, size: 96, start: .1, alpha: 1 - clamp((lt-1.5)/.3) });
+    if (lt > 1.75) text(['*C\'est vous.'], lt-1.75, { y: H*.2, size: 130 }); },
+  paris:lt => { bg(.8); arch({ t: lt+12, alpha: .32, pulse: 0 }); x.fillStyle='rgba(12,1,6,.5)'; x.fillRect(0,0,W,H); text(['Bientôt,', '*à Paris.'], lt, { size: 150, start: .05 }); },
+  end:  lt => { bg(); arch({ t: lt+14, w: 330, cy: H*.3, pulse: beat(lt+.5)*.4, sharp: .3 });
+    const p = eo((lt-.2)/.8); x.save(); x.globalAlpha = p; x.font = `400 170px ${SERIF}`; x.letterSpacing = '44px'; x.fillStyle = C.blush; x.textAlign='center'; x.textBaseline='middle'; x.fillText('MIRI', W/2+22, H*.535 + (1-p)*20); x.restore();
+    text(['Laissez votre e‑mail.', '*Recevez votre invitation.'], lt, { y: H*.645, size: 64, start: .9, step: .09 });
+    const p3 = eo((lt-1.9)/.5);
+    if (p3 > 0) { x.save(); x.globalAlpha = p3; const bw=470,bh=100,bx=W/2-bw/2,by=H*.725; x.shadowColor='rgba(242,169,182,.7)'; x.shadowBlur=44; x.fillStyle=C.blush; x.beginPath(); x.roundRect(bx,by,bw,bh,50); x.fill();
+      x.shadowBlur=0; x.fillStyle=C.wine; x.font=`500 40px ${SANS}`; x.letterSpacing='0px'; x.textAlign='center'; x.textBaseline='middle'; x.fillText('Lien en bio', W/2, by+bh/2+2); x.restore(); } }
+};
+const PLAN = [
+  ['door', 2.6], ['hook', 2.6], ['pulse', 2.2],
+  ['w:Une heure.', .8], ['w:Votre peau.', .7], ['w:Votre cœur.', .7], ['w:Votre sang.', .7],
+  ['wait', 3.4], ['paris', 1.6], ['end', 4.2]
+];
+const SCENES = []; { let t = 0, k = 0; for (const [key, d] of PLAN) { const [n, arg] = key.split(':'); const kk = k++; SCENES.push([t, t+d, arg ? (lt => S.w(lt, arg, kk)) : S[n], n]); t += d; } }
+const DURATION = SCENES[SCENES.length-1][1];
+function draw(t) {
+  FRAME = Math.round(t*30);
+  x.setTransform(1,0,0,1,0,0); x.globalAlpha=1; x.shadowBlur=0; x.filter='none'; x.letterSpacing='0px';
+  const i = SCENES.findIndex(([a,b]) => t>=a && t<b), s = SCENES[i < 0 ? SCENES.length-1 : i], lt = t - s[0], left = s[1] - t;
+  s[2](lt);
+  vignette(); grain();
+  // fondu au noir très court entre les scènes lentes ; coupe franche entre les mots
+  const soft = s[3] !== 'w';
+  if (soft && s[0] > 0 && lt < .22) { x.fillStyle = `rgba(12,1,6,${1 - lt/.22})`; x.fillRect(0,0,W,H); }
+  if (soft && left < .18 && i < SCENES.length-1 && SCENES[i+1][3] !== 'w') { x.fillStyle = `rgba(12,1,6,${1 - left/.18})`; x.fillRect(0,0,W,H); }
+  if (t > DURATION-.6) { x.fillStyle = `rgba(0,0,0,${clamp((t-(DURATION-.6))/.6)})`; x.fillRect(0,0,W,H); }
+}
+window.ready = Promise.all([document.fonts.load(`400 96px "Instrument Serif"`), document.fonts.load(`italic 400 96px "Instrument Serif"`), document.fonts.load(`500 40px "Inter Tight"`)]).catch(()=>{}).then(()=>document.fonts.ready);
+window.draw = draw; window.DURATION = DURATION;
+if (!location.search.includes('rec')) { const t0 = performance.now(); const loop = () => { draw(((performance.now()-t0)/1000) % DURATION); requestAnimationFrame(loop); }; window.ready.then(loop); }
+</script>
+</body></html>
